@@ -1,4 +1,4 @@
-import { GET_TECHS } from "../actions/types.js";
+import { GET_TECHS, DELETE_TECH } from "../actions/types.js";
 
 const initialState = {
   techs: []
@@ -10,6 +10,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         techs: action.payload
+      };
+    case DELETE_TECH:
+      return {
+        ...state,
+        techs: state.techs.filter(tech => tech.id !== action.payload)
       };
     default:
       return state;
