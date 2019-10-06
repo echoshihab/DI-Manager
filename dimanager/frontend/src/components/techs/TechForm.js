@@ -20,6 +20,11 @@ export class TechForm extends Component {
     const { name, initials, certs } = this.state;
     const tech = { name, initials, certs };
     this.props.addTech(tech);
+    this.setState({
+      name: "",
+      initials: "",
+      certs: ""
+    });
   };
 
   render() {
