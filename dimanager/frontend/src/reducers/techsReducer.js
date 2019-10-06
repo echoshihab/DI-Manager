@@ -1,4 +1,4 @@
-import { GET_TECHS, DELETE_TECH } from "../actions/types.js";
+import { GET_TECHS, DELETE_TECH, ADD_TECH } from "../actions/types.js";
 
 const initialState = {
   techs: []
@@ -11,6 +11,12 @@ export default function(state = initialState, action) {
         ...state,
         techs: action.payload
       };
+    case ADD_TECH:
+      return {
+        ...state,
+        techs: [...state.techs, action.payload]
+      };
+
     case DELETE_TECH:
       return {
         ...state,

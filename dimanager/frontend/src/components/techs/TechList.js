@@ -5,7 +5,9 @@ import { getTechs, deleteTech } from "../../actions/techs";
 
 export class TechList extends Component {
   static propTypes = {
-    techs: PropTypes.array.isRequired
+    techs: PropTypes.array.isRequired,
+    getTechs: PropTypes.func.isRequired,
+    deleteTech: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -21,7 +23,7 @@ export class TechList extends Component {
               <th>ID</th>
               <th>Name</th>
               <th>Initials</th>
-              <th>Certs</th>
+              <th>Certifications</th>
               <th> </th>
             </tr>
           </thead>

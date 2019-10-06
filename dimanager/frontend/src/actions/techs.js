@@ -1,15 +1,26 @@
 import axios from "axios";
 
-import { GET_TECHS, DELETE_TECH } from "./types";
+import { GET_TECHS, DELETE_TECH, ADD_TECH } from "./types";
 
 //GET TECHNOLOGISTS
 export const getTechs = () => dispatch => {
   axios
     .get("/api/techs/")
     .then(res => {
-      console.log(res.data);
       dispatch({
         type: GET_TECHS,
+        payload: res.data
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+export const addTech = tech => dispatch => {
+  axios
+    .post("/api/techs/", tech)
+    .then(res => {
+      dispatch({
+        type: ADD_TECH,
         payload: res.data
       });
     })
