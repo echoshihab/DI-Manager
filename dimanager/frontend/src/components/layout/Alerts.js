@@ -19,11 +19,13 @@ export class Alerts extends Component {
         alert.error(`Certifications: ${error.msg.certs.join()}`);
       if (error.msg.non_field_errors)
         alert.error(error.msg.non_field_errors.join());
+      if (error.msg.username) alert.error(error.msg.username.join());
     }
 
     if (message !== prevProps.message) {
       if (message.techDeleted) alert.success(message.techDeleted);
       if (message.techAdded) alert.success(message.techAdded);
+      if (message.passwordNotMatch) alert.error(message.passwordNotMatch);
     }
   }
 
