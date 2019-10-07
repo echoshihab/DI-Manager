@@ -17,6 +17,8 @@ export class Alerts extends Component {
         alert.error(`Initials: ${error.msg.initials.join()}`);
       if (error.msg.certs)
         alert.error(`Certifications: ${error.msg.certs.join()}`);
+      if (error.msg.non_field_errors)
+        alert.error(error.msg.non_field_errors.join());
     }
 
     if (message !== prevProps.message) {
