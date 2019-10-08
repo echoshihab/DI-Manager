@@ -9,7 +9,7 @@ class TechViewSet(viewsets.ModelViewSet):
     ]
 
     def get_queryset(self):
-        return self.request.user.leads.all()
+        return self.request.user.techs.all()
 
     serializer_class = TechSerializer
 
