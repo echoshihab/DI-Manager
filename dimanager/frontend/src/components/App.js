@@ -5,9 +5,9 @@ import Dashboard from "./techs/Dashboard";
 import Alerts from "./layout/Alerts";
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
+import CalendarForm from "./calendar/CalendarForm";
 import PrivateRoute from "./common/PrivateRoute";
 import { loadUser } from "../actions/auth";
-
 import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import {
@@ -42,6 +42,7 @@ class App extends Component {
                   <PrivateRoute exact path="/" component={Dashboard} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
+                  <Route exact path="/calendar" component={CalendarForm} />
                 </Switch>
               </div>
             </Fragment>
