@@ -37,3 +37,42 @@
 .date-picker .dates.active {
   display: block;
 }
+
+.date-picker .dates .month {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #eee;
+}
+
+.date-picker .dates .month .arrows {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: #313131;
+  font-size: 18px;
+}
+
+.date-picker .dates .month .arrows:hover {
+  background-color: #f3f3f3;
+}
+
+.date-picker .dates .month .arrows:active {
+  background-color: #00ca85;
+}
+
+.date-picker .days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  height: 200px;
+  background-color: #eee;
+}
+
+.date-picker .days .day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #313131;
+}
