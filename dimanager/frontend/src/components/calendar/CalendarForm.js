@@ -31,6 +31,7 @@ export class CalendarForm extends Component {
 
     this.state = {
       isActive: false,
+      day: day,
       month: month,
       year: year
     };
@@ -49,17 +50,34 @@ export class CalendarForm extends Component {
         this.setState({ month: next_month });
       }
     };
+
+    this.viewPrevMonth = () => {
+      let prev_month = this.state.month - 1;
+      if (prev_month < 0) {
+        this.setState({ month: 11, year: this.state.year - 1 });
+      } else {
+        this.setState({ month: prev_month });
+      }
+    };
   }
 
   render() {
-    const { isActive, month, year } = this.state;
+    const { isActive, day, month, year } = this.state;
     return (
       <div className="date-picker" onClick={this.toggleDatePicker}>
-        <div className="selected-date"></div>
+        <div className="selected-date">
+          {(day < 10 ? "0" + day : day) +
+            "/" +
+            (1 + month < 10 ? "0" + (1 + month) : 1 + month) +
+            "/" +
+            year}
+        </div>
 
         <div className={`dates ${isActive ? "active" : ""}`}>
           <div className="month">
-            <div className="arrows prev-mth">Prev</div>
+            <div className="arrows prev-mth" onClick={this.viewPrevMonth}>
+              Prev
+            </div>
             <div className="mth">{months[month] + " " + year}</div>
             <div className="arrows next-mth" onClick={this.viewNextMonth}>
               Next
