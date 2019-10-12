@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Fragment, Component } from "react";
+import ShiftList from "../shifts/ShiftList";
 import "./Calendar.css";
 
 const months = [
@@ -99,28 +100,31 @@ export class CalendarForm extends Component {
     }
 
     return (
-      <div className="date-picker" onClick={this.toggleDatePicker}>
-        <div className="selected-date">
-          {(day < 10 ? "0" + day : day) +
-            "/" +
-            (1 + month < 10 ? "0" + (1 + month) : 1 + month) +
-            "/" +
-            year}
-        </div>
-
-        <div className={`dates ${isActive ? "active" : ""}`}>
-          <div className="month">
-            <div className="arrows prev-mth" onClick={this.viewPrevMonth}>
-              Prev
-            </div>
-            <div className="mth">{months[month] + " " + year}</div>
-            <div className="arrows next-mth" onClick={this.viewNextMonth}>
-              Next
-            </div>
+      <Fragment>
+        <div className="date-picker" onClick={this.toggleDatePicker}>
+          <div className="selected-date">
+            {(day < 10 ? "0" + day : day) +
+              "/" +
+              (1 + month < 10 ? "0" + (1 + month) : 1 + month) +
+              "/" +
+              year}
           </div>
-          <div className="days">{days}</div>
+
+          <div className={`dates ${isActive ? "active" : ""}`}>
+            <div className="month">
+              <div className="arrows prev-mth" onClick={this.viewPrevMonth}>
+                Prev
+              </div>
+              <div className="mth">{months[month] + " " + year}</div>
+              <div className="arrows next-mth" onClick={this.viewNextMonth}>
+                Next
+              </div>
+            </div>
+            <div className="days">{days}</div>
+          </div>
         </div>
-      </div>
+        <ShiftList />
+      </Fragment>
     );
   }
 }
