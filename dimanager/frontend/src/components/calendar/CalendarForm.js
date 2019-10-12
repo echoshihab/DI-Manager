@@ -23,6 +23,7 @@ export class CalendarForm extends Component {
     let day = date.getDate();
     let month = date.getMonth();
     let year = date.getFullYear();
+    let daysInMonth = new Date(year, month + 1, 0).getDate();
 
     let selectedDate = date;
     let selectedDay = day;
@@ -33,7 +34,8 @@ export class CalendarForm extends Component {
       isActive: false,
       day: day,
       month: month,
-      year: year
+      year: year,
+      daysInMonth: daysInMonth
     };
 
     this.toggleDatePicker = e => {
@@ -43,26 +45,59 @@ export class CalendarForm extends Component {
     };
 
     this.viewNextMonth = () => {
-      let next_month = this.state.month + 1;
-      if (next_month > 11) {
-        this.setState(prevState => ({ month: 0, year: this.state.year + 1 }));
+      let nextMonth = this.state.month + 1; //this is zero indexed month value
+      if (nextMonth > 11) {
+        let newYear = this.state.year + 1;
+        let newDaysInMonth = new Date(newYear, 0 + 1, 0).getDate();
+        this.setState(prevState => ({
+          month: 0,
+          year: newYear,
+          daysInMonth: newDaysInMonth
+        }));
       } else {
-        this.setState({ month: next_month });
+        let newDaysInMonth = new Date(
+          this.state.year,
+          nextMonth + 1,
+          0
+        ).getDate();
+        this.setState({ month: nextMonth, daysInMonth: newDaysInMonth });
       }
     };
 
     this.viewPrevMonth = () => {
-      let prev_month = this.state.month - 1;
-      if (prev_month < 0) {
-        this.setState({ month: 11, year: this.state.year - 1 });
+      let prevMonth = this.state.month - 1;
+      if (prevMonth < 0) {
+        let newYear = this.state.year - 1;
+        let newDaysInMonth = new Date(newYear, 11 + 1, 0).getDate();
+        this.setState({
+          month: 11,
+          year: newYear,
+          daysInMonth: newDaysInMonth
+        });
       } else {
-        this.setState({ month: prev_month });
+        let newDaysInMonth = new Date(
+          this.state.year,
+          prevMonth + 1,
+          0
+        ).getDate();
+        this.setState({ month: prevMonth, daysInMonth: newDaysInMonth });
       }
     };
   }
 
   render() {
-    const { isActive, day, month, year } = this.state;
+    const { isActive, day, month, year, daysInMonth } = this.state;
+
+    const days = [];
+
+    for (let i = 1; i <= daysInMonth; i++) {
+      days.push(
+        <div className="day" key={i}>
+          {i}
+        </div>
+      );
+    }
+
     return (
       <div className="date-picker" onClick={this.toggleDatePicker}>
         <div className="selected-date">
@@ -83,15 +118,7 @@ export class CalendarForm extends Component {
               Next
             </div>
           </div>
-          <div className="days">
-            <div className="day">1</div>
-            <div className="day">2</div>
-            <div className="day">3</div>
-            <div className="day">4</div>
-            <div className="day">5</div>
-            <div className="day">6</div>
-            <div className="day">7</div>
-          </div>
+          <div className="days">{days}</div>
         </div>
       </div>
     );
