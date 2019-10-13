@@ -15,3 +15,5 @@ class ShiftTimeViewSet(viewsets.ModelViewSet):
     permission_classes = [
         permissions.AllowAny 
     ]
+
+    serializer_class = ShiftTimeSerializer
