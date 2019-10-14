@@ -9,7 +9,7 @@ export default function(state = initialState, action) {
     case GET_ROOMS:
       return {
         ...state,
-        shiftTimes: action.payload
+        rooms: action.payload
       };
 
     default:

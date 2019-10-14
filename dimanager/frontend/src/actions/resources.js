@@ -21,7 +21,7 @@ export const getLocations = () => dispatch => {
 
 export const getRooms = location => dispatch => {
   axios
-    .get(`/api/rooms/?location=${location}/`)
+    .get(`/api/rooms/?location=${location}`)
     .then(res => {
       dispatch({
         type: GET_ROOMS,
