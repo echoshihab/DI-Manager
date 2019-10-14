@@ -85,6 +85,10 @@ export class CalendarForm extends Component {
         this.setState({ month: prevMonth, daysInMonth: newDaysInMonth });
       }
     };
+
+    this.setDay = e => {
+      this.setState({ day: e.target.textContent });
+    };
   }
 
   render() {
@@ -94,7 +98,7 @@ export class CalendarForm extends Component {
 
     for (let i = 1; i <= daysInMonth; i++) {
       days.push(
-        <div className="day" key={i}>
+        <div className="day" onClick={this.setDay} key={i}>
           {i}
         </div>
       );
