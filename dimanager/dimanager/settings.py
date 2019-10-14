@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'knox',
     'accounts',
     'shifts',
-    'resources',
 ]
 
 
