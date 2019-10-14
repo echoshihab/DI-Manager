@@ -1,6 +1,7 @@
 import React, { Fragment, Component } from "react";
 import ShiftList from "../shifts/ShiftList";
 import ShiftTimes from "../shifts/ShiftTimes";
+import Location from "../resources/Location";
 import "./Calendar.css";
 
 const months = [
@@ -130,6 +131,7 @@ export class CalendarForm extends Component {
         </div>
         <ShiftList />
         <ShiftTimes />
+        <Location />
       </Fragment>
     );
   }
