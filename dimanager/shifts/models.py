@@ -8,4 +8,15 @@ class ExamTypes(models.Model):
 class ShiftTime(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
+
+class Shifts(models.Model):
+    date_of_shift = models.DateField()
+    exam_type = models.ForeignKey('ExamTypes', on_delete=models.CASCADE)
+    shift_time = models.ForeignKey('ShiftTime', on_delete=models.CASCADE)
+    room = models.ForeignKey('resources.Room', on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['date_of_shift']
+
+
     

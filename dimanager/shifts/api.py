@@ -1,6 +1,6 @@
-from shifts.models import ExamTypes, ShiftTime
+from shifts.models import ExamTypes, ShiftTime, Shifts
 from rest_framework import viewsets, permissions
-from .serializers import ExamTypesSerializer, ShiftTimeSerializer
+from .serializers import ExamTypesSerializer, ShiftTimeSerializer, ShiftsSerializer
 
 class ExamTypesViewSet(viewsets.ModelViewSet):
     queryset = ExamTypes.objects.all() 
@@ -17,3 +17,11 @@ class ShiftTimeViewSet(viewsets.ModelViewSet):
     ]
 
     serializer_class = ShiftTimeSerializer
+
+class ShiftsViewSet(viewsets.ModelViewSet):
+    queryset = Shifts.objects.all()
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = ShiftsSerializer
+
