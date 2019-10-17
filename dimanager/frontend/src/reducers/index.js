@@ -7,6 +7,7 @@ import examTypes from "./examTypes";
 import shiftTimes from "./shiftTimes";
 import locations from "./locations";
 import rooms from "./rooms";
+import shifts from "./shifts";
 
 export default combineReducers({
   techsReducer: techs,
@@ -16,5 +17,6 @@ export default combineReducers({
   messages,
   auth,
   locations,
-  rooms
+  rooms,
+  shifts
 });

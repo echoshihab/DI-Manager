@@ -16,3 +16,4 @@ export const GET_EXAMTYPES = "GET_EXAMTYPES";
 export const GET_SHIFTTIMES = "GET_SHIFTTIMES";
 export const GET_LOCATIONS = "GET_LOCATIONS";
 export const GET_ROOMS = "GET_ROOMS";
+export const SHIFT_ADDED = "SHIFT_ADDED";

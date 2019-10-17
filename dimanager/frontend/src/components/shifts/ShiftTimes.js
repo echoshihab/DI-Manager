@@ -15,12 +15,9 @@ export class ShiftTimes extends Component {
   render() {
     return (
       <Fragment>
-        <select>
+        <select name="shiftTime">
           {this.props.shiftTimes.map(shiftTime => (
-            <option
-              key={shiftTime.id}
-              value={shiftTime.start_time + "-" + shiftTime.end_time}
-            >
+            <option key={shiftTime.id} value={shiftTime.id}>
               {shiftTime.start_time.slice(0, -3) +
                 "-" +
                 shiftTime.end_time.slice(0, -3)}

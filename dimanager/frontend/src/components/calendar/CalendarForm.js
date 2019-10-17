@@ -1,8 +1,10 @@
-import React, { Fragment, Component } from "react";
+import React, { Component } from "react";
 import ShiftList from "../shifts/ShiftList";
 import ShiftTimes from "../shifts/ShiftTimes";
 import Location from "../resources/Location";
 import "./Calendar.css";
+import { assignShift } from "../../actions/shifts";
+import { connect } from "react-redux";
 
 const months = [
   "January",
@@ -28,11 +30,6 @@ export class CalendarForm extends Component {
     let year = date.getFullYear();
     let daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    let selectedDate = date;
-    let selectedDay = day;
-    let selectedMonth = month;
-    let selectedYear = year;
-
     this.state = {
       isActive: false,
       day: day,
@@ -52,11 +49,11 @@ export class CalendarForm extends Component {
       if (nextMonth > 11) {
         let newYear = this.state.year + 1;
         let newDaysInMonth = new Date(newYear, 0 + 1, 0).getDate();
-        this.setState(prevState => ({
+        this.setState({
           month: 0,
           year: newYear,
           daysInMonth: newDaysInMonth
-        }));
+        });
       } else {
         let newDaysInMonth = new Date(
           this.state.year,
@@ -90,6 +87,23 @@ export class CalendarForm extends Component {
     this.setDay = e => {
       this.setState({ day: e.target.textContent });
     };
+
+    this.handleSubmit = e => {
+      e.preventDefault();
+      let { room, shiftTime, examType } = e.target;
+      let selectedDate = document
+        .getElementsByClassName("selected-date")[0]
+        .innerHTML.split("/")
+        .reverse()
+        .join("-");
+
+      this.props.assignShift(
+        selectedDate,
+        examType.value,
+        shiftTime.value,
+        room.value
+      );
+    };
   }
 
   render() {
@@ -97,6 +111,7 @@ export class CalendarForm extends Component {
 
     const days = [];
 
+    //populate days in a month
     for (let i = 1; i <= daysInMonth; i++) {
       days.push(
         <div className="day" onClick={this.setDay} key={i}>
@@ -106,7 +121,7 @@ export class CalendarForm extends Component {
     }
 
     return (
-      <Fragment>
+      <form onSubmit={this.handleSubmit}>
         <div className="date-picker" onClick={this.toggleDatePicker}>
           <div className="selected-date">
             {(day < 10 ? "0" + day : day) +
@@ -132,9 +147,17 @@ export class CalendarForm extends Component {
         <ShiftList />
         <ShiftTimes />
         <Location />
-      </Fragment>
+        <button> Assign Shift </button>
+      </form>
     );
   }
 }
 
-export default CalendarForm;
+//ShiftList = examType component
+//ShiftTimes = shift time range component
+//location = location and room component
+
+export default connect(
+  null,
+  { assignShift }
+)(CalendarForm);

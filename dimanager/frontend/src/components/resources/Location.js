@@ -5,7 +5,7 @@ import { getLocations, getRooms } from "../../actions/resources";
 
 export class Location extends Component {
   state = {
-    test: false
+    room: false
   };
 
   static propTypes = {
@@ -15,7 +15,7 @@ export class Location extends Component {
 
   listRooms = e => {
     this.props.getRooms(e.target.value);
-    this.setState({ test: true });
+    this.setState({ room: true });
   };
 
   componentDidMount() {
@@ -24,20 +24,24 @@ export class Location extends Component {
   render() {
     return (
       <Fragment>
-        <select defaultValue={"default"} onChange={this.listRooms}>
+        <select
+          defaultValue={"default"}
+          onChange={this.listRooms}
+          name="location"
+        >
           <option hidden disabled value="default">
             Select Location
           </option>
           {this.props.locations.map(location => (
-            <option key={location.id} value={location.location}>
+            <option key={location.id} value={location.id}>
               {location.location}
             </option>
           ))}
         </select>
-        {this.state.test ? (
-          <select>
+        {this.state.room ? (
+          <select name="room">
             {this.props.rooms.map(room => (
-              <option key={room.id} value={room.room}>
+              <option key={room.id} value={room.id}>
                 {room.room}
               </option>
             ))}
