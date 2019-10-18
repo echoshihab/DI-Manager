@@ -19,8 +19,11 @@ class RoomViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         query_parameter = self.request.query_params.get('location', None)
-        location = Location.objects.get(id=query_parameter)
-        return Room.objects.filter(location = location)
+        if query_parameter == None:
+            return Room.objects.all()
+        else:
+            location = Location.objects.get(id=query_parameter)
+            return Room.objects.filter(location = location)
 
 
   

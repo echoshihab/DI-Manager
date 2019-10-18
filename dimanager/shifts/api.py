@@ -19,7 +19,6 @@ class ShiftTimeViewSet(viewsets.ModelViewSet):
     serializer_class = ShiftTimeSerializer
 
 class ShiftsViewSet(viewsets.ModelViewSet):
-    queryset = Shifts.objects.all()
     permission_classes = [
         permissions.AllowAny
     ]
@@ -33,3 +32,12 @@ class ShiftsViewSet(viewsets.ModelViewSet):
             return self.serializer_action_classes[self.action]
         except (KeyError, AttributeError):
             return super().get_serializer_class()
+
+    def get_queryset(self):
+        query_parameter = self.request.query_params.get('date', None)
+        if query_parameter == None:
+            return Shifts.objects.all()
+        else:
+            return Shifts.objects.filter(date_of_shift=query_parameter)
+
+

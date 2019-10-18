@@ -67,3 +67,8 @@ export const assignShift = (
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 };
+
+//export const getShiftsForDay = dateOfShift => dispatch => {
+//axios
+//.get("api/shifts")
+//}
