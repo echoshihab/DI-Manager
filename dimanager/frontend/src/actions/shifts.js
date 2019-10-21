@@ -1,6 +1,6 @@
 import axios from "axios";
 import { returnErrors } from "./messages";
-import { GET_EXAMTYPES, GET_SHIFTTIMES, SHIFT_ADDED } from "./types";
+import { GET_EXAMTYPES, GET_SHIFTTIMES, SHIFT_ADDED, VIEW_DAY } from "./types";
 
 //GET EXAM TYPES
 export const getExamTypes = () => dispatch => {
@@ -57,7 +57,6 @@ export const assignShift = (
   axios
     .post("api/shifts/", body, config)
     .then(res => {
-      console.log(res.data);
       dispatch({
         type: SHIFT_ADDED,
         payload: res.data
@@ -68,7 +67,16 @@ export const assignShift = (
     );
 };
 
-//export const getShiftsForDay = dateOfShift => dispatch => {
-//axios
-//.get("api/shifts")
-//}
+export const getShiftsForDay = dateOfShift => dispatch => {
+  axios
+    .get(`api/shifts/?date=${dateOfShift}`)
+    .then(res => {
+      dispatch({
+        type: VIEW_DAY,
+        payload: res.data
+      });
+    })
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};

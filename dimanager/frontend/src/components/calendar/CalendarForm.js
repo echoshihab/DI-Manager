@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React, { Fragment, Component } from "react";
 import ShiftList from "../shifts/ShiftList";
 import ShiftTimes from "../shifts/ShiftTimes";
 import Location from "../resources/Location";
+import DayView from "../calendar/DayView";
 import "./Calendar.css";
-import { assignShift } from "../../actions/shifts";
+import { assignShift, getShiftsForDay } from "../../actions/shifts";
 import { connect } from "react-redux";
 
 const months = [
@@ -85,7 +86,14 @@ export class CalendarForm extends Component {
     };
 
     this.setDay = e => {
-      this.setState({ day: e.target.textContent });
+      this.setState({ day: e.target.textContent }, function() {
+        let selectedDate = document
+          .getElementsByClassName("selected-date")[0]
+          .innerHTML.split("/")
+          .reverse()
+          .join("-");
+        this.props.getShiftsForDay(selectedDate);
+      });
     };
 
     this.handleSubmit = e => {
@@ -121,34 +129,38 @@ export class CalendarForm extends Component {
     }
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div className="date-picker" onClick={this.toggleDatePicker}>
-          <div className="selected-date">
-            {(day < 10 ? "0" + day : day) +
-              "/" +
-              (1 + month < 10 ? "0" + (1 + month) : 1 + month) +
-              "/" +
-              year}
-          </div>
-
-          <div className={`dates ${isActive ? "active" : ""}`}>
-            <div className="month">
-              <div className="arrows prev-mth" onClick={this.viewPrevMonth}>
-                Prev
-              </div>
-              <div className="mth">{months[month] + " " + year}</div>
-              <div className="arrows next-mth" onClick={this.viewNextMonth}>
-                Next
-              </div>
+      <Fragment>
+        <form onSubmit={this.handleSubmit}>
+          <div className="date-picker" onClick={this.toggleDatePicker}>
+            <div className="selected-date">
+              {(day < 10 ? "0" + day : day) +
+                "/" +
+                (1 + month < 10 ? "0" + (1 + month) : 1 + month) +
+                "/" +
+                year}
             </div>
-            <div className="days">{days}</div>
+
+            <div className={`dates ${isActive ? "active" : ""}`}>
+              <div className="month">
+                <div className="arrows prev-mth" onClick={this.viewPrevMonth}>
+                  Prev
+                </div>
+                <div className="mth">{months[month] + " " + year}</div>
+                <div className="arrows next-mth" onClick={this.viewNextMonth}>
+                  Next
+                </div>
+              </div>
+              <div className="days">{days}</div>
+            </div>
           </div>
-        </div>
-        <ShiftList />
-        <ShiftTimes />
-        <Location />
-        <button> Assign Shift </button>
-      </form>
+          <ShiftList />
+          <ShiftTimes />
+          <Location />
+          <button> Assign Shift </button>
+        </form>
+
+        <DayView />
+      </Fragment>
     );
   }
 }
@@ -159,5 +171,5 @@ export class CalendarForm extends Component {
 
 export default connect(
   null,
-  { assignShift }
+  { assignShift, getShiftsForDay }
 )(CalendarForm);
