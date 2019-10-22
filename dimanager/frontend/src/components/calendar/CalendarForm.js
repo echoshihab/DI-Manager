@@ -3,6 +3,7 @@ import ShiftList from "../shifts/ShiftList";
 import ShiftTimes from "../shifts/ShiftTimes";
 import Location from "../resources/Location";
 import DayView from "../calendar/DayView";
+import TechListView from "../techs/TechListView";
 import "./Calendar.css";
 import { assignShift, getShiftsForDay } from "../../actions/shifts";
 import { connect } from "react-redux";
@@ -98,7 +99,7 @@ export class CalendarForm extends Component {
 
     this.handleSubmit = e => {
       e.preventDefault();
-      let { room, shiftTime, examType } = e.target;
+      let { room, shiftTime, examType, tech } = e.target;
       let selectedDate = document
         .getElementsByClassName("selected-date")[0]
         .innerHTML.split("/")
@@ -109,7 +110,8 @@ export class CalendarForm extends Component {
         selectedDate,
         examType.value,
         shiftTime.value,
-        room.value
+        room.value,
+        tech.value
       );
     };
   }
@@ -130,33 +132,34 @@ export class CalendarForm extends Component {
 
     return (
       <Fragment>
-        <form onSubmit={this.handleSubmit}>
-          <div className="date-picker" onClick={this.toggleDatePicker}>
-            <div className="selected-date">
-              {(day < 10 ? "0" + day : day) +
-                "/" +
-                (1 + month < 10 ? "0" + (1 + month) : 1 + month) +
-                "/" +
-                year}
-            </div>
-
-            <div className={`dates ${isActive ? "active" : ""}`}>
-              <div className="month">
-                <div className="arrows prev-mth" onClick={this.viewPrevMonth}>
-                  Prev
-                </div>
-                <div className="mth">{months[month] + " " + year}</div>
-                <div className="arrows next-mth" onClick={this.viewNextMonth}>
-                  Next
-                </div>
-              </div>
-              <div className="days">{days}</div>
-            </div>
+        <div className="date-picker" onClick={this.toggleDatePicker}>
+          <div className="selected-date">
+            {(day < 10 ? "0" + day : day) +
+              "/" +
+              (1 + month < 10 ? "0" + (1 + month) : 1 + month) +
+              "/" +
+              year}
           </div>
+
+          <div className={`dates ${isActive ? "active" : ""}`}>
+            <div className="month">
+              <div className="arrows prev-mth" onClick={this.viewPrevMonth}>
+                Prev
+              </div>
+              <div className="mth">{months[month] + " " + year}</div>
+              <div className="arrows next-mth" onClick={this.viewNextMonth}>
+                Next
+              </div>
+            </div>
+            <div className="days">{days}</div>
+          </div>
+        </div>
+        <form className="form-inline" onSubmit={this.handleSubmit}>
           <ShiftList />
           <ShiftTimes />
           <Location />
-          <button> Assign Shift </button>
+          <TechListView />
+          <button className="btn btn-primary btn-sm">Assign</button>
         </form>
 
         <DayView />

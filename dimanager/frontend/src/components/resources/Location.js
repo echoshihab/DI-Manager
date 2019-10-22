@@ -25,6 +25,7 @@ export class Location extends Component {
     return (
       <Fragment>
         <select
+          className="form-control"
           defaultValue={"default"}
           onChange={this.listRooms}
           name="location"

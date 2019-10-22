@@ -14,6 +14,7 @@ class Shifts(models.Model):
     exam_type = models.ForeignKey('ExamTypes', on_delete=models.CASCADE)
     shift_time = models.ForeignKey('ShiftTime', on_delete=models.CASCADE)
     room = models.ForeignKey('resources.Room', on_delete=models.CASCADE)
+    tech = models.ForeignKey('techs.Tech', on_delete=models.CASCADE, null=True)
 
     class Meta:
         ordering = ['date_of_shift']

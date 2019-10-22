@@ -15,7 +15,7 @@ export class ShiftList extends Component {
   render() {
     return (
       <Fragment>
-        <select name="examType">
+        <select className="form-control" name="examType">
           {this.props.examTypes.map(examType => (
             <option key={examType.id} value={examType.id}>
               {examType.exam_type}

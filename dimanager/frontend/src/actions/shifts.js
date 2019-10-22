@@ -38,7 +38,8 @@ export const assignShift = (
   dateOfShift,
   examType,
   shiftTime,
-  room
+  room,
+  tech
 ) => dispatch => {
   //Headers
   const config = {
@@ -52,7 +53,8 @@ export const assignShift = (
     date_of_shift: dateOfShift,
     exam_type: examType,
     shift_time: shiftTime,
-    room: room
+    room: room,
+    tech: tech
   });
   axios
     .post("api/shifts/", body, config)

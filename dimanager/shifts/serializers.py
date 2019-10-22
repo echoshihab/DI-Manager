@@ -16,6 +16,7 @@ class ShiftsSerializer(serializers.ModelSerializer):
     exam_type = serializers.SlugRelatedField(many=False, read_only=True, slug_field='exam_type')
     shift_time = ShiftTimeSerializer(many=False, read_only=True)
     room = serializers.SlugRelatedField(many=False, read_only=True, slug_field='room')
+    tech = serializers.SlugRelatedField(many=False, read_only=True, slug_field='initials')
 
     class Meta:
         model = Shifts

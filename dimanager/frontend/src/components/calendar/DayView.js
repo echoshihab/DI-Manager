@@ -15,6 +15,7 @@ export class DayView extends Component {
             <tr>
               <th scope="col">Room</th>
               <th scope="col">Shift</th>
+              <th scope="col">Technologist</th>
             </tr>
           </thead>
           <tbody>
@@ -28,6 +29,7 @@ export class DayView extends Component {
                     " - " +
                     item.shift_time.end_time}
                 </td>
+                <td>{item.tech}</td>
               </tr>
             ))}
           </tbody>
