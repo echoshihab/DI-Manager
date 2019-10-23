@@ -8,14 +8,14 @@ import "./Calendar.css";
 import { assignShift, getShiftsForDay } from "../../actions/shifts";
 import { connect } from "react-redux";
 
-//helper function
-const shiftQuery = () => {
+//helper function for querying for shifts
+const shiftQuery = getShifts => {
   let selectedDate = document
     .getElementsByClassName("selected-date")[0]
     .innerHTML.split("/")
     .reverse()
     .join("-");
-  this.props.getShiftsForDay(selectedDate);
+  getShifts(selectedDate);
 };
 
 //months
@@ -77,12 +77,7 @@ export class CalendarForm extends Component {
       this.setState(
         { month: nextMonth, daysInMonth: newDaysInMonth },
         function() {
-          let selectedDate = document
-            .getElementsByClassName("selected-date")[0]
-            .innerHTML.split("/")
-            .reverse()
-            .join("-");
-          this.props.getShiftsForDay(selectedDate);
+          shiftQuery(this.props.getShiftsForDay);
         }
       );
     }
@@ -107,12 +102,7 @@ export class CalendarForm extends Component {
       this.setState(
         { month: prevMonth, daysInMonth: newDaysInMonth },
         function() {
-          let selectedDate = document
-            .getElementsByClassName("selected-date")[0]
-            .innerHTML.split("/")
-            .reverse()
-            .join("-");
-          this.props.getShiftsForDay(selectedDate);
+          shiftQuery(this.props.getShiftsForDay);
         }
       );
     }
@@ -120,12 +110,7 @@ export class CalendarForm extends Component {
 
   setDay = e => {
     this.setState({ day: e.target.textContent }, function() {
-      let selectedDate = document
-        .getElementsByClassName("selected-date")[0]
-        .innerHTML.split("/")
-        .reverse()
-        .join("-");
-      this.props.getShiftsForDay(selectedDate);
+      shiftQuery(this.props.getShiftsForDay);
     });
   };
 
@@ -148,12 +133,7 @@ export class CalendarForm extends Component {
   };
 
   componentDidMount() {
-    let selectedDate = document
-      .getElementsByClassName("selected-date")[0]
-      .innerHTML.split("/")
-      .reverse()
-      .join("-");
-    this.props.getShiftsForDay(selectedDate);
+    shiftQuery(this.props.getShiftsForDay);
   }
 
   render() {
