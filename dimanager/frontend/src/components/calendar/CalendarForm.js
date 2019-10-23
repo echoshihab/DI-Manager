@@ -8,6 +8,17 @@ import "./Calendar.css";
 import { assignShift, getShiftsForDay } from "../../actions/shifts";
 import { connect } from "react-redux";
 
+//helper function
+const shiftQuery = () => {
+  let selectedDate = document
+    .getElementsByClassName("selected-date")[0]
+    .innerHTML.split("/")
+    .reverse()
+    .join("-");
+  this.props.getShiftsForDay(selectedDate);
+};
+
+//months
 const months = [
   "January",
   "February",
@@ -39,81 +50,110 @@ export class CalendarForm extends Component {
       year: year,
       daysInMonth: daysInMonth
     };
+  }
 
-    this.toggleDatePicker = e => {
-      if (e.target.className == "selected-date") {
-        this.setState(prevState => ({ isActive: !prevState.isActive }));
-      }
-    };
+  toggleDatePicker = e => {
+    if (e.target.className == "selected-date") {
+      this.setState(prevState => ({ isActive: !prevState.isActive }));
+    }
+  };
 
-    this.viewNextMonth = () => {
-      let nextMonth = this.state.month + 1; //this is zero indexed month value
-      if (nextMonth > 11) {
-        let newYear = this.state.year + 1;
-        let newDaysInMonth = new Date(newYear, 0 + 1, 0).getDate();
-        this.setState({
-          month: 0,
-          year: newYear,
-          daysInMonth: newDaysInMonth
-        });
-      } else {
-        let newDaysInMonth = new Date(
-          this.state.year,
-          nextMonth + 1,
-          0
-        ).getDate();
-        this.setState({ month: nextMonth, daysInMonth: newDaysInMonth });
-      }
-    };
-
-    this.viewPrevMonth = () => {
-      let prevMonth = this.state.month - 1;
-      if (prevMonth < 0) {
-        let newYear = this.state.year - 1;
-        let newDaysInMonth = new Date(newYear, 11 + 1, 0).getDate();
-        this.setState({
-          month: 11,
-          year: newYear,
-          daysInMonth: newDaysInMonth
-        });
-      } else {
-        let newDaysInMonth = new Date(
-          this.state.year,
-          prevMonth + 1,
-          0
-        ).getDate();
-        this.setState({ month: prevMonth, daysInMonth: newDaysInMonth });
-      }
-    };
-
-    this.setDay = e => {
-      this.setState({ day: e.target.textContent }, function() {
-        let selectedDate = document
-          .getElementsByClassName("selected-date")[0]
-          .innerHTML.split("/")
-          .reverse()
-          .join("-");
-        this.props.getShiftsForDay(selectedDate);
+  viewNextMonth = () => {
+    let nextMonth = this.state.month + 1;
+    if (nextMonth > 11) {
+      let newYear = this.state.year + 1;
+      let newDaysInMonth = new Date(newYear, 0 + 1, 0).getDate(); //this accounts for 0 indexed month values
+      this.setState({
+        month: 0,
+        year: newYear,
+        daysInMonth: newDaysInMonth
       });
-    };
+    } else {
+      let newDaysInMonth = new Date(
+        this.state.year,
+        nextMonth + 1,
+        0
+      ).getDate();
+      this.setState(
+        { month: nextMonth, daysInMonth: newDaysInMonth },
+        function() {
+          let selectedDate = document
+            .getElementsByClassName("selected-date")[0]
+            .innerHTML.split("/")
+            .reverse()
+            .join("-");
+          this.props.getShiftsForDay(selectedDate);
+        }
+      );
+    }
+  };
 
-    this.handleSubmit = e => {
-      e.preventDefault();
-      let { room, shiftTime, examType, tech } = e.target;
+  viewPrevMonth = () => {
+    let prevMonth = this.state.month - 1;
+    if (prevMonth < 0) {
+      let newYear = this.state.year - 1;
+      let newDaysInMonth = new Date(newYear, 11 + 1, 0).getDate(); //this accounts for 0 indexed month values
+      this.setState({
+        month: 11,
+        year: newYear,
+        daysInMonth: newDaysInMonth
+      });
+    } else {
+      let newDaysInMonth = new Date(
+        this.state.year,
+        prevMonth + 1,
+        0
+      ).getDate();
+      this.setState(
+        { month: prevMonth, daysInMonth: newDaysInMonth },
+        function() {
+          let selectedDate = document
+            .getElementsByClassName("selected-date")[0]
+            .innerHTML.split("/")
+            .reverse()
+            .join("-");
+          this.props.getShiftsForDay(selectedDate);
+        }
+      );
+    }
+  };
+
+  setDay = e => {
+    this.setState({ day: e.target.textContent }, function() {
       let selectedDate = document
         .getElementsByClassName("selected-date")[0]
         .innerHTML.split("/")
         .reverse()
         .join("-");
+      this.props.getShiftsForDay(selectedDate);
+    });
+  };
 
-      this.props.assignShift(
-        selectedDate,
-        examType.value,
-        shiftTime.value,
-        room.value,
-        tech.value
-      );
-    };
+  handleSubmit = e => {
+    e.preventDefault();
+    let { room, shiftTime, examType, tech } = e.target;
+    let selectedDate = document
+      .getElementsByClassName("selected-date")[0]
+      .innerHTML.split("/")
+      .reverse()
+      .join("-");
+
+    this.props.assignShift(
+      selectedDate,
+      examType.value,
+      shiftTime.value,
+      room.value,
+      tech.value
+    );
+  };
+
+  componentDidMount() {
+    let selectedDate = document
+      .getElementsByClassName("selected-date")[0]
+      .innerHTML.split("/")
+      .reverse()
+      .join("-");
+    this.props.getShiftsForDay(selectedDate);
   }
 
   render() {
