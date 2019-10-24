@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 export class DayView extends Component {
   static propTypes = {
-    dayview: PropTypes.array.isRequired
+    shifts: PropTypes.array.isRequired
   };
 
   render() {
@@ -19,7 +19,7 @@ export class DayView extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.dayview.map(item => (
+            {this.props.shifts.map(item => (
               <tr key={item.id}>
                 <td>{item.room}</td>
                 <td>
@@ -40,7 +40,7 @@ export class DayView extends Component {
 }
 
 const mapStateToProps = state => ({
-  dayview: state.dayview.dayview
+  shifts: state.shifts.shifts
 });
 
 export default connect(

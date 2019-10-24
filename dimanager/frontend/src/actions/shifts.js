@@ -1,6 +1,11 @@
 import axios from "axios";
 import { returnErrors } from "./messages";
-import { GET_EXAMTYPES, GET_SHIFTTIMES, SHIFT_ADDED, VIEW_DAY } from "./types";
+import {
+  GET_EXAMTYPES,
+  GET_SHIFTTIMES,
+  SHIFT_ADDED,
+  SHIFT_RETRIEVE
+} from "./types";
 
 //GET EXAM TYPES
 export const getExamTypes = () => dispatch => {
@@ -74,7 +79,7 @@ export const getShiftsForDay = dateOfShift => dispatch => {
     .get(`api/shifts/?date=${dateOfShift}`)
     .then(res => {
       dispatch({
-        type: VIEW_DAY,
+        type: SHIFT_RETRIEVE,
         payload: res.data
       });
     })

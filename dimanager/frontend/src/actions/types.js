@@ -17,4 +17,4 @@ export const GET_SHIFTTIMES = "GET_SHIFTTIMES";
 export const GET_LOCATIONS = "GET_LOCATIONS";
 export const GET_ROOMS = "GET_ROOMS";
 export const SHIFT_ADDED = "SHIFT_ADDED";
-export const VIEW_DAY = "VIEW_DAY";
+export const SHIFT_RETRIEVE = "SHIFT_RETRIEVE";

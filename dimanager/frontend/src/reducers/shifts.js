@@ -1,4 +1,4 @@
-import { SHIFT_ADDED } from "../actions/types.js";
+import { SHIFT_ADDED, SHIFT_RETRIEVE } from "../actions/types.js";
 
 const initialState = {
   shifts: []
@@ -6,10 +6,15 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case SHIFT_ADDED:
+    case SHIFT_RETRIEVE:
       return {
         ...state,
         shifts: action.payload
+      };
+    case SHIFT_ADDED:
+      return {
+        ...state,
+        shifts: [...state.shifts, action.payload]
       };
 
     default:

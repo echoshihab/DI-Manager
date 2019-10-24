@@ -8,7 +8,6 @@ import shiftTimes from "./shiftTimes";
 import locations from "./locations";
 import rooms from "./rooms";
 import shifts from "./shifts";
-import dayview from "./dayview";
 
 export default combineReducers({
   techsReducer: techs,
@@ -19,6 +18,5 @@ export default combineReducers({
   auth,
   locations,
   rooms,
-  shifts,
-  dayview
+  shifts
 });
