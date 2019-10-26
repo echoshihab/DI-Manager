@@ -6,6 +6,7 @@ import {
   SHIFT_ADDED,
   SHIFT_RETRIEVE
 } from "./types";
+import { combineReducers } from "../../../../../../AppData/Local/Microsoft/TypeScript/3.6/node_modules/redux";
 
 //GET EXAM TYPES
 export const getExamTypes = () => dispatch => {
@@ -39,13 +40,15 @@ export const getShiftTimes = () => dispatch => {
 };
 
 //ASSIGN SHIFT
-export const assignShift = (
-  dateOfShift,
-  examType,
-  shiftTime,
-  room,
-  tech
-) => dispatch => {
+export const assignShift = (dateOfShift, examType, shiftTime, room, tech) => (
+  dispatch,
+  getState
+) => {
+  const currentShifts = getState().shifts.shifts;
+  if (currentShifts.some(shift => shift.tech.id == tech)) {
+    console.log("You have a duplicate");
+  }
+
   //Headers
   const config = {
     headers: {

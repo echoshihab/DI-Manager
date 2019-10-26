@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from "react";
-import ShiftList from "../shifts/ShiftList";
+import ExamTypes from "../shifts/ExamTypes";
 import ShiftTimes from "../shifts/ShiftTimes";
 import Location from "../resources/Location";
 import DayView from "../calendar/DayView";
@@ -175,7 +175,7 @@ export class CalendarForm extends Component {
           </div>
         </div>
         <form className="form-inline" onSubmit={this.handleSubmit}>
-          <ShiftList />
+          <ExamTypes />
           <ShiftTimes />
           <Location />
           <TechListView />

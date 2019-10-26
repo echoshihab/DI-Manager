@@ -15,15 +15,16 @@ class ShiftTimeSerializer(serializers.ModelSerializer):
 
 
 class ShiftsSerializer(serializers.ModelSerializer):
-    exam_type = serializers.SlugRelatedField(many=False, read_only=True, slug_field='exam_type')
-    shift_time = ShiftTimeSerializer(many=False, read_only=True)
-    room = serializers.SlugRelatedField(many=False, read_only=True, slug_field='room')
-    tech = serializers.SlugRelatedField(many=False, read_only=True, slug_field='initials')
+    #exam_type = serializers.SlugRelatedField(many=False, read_only=True, slug_field='exam_type')
+    #shift_time = ShiftTimeSerializer(many=False, read_only=True)
+    #room = serializers.SlugRelatedField(many=False, read_only=True, slug_field='room')
+    #tech = serializers.SlugRelatedField(many=False, read_only=True, slug_field='initials')
 
     class Meta:
         model = Shifts
         fields = '__all__'
-    
+        depth = 1
+
 
 class ShiftsCreateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -32,10 +33,10 @@ class ShiftsCreateSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         response = super().to_representation(instance)
-        response['exam_type'] = ExamTypesSerializer(instance.exam_type).data['exam_type']
+        response['exam_type'] = ExamTypesSerializer(instance.exam_type).data
         response['shift_time'] = ShiftTimeSerializer(instance.shift_time).data
-        response['room'] = RoomSerializer(instance.room).data['room']
-        response['tech'] = TechSerializer(instance.tech).data['initials']
+        response['room'] = RoomSerializer(instance.room).data
+        response['tech'] = TechSerializer(instance.tech).data
         return response
     
 

@@ -21,15 +21,15 @@ export class DayView extends Component {
           <tbody>
             {this.props.shifts.map(item => (
               <tr key={item.id}>
-                <td>{item.room}</td>
+                <td>{item.room.room}</td>
                 <td>
-                  <strong>{item.exam_type}</strong>
+                  <strong>{item.exam_type.exam_type}</strong>
                   {" " +
                     item.shift_time.start_time +
                     " - " +
                     item.shift_time.end_time}
                 </td>
-                <td>{item.tech}</td>
+                <td>{item.tech.initials}</td>
               </tr>
             ))}
           </tbody>
