@@ -64,6 +64,7 @@ export const assignShift = (
   axios
     .post("api/shifts/", body, config)
     .then(res => {
+      console.log(res.data);
       dispatch({
         type: SHIFT_ADDED,
         payload: res.data
