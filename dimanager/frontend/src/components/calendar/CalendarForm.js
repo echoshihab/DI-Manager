@@ -6,7 +6,12 @@ import DayView from "../calendar/DayView";
 import TechListView from "../techs/TechListView";
 import ModalComponent from "./ModalComponent";
 import "./Calendar.css";
-import { assignShift, getShiftsForDay, closeModal } from "../../actions/shifts";
+import {
+  assignShift,
+  getShiftsForDay,
+  closeModal,
+  validAssignShift
+} from "../../actions/shifts";
 import { connect } from "react-redux";
 
 //helper function for querying for shifts
@@ -154,12 +159,27 @@ export class CalendarForm extends Component {
     const modal = this.props.modal ? (
       <ModalComponent>
         <div className="modal">
-          <div>
-            With a portal, we can render content into a different part of the
-            DOM, as if it were any other React child.
+          <div className="modal-content">
+            <span>
+              Warning: Technologist:
+              <strong>{" " + this.props.values.tech_init + " "}</strong>
+              already assigned on same day
+            </span>
+            <button
+              className="btn btn-primary btn-sm"
+              onClick={this.props.closeModal}
+            >
+              Cancel
+            </button>
+            <button
+              className="btn btn-primary btn-sm"
+              onClick={() => {
+                this.props.validAssignShift(this.props.values);
+              }}
+            >
+              Assign Anyway
+            </button>
           </div>
-          This is being rendered inside the #modal-container div.
-          <button onClick={this.props.closeModal}>Hide modal</button>
         </div>
       </ModalComponent>
     ) : null;
@@ -210,5 +230,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { assignShift, getShiftsForDay, closeModal }
+  { assignShift, getShiftsForDay, closeModal, validAssignShift }
 )(CalendarForm);

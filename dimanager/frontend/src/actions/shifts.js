@@ -41,13 +41,9 @@ export const getShiftTimes = () => dispatch => {
 };
 
 //Modal Assign SHIFT -after overriding at modal or with no duplicates
-export const validAssignShift = (
-  dateOfShift,
-  examType,
-  shiftTime,
-  room,
-  tech
-) => dispatch => {
+export const validAssignShift = values => dispatch => {
+  const { dateOfShift, examType, shiftTime, room, tech } = values;
+  console.log(dateOfShift, examType, shiftTime, room, tech);
   //headers
   const config = {
     headers: {
@@ -66,6 +62,7 @@ export const validAssignShift = (
   axios
     .post("api/shifts/", body, config)
     .then(res => {
+      dispatch({ type: OVERRIDE_ITEMS });
       dispatch({
         type: SHIFT_ADDED,
         payload: res.data
