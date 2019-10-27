@@ -18,3 +18,5 @@ export const GET_LOCATIONS = "GET_LOCATIONS";
 export const GET_ROOMS = "GET_ROOMS";
 export const SHIFT_ADDED = "SHIFT_ADDED";
 export const SHIFT_RETRIEVE = "SHIFT_RETRIEVE";
+export const DUPLICATE_ITEMS = "DUPLICATE ITEMS";
+export const OVERRIDE_ITEMS = "OVERRIDE ITEMS";
