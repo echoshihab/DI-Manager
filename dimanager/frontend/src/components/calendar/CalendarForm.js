@@ -165,14 +165,15 @@ export class CalendarForm extends Component {
               <strong>{" " + this.props.values.tech_init + " "}</strong>
               already assigned on same day
             </span>
+            <div>Time Conflict: {this.props.values.timeDetail} </div>
             <button
-              className="btn btn-primary btn-sm"
+              className="btn btn-primary btn-sm btn-block"
               onClick={this.props.closeModal}
             >
               Cancel
             </button>
             <button
-              className="btn btn-primary btn-sm"
+              className="btn btn-secondary btn-sm btn-block"
               onClick={() => {
                 this.props.validAssignShift(this.props.values);
               }}

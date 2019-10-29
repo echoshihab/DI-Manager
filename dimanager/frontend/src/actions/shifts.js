@@ -9,6 +9,32 @@ import {
   OVERRIDE_ITEMS
 } from "./types";
 
+//seconds converter function
+const secondsConverter = timeString => {
+  let timeArray = timeString.split(":");
+  let secondsCount = timeArray[0] * 3600 + timeArray[1] * 60;
+  return secondsCount;
+};
+
+//shift compare function 10 - 4
+const shiftCompare = (
+  currentShiftStart,
+  currentShiftEnd,
+  newShiftStart,
+  newShiftEnd
+) => {
+  if (currentShiftStart <= newShiftStart && currentShiftEnd >= newShiftEnd)
+    return true;
+  if (currentShiftStart > newShiftStart && currentShiftEnd <= newShiftEnd)
+    return true;
+  if (currentShiftStart > newShiftStart && currentShiftStart < newShiftEnd)
+    return true;
+  if (currentShiftEnd > newShiftStart && currentShiftEnd < newShiftEnd)
+    return true;
+
+  return false;
+};
+
 //GET EXAM TYPES
 export const getExamTypes = () => dispatch => {
   axios
@@ -43,7 +69,6 @@ export const getShiftTimes = () => dispatch => {
 //Modal Assign SHIFT -after overriding at modal or with no duplicates
 export const validAssignShift = values => dispatch => {
   const { dateOfShift, examType, shiftTime, room, tech } = values;
-  console.log(dateOfShift, examType, shiftTime, room, tech);
   //headers
   const config = {
     headers: {
@@ -73,20 +98,53 @@ export const validAssignShift = values => dispatch => {
     );
 };
 
-//ASSIGN SHIFT  - prior to modal
+//ASSIGN SHIFT  - prior to modal override option
 export const assignShift = (dateOfShift, examType, shiftTime, room, tech) => (
   dispatch,
   getState
 ) => {
   const currentShifts = getState().shifts.shifts;
-
   //Show error if duplicate technologist on same day
-  if (currentShifts.some(shift => shift.tech.id == tech)) {
+  if (
+    currentShifts.some(shift => shift.tech.id == tech) ||
+    currentShifts.some(shift => shift.room.id == room)
+  ) {
     let tech_init = currentShifts.find(shift => shift.tech.id == tech).tech
       .initials;
+    let duplicateRoomShift = currentShifts.find(shift => shift.room.id == room);
+
+    let timeDetail;
+    if (duplicateRoomShift) {
+      const stateShiftTimes = getState().shiftTimes.shiftTimes;
+
+      let newShiftTime = stateShiftTimes.find(
+        stateShiftTime => stateShiftTime.id == shiftTime
+      );
+
+      let currentStartTime = secondsConverter(
+        duplicateRoomShift.shift_time.start_time
+      );
+      let currentEndTime = secondsConverter(
+        duplicateRoomShift.shift_time.end_time
+      );
+      let newStartTime = secondsConverter(newShiftTime.start_time);
+      let newEndTime = secondsConverter(newShiftTime.end_time);
+      shiftCompare(currentStartTime, currentEndTime, newStartTime, newEndTime)
+        ? (timeDetail = "Overlap of time, please review")
+        : (timeDetail = "No Time Conflict");
+    }
+
     dispatch({
       type: DUPLICATE_ITEMS,
-      payload: { dateOfShift, examType, shiftTime, room, tech, tech_init }
+      payload: {
+        dateOfShift,
+        examType,
+        shiftTime,
+        room,
+        tech,
+        tech_init,
+        timeDetail
+      }
     });
   } else {
     const config = {
