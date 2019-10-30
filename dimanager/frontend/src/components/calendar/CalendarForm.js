@@ -161,9 +161,8 @@ export class CalendarForm extends Component {
         <div className="modal">
           <div className="modal-content">
             <span>
-              Warning: Technologist:
+              Technologist:
               <strong>{" " + this.props.values.tech_init + " "}</strong>
-              already assigned on same day
             </span>
             <div>Time Conflict: {this.props.values.timeDetail} </div>
             <button

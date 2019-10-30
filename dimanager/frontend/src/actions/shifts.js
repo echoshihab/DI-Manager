@@ -109,8 +109,14 @@ export const assignShift = (dateOfShift, examType, shiftTime, room, tech) => (
     currentShifts.some(shift => shift.tech.id == tech) ||
     currentShifts.some(shift => shift.room.id == room)
   ) {
-    let tech_init = currentShifts.find(shift => shift.tech.id == tech).tech
-      .initials;
+    let tech_init;
+    let duplicateTechShift = currentShifts.find(shift => shift.tech.id == tech);
+    if (duplicateTechShift) {
+      tech_init = `${duplicateTechShift.tech.initials} has already been assigned`;
+    } else {
+      tech_init = "No Conflict";
+    }
+
     let duplicateRoomShift = currentShifts.find(shift => shift.room.id == room);
 
     let timeDetail;
