@@ -6,7 +6,8 @@ import {
   SHIFT_ADDED,
   SHIFT_RETRIEVE,
   DUPLICATE_ITEMS,
-  OVERRIDE_ITEMS
+  OVERRIDE_ITEMS,
+  BUILD_SHIFTTIMES
 } from "./types";
 
 //seconds converter function
@@ -201,4 +202,33 @@ export const closeModal = () => dispatch => {
   {
     dispatch({ type: OVERRIDE_ITEMS });
   }
+};
+
+//build new shift
+export const buildShift = (startShift, endShift) => dispatch => {
+  //config
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  //request body
+  const body = JSON.stringify({
+    start_time: startShift,
+    end_time: endShift
+  });
+
+  axios
+    .post("api/shift-times/", body, config)
+    .then(res => {
+      dispatch({
+        type: BUILD_SHIFTTIMES,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
 };

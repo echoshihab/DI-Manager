@@ -8,6 +8,8 @@ class ExamTypes(models.Model):
 class ShiftTime(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
+    class Meta:
+        unique_together = ["start_time", "end_time"]
 
 class Shifts(models.Model):
     date_of_shift = models.DateField()
