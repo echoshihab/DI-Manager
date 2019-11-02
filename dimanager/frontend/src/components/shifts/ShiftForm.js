@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import ShiftTimeList from "../shifts/ShiftTimesList";
 import { buildShift } from "../../actions/shifts";
 import "./ShiftForm.css";
+import ExamTypesList from "./ExamTypesList";
 
 export class ShiftForm extends Component {
   state = {
@@ -90,7 +91,16 @@ export class ShiftForm extends Component {
             </div>
           </div>
         </form>
-        <ShiftTimeList />
+        <div className="container">
+          <div className="row">
+            <div className="col-sm">
+              <ShiftTimeList />
+            </div>
+            <div className="col-sm">
+              <ExamTypesList />
+            </div>
+          </div>
+        </div>
       </Fragment>
     );
   }
