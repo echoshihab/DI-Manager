@@ -7,8 +7,10 @@ import {
   SHIFT_RETRIEVE,
   DUPLICATE_ITEMS,
   OVERRIDE_ITEMS,
-  BUILD_SHIFTTIMES
+  BUILD_SHIFTTIMES,
+  DELETE_SHIFTTIME
 } from "./types";
+import { tokenConfig } from "./auth";
 
 //seconds converter function
 const secondsConverter = timeString => {
@@ -231,4 +233,19 @@ export const buildShift = (startShift, endShift) => dispatch => {
       console.log(err);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
+};
+
+//DELETE shift time
+export const deleteShiftTime = id => (dispatch, getState) => {
+  axios
+    .delete(`/api/shift-times/${id}/`, tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: DELETE_SHIFTTIME,
+        payload: id
+      });
+    })
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };

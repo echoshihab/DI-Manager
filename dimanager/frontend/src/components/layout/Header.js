@@ -14,13 +14,13 @@ export class Header extends Component {
     const { isAuthenticated, user } = this.props.auth;
     const authLinks = (
       <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-        <span className="nav-bar-text mr-3">
+        <span className="nav-bar-text mr-sm-2">
           <strong>{user ? `Welcome ${user.username}` : ""}</strong>
         </span>
         <li className="nav-item">
           <button
             onClick={this.props.logout}
-            className="nav-link btn btn-primary btn-sm text-light"
+            className="btn btn-primary btn-sm mr-sm-2"
           >
             Logout
           </button>

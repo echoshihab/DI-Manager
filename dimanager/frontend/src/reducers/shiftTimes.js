@@ -1,4 +1,8 @@
-import { GET_SHIFTTIMES, BUILD_SHIFTTIMES } from "../actions/types.js";
+import {
+  GET_SHIFTTIMES,
+  BUILD_SHIFTTIMES,
+  DELETE_SHIFTTIME
+} from "../actions/types.js";
 
 const initialState = {
   shiftTimes: []
@@ -12,10 +16,16 @@ export default function(state = initialState, action) {
         shiftTimes: action.payload
       };
     case BUILD_SHIFTTIMES:
-      console.log(action.payload);
       return {
         ...state,
-        shifttIMES: [...state.shiftTimes, action.payload]
+        shiftTimes: [...state.shiftTimes, action.payload]
+      };
+    case DELETE_SHIFTTIME:
+      return {
+        ...state,
+        shiftTimes: state.shiftTimes.filter(
+          shiftTime => shiftTime.id !== action.payload
+        )
       };
 
     default:
