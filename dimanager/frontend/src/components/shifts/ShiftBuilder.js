@@ -1,6 +1,7 @@
 import React, { Fragment, Component } from "react";
 import ShiftTimeList from "./ShiftTimesList";
 import ExamTypesList from "./ExamTypesList";
+import LocationBuild from "../resources/LocationBuild";
 import BuilderDashboard from "../layout/BuilderDashboard";
 
 export class ShiftBuilder extends Component {
@@ -31,6 +32,7 @@ export class ShiftBuilder extends Component {
 
     const shiftTimeComponent = shiftTimeBuilder ? <ShiftTimeList /> : null;
     const examTypeComponent = examTypeBuilder ? <ExamTypesList /> : null;
+    const locationComponent = locationBuilder ? <LocationBuild /> : null;
 
     return (
       <Fragment>
@@ -41,6 +43,7 @@ export class ShiftBuilder extends Component {
         <div className="d-flex align-items-center flex-column justify-content-center h-100 mt-5">
           {shiftTimeComponent}
           {examTypeComponent}
+          {locationComponent}
         </div>
       </Fragment>
     );

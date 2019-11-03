@@ -21,9 +21,6 @@ export default function(state = initialState, action) {
         examTypes: [...state.examTypes, action.payload]
       };
     case DELETE_EXAMTYPE:
-      state.examTypes
-        .filter(examType => examType.id == action.payload)
-        .map(examType => {});
       return {
         ...state,
         examTypes: state.examTypes.filter(
