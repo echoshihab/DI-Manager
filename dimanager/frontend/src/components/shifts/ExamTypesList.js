@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getExamTypes, addExamType } from "../../actions/shifts";
+import {
+  getExamTypes,
+  addExamType,
+  deleteExamType
+} from "../../actions/shifts";
 
 export class ExamTypes extends Component {
   state = {
@@ -11,6 +15,11 @@ export class ExamTypes extends Component {
   static propTypes = {
     examTypes: PropTypes.array.isRequired,
     getExamTypes: PropTypes.func.isRequired
+  };
+
+  deleteExamType = (e, id) => {
+    e.preventDefault();
+    this.props.deleteExamType(id);
   };
 
   onChange = e => {
@@ -50,7 +59,12 @@ export class ExamTypes extends Component {
         {this.props.examTypes.map(examType => (
           <li className="list-group-item" key={examType.id}>
             {examType.exam_type}
-            <a href="#" className="badge badge-danger ml-2">
+            <a
+              href="#"
+              name={examType.id}
+              className="badge badge-danger ml-2"
+              onClick={e => this.deleteExamType(e, examType.id)}
+            >
               Delete
             </a>
           </li>
@@ -70,5 +84,5 @@ const style = {
 
 export default connect(
   mapStateToProps,
-  { getExamTypes, addExamType }
+  { getExamTypes, addExamType, deleteExamType }
 )(ExamTypes);

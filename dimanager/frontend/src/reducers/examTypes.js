@@ -1,4 +1,8 @@
-import { GET_EXAMTYPES, ADD_EXAMTYPE } from "../actions/types.js";
+import {
+  GET_EXAMTYPES,
+  ADD_EXAMTYPE,
+  DELETE_EXAMTYPE
+} from "../actions/types.js";
 
 const initialState = {
   examTypes: []
@@ -15,6 +19,16 @@ export default function(state = initialState, action) {
       return {
         ...state,
         examTypes: [...state.examTypes, action.payload]
+      };
+    case DELETE_EXAMTYPE:
+      state.examTypes
+        .filter(examType => examType.id == action.payload)
+        .map(examType => {});
+      return {
+        ...state,
+        examTypes: state.examTypes.filter(
+          examType => examType.id !== action.payload
+        )
       };
 
     default:

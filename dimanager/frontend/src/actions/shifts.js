@@ -9,7 +9,8 @@ import {
   OVERRIDE_ITEMS,
   BUILD_SHIFTTIMES,
   DELETE_SHIFTTIME,
-  ADD_EXAMTYPE
+  ADD_EXAMTYPE,
+  DELETE_EXAMTYPE
 } from "./types";
 import { tokenConfig } from "./auth";
 
@@ -278,4 +279,20 @@ export const addExamType = examType => dispatch => {
       console.log(err);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
+};
+
+//DELETE exam type
+export const deleteExamType = id => (dispatch, getState) => {
+  console.log(id);
+  axios
+    .delete(`/api/exam-types/${id}/`, tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: DELETE_EXAMTYPE,
+        payload: id
+      });
+    })
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };
