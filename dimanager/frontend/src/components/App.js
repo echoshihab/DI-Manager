@@ -19,7 +19,7 @@ import {
 
 import { Provider } from "react-redux";
 import store from "../store";
-import ShiftForm from "./shifts/ShiftForm";
+import ShiftBuilder from "./shifts/ShiftBuilder";
 
 const alertOptions = {
   timeout: 2000,
@@ -44,7 +44,7 @@ class App extends Component {
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/calendar" component={CalendarForm} />
-                  <Route exact path="/shiftform" component={ShiftForm} />
+                  <Route exact path="/shiftbuilder" component={ShiftBuilder} />
                 </Switch>
               </div>
             </Fragment>
