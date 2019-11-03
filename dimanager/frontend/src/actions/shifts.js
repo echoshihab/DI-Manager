@@ -8,7 +8,8 @@ import {
   DUPLICATE_ITEMS,
   OVERRIDE_ITEMS,
   BUILD_SHIFTTIMES,
-  DELETE_SHIFTTIME
+  DELETE_SHIFTTIME,
+  ADD_EXAMTYPE
 } from "./types";
 import { tokenConfig } from "./auth";
 
@@ -248,4 +249,33 @@ export const deleteShiftTime = id => (dispatch, getState) => {
     .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
+};
+
+//build exam types
+
+export const addExamType = examType => dispatch => {
+  //config
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  //request body
+  const body = JSON.stringify({
+    exam_type: examType
+  });
+
+  axios
+    .post("/api/exam-types/", body, config)
+    .then(res => {
+      dispatch({
+        type: ADD_EXAMTYPE,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
 };

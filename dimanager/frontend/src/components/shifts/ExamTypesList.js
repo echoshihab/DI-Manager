@@ -4,9 +4,26 @@ import PropTypes from "prop-types";
 import { getExamTypes, addExamType } from "../../actions/shifts";
 
 export class ExamTypes extends Component {
+  state = {
+    examType: ""
+  };
+
   static propTypes = {
     examTypes: PropTypes.array.isRequired,
     getExamTypes: PropTypes.func.isRequired
+  };
+
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+    const { examType } = this.state;
+    this.props.addExamType(examType);
+    this.setState({
+      examType: ""
+    });
   };
 
   componentDidMount() {
@@ -16,16 +33,16 @@ export class ExamTypes extends Component {
     return (
       <ul className="list-group">
         <li className="list-group-item">
-          <form className="form-inline my-2 my-lg-0">
+          <form className="form-inline my-2 my-lg-0" onSubmit={this.onSubmit}>
             <input
+              name="examType"
               className="form-control mr-sm-2"
               type="text"
               placeholder="..add exam type"
+              onChange={this.onChange}
+              value={this.state.examType}
             />
-            <button
-              className="btn btn-secondary btn-sm"
-              onClick={this.props.addExamType}
-            >
+            <button className="btn btn-secondary btn-sm">
               <span style={style}>+</span>
             </button>
           </form>
