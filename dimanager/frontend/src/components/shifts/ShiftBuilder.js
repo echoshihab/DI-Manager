@@ -2,6 +2,7 @@ import React, { Fragment, Component } from "react";
 import ShiftTimeList from "./ShiftTimesList";
 import ExamTypesList from "./ExamTypesList";
 import LocationBuild from "../resources/LocationBuild";
+import RoomBuild from "../resources/RoomBuild";
 import BuilderDashboard from "../layout/BuilderDashboard";
 
 export class ShiftBuilder extends Component {
@@ -33,6 +34,7 @@ export class ShiftBuilder extends Component {
     const shiftTimeComponent = shiftTimeBuilder ? <ShiftTimeList /> : null;
     const examTypeComponent = examTypeBuilder ? <ExamTypesList /> : null;
     const locationComponent = locationBuilder ? <LocationBuild /> : null;
+    const roomComponent = roomBuilder ? <RoomBuild /> : null;
 
     return (
       <Fragment>
@@ -44,6 +46,7 @@ export class ShiftBuilder extends Component {
           {shiftTimeComponent}
           {examTypeComponent}
           {locationComponent}
+          {roomComponent}
         </div>
       </Fragment>
     );

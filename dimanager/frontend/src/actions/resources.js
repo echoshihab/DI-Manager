@@ -3,6 +3,8 @@ import { returnErrors } from "./messages";
 import {
   GET_LOCATIONS,
   GET_ROOMS,
+  ADD_ROOM,
+  DELETE_ROOM,
   ADD_LOCATION,
   DELETE_LOCATION
 } from "./types";
@@ -76,6 +78,53 @@ export const getRooms = location => dispatch => {
       dispatch({
         type: GET_ROOMS,
         payload: res.data
+      });
+    })
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+//ADD ROOMS
+
+export const addRoom = (room, locationID) => dispatch => {
+  console.log(room, locationID);
+  //config
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  //request body
+  const body = JSON.stringify({
+    room,
+    location: locationID
+  });
+
+  axios
+    .post("/api/rooms/", body, config)
+    .then(res => {
+      console.log(res.data);
+      dispatch({
+        type: ADD_ROOM,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
+};
+
+//DELETE ROOMS
+export const deleteRoom = id => (dispatch, getState) => {
+  axios
+    .delete(`/api/rooms/${id}/`, tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: DELETE_ROOM,
+        payload: id
       });
     })
     .catch(err =>
