@@ -6,6 +6,7 @@ import Alerts from "./layout/Alerts";
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
 import CalendarForm from "./calendar/CalendarForm";
+import MonthView from "./calendar/MonthView";
 import PrivateRoute from "./common/PrivateRoute";
 import { loadUser } from "../actions/auth";
 import { Provider as AlertProvider } from "react-alert";
@@ -45,6 +46,7 @@ class App extends Component {
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/calendar" component={CalendarForm} />
                   <Route exact path="/shiftbuilder" component={ShiftBuilder} />
+                  <Route exact path="/monthview" component={MonthView} />
                 </Switch>
               </div>
             </Fragment>

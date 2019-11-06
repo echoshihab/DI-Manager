@@ -34,10 +34,15 @@ class ShiftsViewSet(viewsets.ModelViewSet):
             return super().get_serializer_class()
 
     def get_queryset(self):
-        query_parameter = self.request.query_params.get('date', None)
-        if query_parameter == None:
-            return Shifts.objects.all()
+        date_parameter = self.request.query_params.get('date', None)
+        date_range_parameter = self.request.query_params.get('date_range', None)
+
+        if date_parameter is not None:
+            return Shifts.objects.filter(date_of_shift=date_parameter)
+        elif date_range_parameter is not None:
+            date_range = date_range_parameter.split("^")
+            return Shifts.objects.filter(date_of_shift__range=date_range)
         else:
-            return Shifts.objects.filter(date_of_shift=query_parameter)
+            return Shifts.objects.all()
 
 
