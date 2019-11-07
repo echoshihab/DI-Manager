@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./monthView.css";
 
 //months
 
@@ -36,9 +37,19 @@ export class MonthView extends Component {
       "November",
       "December"
     ];
+
+    const days = [];
+    for (let i = 1; i <= daysInMonth; i++) {
+      days.push(
+        <li className="day" key={i}>
+          {i}
+        </li>
+      );
+    }
+
     return (
-      <div className="container d-flex align-items-center flex-row justify-content-center h-100">
-        <div clasName="btn-group btn-group-vertical">
+      <div className="container d-flex align-items-center flex-column justify-content-center h-100">
+        <div className="btn-group btn-group-vertical">
           <button type="button" className="btn btn-sm btn-outline-primary">
             +
           </button>
@@ -53,6 +64,44 @@ export class MonthView extends Component {
               {month}
             </button>
           ))}
+        </div>
+        <div className="calendar">
+          <header>
+            <h1>November 2019</h1>
+          </header>
+
+          <ul className="weekdays">
+            <li>
+              <abbr title="S">Sunday</abbr>
+            </li>
+            <li>
+              <abbr title="M">Monday</abbr>
+            </li>
+            <li>
+              <abbr title="T">Tuesday</abbr>
+            </li>
+            <li>
+              <abbr title="W">Wednesday</abbr>
+            </li>
+            <li>
+              <abbr title="T">Thursday</abbr>
+            </li>
+            <li>
+              <abbr title="F">Friday</abbr>
+            </li>
+            <li>
+              <abbr title="S">Saturday</abbr>
+            </li>
+          </ul>
+
+          <ul className="day-grid">
+            <li className="month=prev">29</li>
+            <li className="month=prev">30</li>
+            <li className="month=prev">31</li>
+            {days}
+            <li className="month-next">1</li>
+            <li className="month-next">2</li>
+          </ul>
         </div>
       </div>
     );
