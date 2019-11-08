@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./monthView.css";
+import getShiftsforMonth from "../../actions/shifts";
 
 //months
 
@@ -50,7 +51,11 @@ export class MonthView extends Component {
     return (
       <div className="container d-flex align-items-center flex-column justify-content-center h-100">
         <div className="btn-group btn-group-vertical">
-          <button type="button" className="btn btn-sm btn-outline-primary">
+          <button
+            type="button"
+            className="btn btn-sm btn-outline-primary"
+            onClick={this.props.getShiftsforMonth}
+          >
             +
           </button>
           <button type="button" className="btn btn-sm btn-outline-primary">
@@ -108,4 +113,11 @@ export class MonthView extends Component {
   }
 }
 
-export default MonthView;
+const mapStateToProps = state => ({
+  shifts: state.shifts.shifts
+});
+
+export default connect(
+  mapStateToProps,
+  { getShiftsforMonth }
+)(MonthView);

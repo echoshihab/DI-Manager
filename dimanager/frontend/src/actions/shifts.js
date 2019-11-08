@@ -201,6 +201,21 @@ export const getShiftsForDay = dateOfShift => dispatch => {
     );
 };
 
+//get mont's shifts
+export const getShiftsForMonth = dateRange => dispatch => {
+  axios
+    .get(`http://localhost:8000/api/shifts/?date_range=${dateRange}`)
+    .then(res => {
+      dispatch({
+        type: SHIFT_RETRIEVE,
+        payload: res.data
+      });
+    })
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
 //close modal
 export const closeModal = () => dispatch => {
   {
