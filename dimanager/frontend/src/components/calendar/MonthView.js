@@ -1,8 +1,14 @@
 import React, { Component } from "react";
 import "./monthView.css";
-import getShiftsforMonth from "../../actions/shifts";
+import { getShiftsForMonth } from "../../actions/shifts";
+import { connect } from "react-redux";
 
-//months
+//helper function for querying for shift for a month
+const shiftQuery = getShifts => {
+  let selectedDate = "2019-11-01^2019-11-30";
+  console.log("firing shift query");
+  getShifts(selectedDate);
+};
 
 export class MonthView extends Component {
   constructor() {
@@ -22,7 +28,13 @@ export class MonthView extends Component {
     };
   }
 
+  componentDidMount() {
+    shiftQuery(this.props.getShiftsForMonth);
+    console.log("firing component did mount");
+  }
+
   render() {
+    this.props.shifts ? console.log(this.props.shifts) : null;
     const { isActive, day, month, year, daysInMonth } = this.state;
     const months = [
       "January",
@@ -42,7 +54,7 @@ export class MonthView extends Component {
     const days = [];
     for (let i = 1; i <= daysInMonth; i++) {
       days.push(
-        <li className="day" key={i}>
+        <li className="day" key={i} onClick={this.handleDayClick}>
           {i}
         </li>
       );
@@ -51,11 +63,7 @@ export class MonthView extends Component {
     return (
       <div className="container d-flex align-items-center flex-column justify-content-center h-100">
         <div className="btn-group btn-group-vertical">
-          <button
-            type="button"
-            className="btn btn-sm btn-outline-primary"
-            onClick={this.props.getShiftsforMonth}
-          >
+          <button type="button" className="btn btn-sm btn-outline-primary">
             +
           </button>
           <button type="button" className="btn btn-sm btn-outline-primary">
@@ -119,5 +127,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getShiftsforMonth }
+  { getShiftsForMonth }
 )(MonthView);

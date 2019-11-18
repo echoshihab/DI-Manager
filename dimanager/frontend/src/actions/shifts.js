@@ -201,7 +201,7 @@ export const getShiftsForDay = dateOfShift => dispatch => {
     );
 };
 
-//get mont's shifts
+//get month's shifts
 export const getShiftsForMonth = dateRange => dispatch => {
   axios
     .get(`http://localhost:8000/api/shifts/?date_range=${dateRange}`)
