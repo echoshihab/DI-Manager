@@ -67,15 +67,18 @@ export class MonthView extends Component {
             <li className="day" key={i}>
               {i +
                 " " +
-                result[0].room.room +
-                " " +
-                result[0].exam_type.exam_type +
-                " " +
-                result[0].shift_time.start_time.slice(0, -3) +
-                "-" +
-                result[0].shift_time.end_time.slice(0, -3) +
-                " " +
-                result[0].tech.initials}
+                result.map(
+                  r =>
+                    r.room.room +
+                    " " +
+                    r.exam_type.exam_type +
+                    " " +
+                    r.shift_time.start_time.slice(0, -3) +
+                    "-" +
+                    r.shift_time.end_time.slice(0, -3) +
+                    " " +
+                    r.tech.initials
+                )}
             </li>
           )
         : days.push(
@@ -84,6 +87,18 @@ export class MonthView extends Component {
             </li>
           );
     }
+
+    /*
+ result[0].room.room +
+                " " +
+                result[0].exam_type.exam_type +
+                " " +
+                result[0].shift_time.start_time.slice(0, -3) +
+                "-" +
+                result[0].shift_time.end_time.slice(0, -3) +
+                " " +
+                result[0].tech.initials}
+    */
 
     return (
       <div className="container d-flex align-items-center flex-column justify-content-center h-100">
