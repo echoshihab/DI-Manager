@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 //helper function for querying for shift for a month
 const shiftQuery = getShifts => {
   let selectedDate = "2019-11-01^2019-11-30";
-  console.log("firing shift query");
   getShifts(selectedDate);
 };
 
@@ -30,7 +29,6 @@ export class MonthView extends Component {
 
   componentDidMount() {
     shiftQuery(this.props.getShiftsForMonth);
-    console.log("firing component did mount");
   }
 
   render() {
@@ -53,11 +51,38 @@ export class MonthView extends Component {
 
     const days = [];
     for (let i = 1; i <= daysInMonth; i++) {
-      days.push(
-        <li className="day" key={i} onClick={this.handleDayClick}>
-          {i}
-        </li>
+      let dayOfMonth;
+      if (i < 10) {
+        dayOfMonth = "0" + i;
+      } else {
+        dayOfMonth = i.toString();
+      }
+
+      let result = this.props.shifts.filter(
+        shift => shift.date_of_shift.slice(-2) == dayOfMonth
       );
+
+      result.length > 0
+        ? days.push(
+            <li className="day" key={i}>
+              {i +
+                " " +
+                result[0].room.room +
+                " " +
+                result[0].exam_type.exam_type +
+                " " +
+                result[0].shift_time.start_time.slice(0, -3) +
+                "-" +
+                result[0].shift_time.end_time.slice(0, -3) +
+                " " +
+                result[0].tech.initials}
+            </li>
+          )
+        : days.push(
+            <li className="day" key={i}>
+              {i}
+            </li>
+          );
     }
 
     return (
@@ -125,7 +150,4 @@ const mapStateToProps = state => ({
   shifts: state.shifts.shifts
 });
 
-export default connect(
-  mapStateToProps,
-  { getShiftsForMonth }
-)(MonthView);
+export default connect(mapStateToProps, { getShiftsForMonth })(MonthView);
