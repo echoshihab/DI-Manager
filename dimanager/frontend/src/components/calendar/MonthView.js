@@ -4,8 +4,10 @@ import { getShiftsForMonth } from "../../actions/shifts";
 import { connect } from "react-redux";
 
 //helper function for querying for shift for a month
-const shiftQuery = getShifts => {
-  let selectedDate = "2019-11-01^2019-11-30";
+const shiftQuery = (getShifts, year, month, daysInMonth) => {
+  let selectedDate = `${year}-${month + 1}-01^${year}-${month +
+    1}-${daysInMonth}`;
+  console.log(selectedDate);
   getShifts(selectedDate);
 };
 
@@ -27,12 +29,25 @@ export class MonthView extends Component {
     };
   }
 
+  handleMonthQuery = (index, e) => {
+    let newMonth = index;
+    let newDaysInMonth = new Date(this.state.year, newMonth + 1, 0).getDate();
+    this.setState({ month: newMonth, daysInMonth: newDaysInMonth }, function() {
+      shiftQuery(
+        this.props.getShiftsForMonth,
+        this.state.year,
+        this.state.month,
+        this.state.daysInMonth
+      );
+    });
+  };
+
   componentDidMount() {
-    shiftQuery(this.props.getShiftsForMonth);
+    const { year, month, daysInMonth } = this.state;
+    shiftQuery(this.props.getShiftsForMonth, year, month, daysInMonth);
   }
 
   render() {
-    this.props.shifts ? console.log(this.props.shifts) : null;
     const { isActive, day, month, year, daysInMonth } = this.state;
     const months = [
       "January",
@@ -57,11 +72,12 @@ export class MonthView extends Component {
       } else {
         dayOfMonth = i.toString();
       }
-
+      //result below are shifts that match the current day of month
       let result = this.props.shifts.filter(
         shift => shift.date_of_shift.slice(-2) == dayOfMonth
       );
-
+      //if there are any shifts, associate them with the day below and push
+      //to days array to map out to calender view later
       result.length > 0
         ? days.push(
             <li className="day" key={i}>
@@ -88,18 +104,6 @@ export class MonthView extends Component {
           );
     }
 
-    /*
- result[0].room.room +
-                " " +
-                result[0].exam_type.exam_type +
-                " " +
-                result[0].shift_time.start_time.slice(0, -3) +
-                "-" +
-                result[0].shift_time.end_time.slice(0, -3) +
-                " " +
-                result[0].tech.initials}
-    */
-
     return (
       <div className="container d-flex align-items-center flex-column justify-content-center h-100">
         <div className="btn-group btn-group-vertical">
@@ -112,11 +116,18 @@ export class MonthView extends Component {
         </div>
         <h1>{year}</h1>
         <div className="btn-group" role="group" aria-label="months">
-          {months.map(month => (
-            <button type="button" key={month} className="btn btn-secondary">
-              {month}
-            </button>
-          ))}
+          {months.map((month, index) => {
+            return (
+              <button
+                type="button"
+                key={month}
+                className="btn btn-secondary"
+                onClick={e => this.handleMonthQuery(index, e)}
+              >
+                {month}
+              </button>
+            );
+          })}
         </div>
         <div className="calendar">
           <header>

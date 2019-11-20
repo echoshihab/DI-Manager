@@ -17,7 +17,7 @@ ul {
   grid-template-columns: repeat(7, 1fr);
   grid-gap: 1em;
   margin: 0 auto;
-  max-width: 64em;
+  max-width: 120em;
   padding: 0;
 }
 
@@ -42,7 +42,7 @@ ul.day-grid li {
   background-color: #eaeaea;
   border: 1px solid #eaeaea;
   height: 12vw;
-  max-height: 125px;
+  max-height: 150px;
 }
 
 ul.weekdays abbr[title] {
