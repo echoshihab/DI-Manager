@@ -42,6 +42,21 @@ export class MonthView extends Component {
     });
   };
 
+  handleYearQuery = e => {
+    let modification;
+    e.target.id == "plus" ? (modification = 1) : (modification = -1);
+    let newYear = this.state.year + modification;
+    let newDaysInMonth = new Date(newYear, this.state.month + 1, 0).getDate();
+    this.setState({ year: newYear, daysInMonth: newDaysInMonth }, function() {
+      shiftQuery(
+        this.props.getShiftsForMonth,
+        this.state.year,
+        this.state.month,
+        this.state.daysInMonth
+      );
+    });
+  };
+
   componentDidMount() {
     const { year, month, daysInMonth } = this.state;
     shiftQuery(this.props.getShiftsForMonth, year, month, daysInMonth);
@@ -72,12 +87,13 @@ export class MonthView extends Component {
       } else {
         dayOfMonth = i.toString();
       }
-      //result below are shifts that match the current day of month
+      //filter for shifts that match the current day of month
       let result = this.props.shifts.filter(
         shift => shift.date_of_shift.slice(-2) == dayOfMonth
       );
-      //if there are any shifts, associate them with the day below and push
-      //to days array to map out to calender view later
+
+      //if there are any matching shifts, associate  day push
+      //to days array in order to map out calender view lateer
       result.length > 0
         ? days.push(
             <li className="day" key={i}>
@@ -97,7 +113,8 @@ export class MonthView extends Component {
                 )}
             </li>
           )
-        : days.push(
+        : //if no matches, just push the day of month to days array
+          days.push(
             <li className="day" key={i}>
               {i}
             </li>
@@ -107,10 +124,20 @@ export class MonthView extends Component {
     return (
       <div className="container d-flex align-items-center flex-column justify-content-center h-100">
         <div className="btn-group btn-group-vertical">
-          <button type="button" className="btn btn-sm btn-outline-primary">
+          <button
+            type="button"
+            className="btn btn-sm btn-outline-primary"
+            id="plus"
+            onClick={this.handleYearQuery}
+          >
             +
           </button>
-          <button type="button" className="btn btn-sm btn-outline-primary">
+          <button
+            type="button"
+            className="btn btn-sm btn-outline-primary"
+            id="minus"
+            onClick={this.handleYearQuery}
+          >
             -
           </button>
         </div>
@@ -131,7 +158,9 @@ export class MonthView extends Component {
         </div>
         <div className="calendar">
           <header>
-            <h1>November 2019</h1>
+            <h1>
+              {months[this.state.month]} {year}
+            </h1>
           </header>
 
           <ul className="weekdays">
