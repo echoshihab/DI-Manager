@@ -43,10 +43,12 @@ export class MonthView extends Component {
     });
   };
 
-  handleYearQuery = e => {
+  handleYearQuery = mod => {
     let modification;
-    e.target.id == "plus" ? (modification = 1) : (modification = -1);
+    mod == "plus" ? (modification = 1) : (modification = -1);
+    console.log(modification);
     let newYear = this.state.year + modification;
+    console.log(newYear);
     let newDaysInMonth = new Date(newYear, this.state.month + 1, 0).getDate();
     this.setState({ year: newYear, daysInMonth: newDaysInMonth }, function() {
       shiftQuery(
@@ -136,25 +138,26 @@ export class MonthView extends Component {
 
     return (
       <div className="container d-flex align-items-center flex-column justify-content-center h-100">
-        <div className="btn-group btn-group-vertical">
+        <div className="btn-group btn-group-horizontal">
           <button
             type="button"
-            className="btn btn-sm btn-outline-primary"
+            className="btn btn-sm btn-secondary"
             id="plus"
-            onClick={this.handleYearQuery}
+            onClick={() => this.handleYearQuery("plus")}
           >
-            +
+            <strong>+</strong>
           </button>
+          <h1>{year}</h1>
           <button
             type="button"
-            className="btn btn-sm btn-outline-primary"
+            className="btn btn-sm btn-secondary"
             id="minus"
-            onClick={this.handleYearQuery}
+            onClick={() => this.handleYearQuery("minus")}
           >
             -
           </button>
         </div>
-        <h1>{year}</h1>
+
         <div className="btn-group" role="group" aria-label="months">
           {months.map((month, index) => {
             return (
@@ -171,9 +174,7 @@ export class MonthView extends Component {
         </div>
         <div className="calendar">
           <header>
-            <h1>
-              {months[this.state.month]} {year}
-            </h1>
+            <h1>{months[this.state.month]}</h1>
           </header>
 
           <ul className="weekdays">
