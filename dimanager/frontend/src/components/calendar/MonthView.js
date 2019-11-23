@@ -164,7 +164,10 @@ export class MonthView extends Component {
               <button
                 type="button"
                 key={month}
-                className="btn btn-secondary"
+                className={
+                  "btn btn-secondary " +
+                  (this.state.month == index ? "selected-month" : "")
+                }
                 onClick={e => this.handleMonthQuery(index, e)}
               >
                 {month}
@@ -173,10 +176,6 @@ export class MonthView extends Component {
           })}
         </div>
         <div className="calendar">
-          <header>
-            <h1>{months[this.state.month]}</h1>
-          </header>
-
           <ul className="weekdays">
             <li>
               <abbr title="S">Sunday</abbr>

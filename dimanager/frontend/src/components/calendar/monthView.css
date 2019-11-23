@@ -78,3 +78,7 @@ ul.day-grid li:nth-child(35) {
 .year-mod {
   font-size: 20px;
 }
+
+.selected-month {
+  font-size: 30px;
+}
