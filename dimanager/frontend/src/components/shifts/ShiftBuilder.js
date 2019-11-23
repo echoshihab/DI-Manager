@@ -38,15 +38,23 @@ export class ShiftBuilder extends Component {
 
     return (
       <Fragment>
-        <BuilderDashboard
-          toggleComponent={this.handleComponentChange.bind(this)}
-        />
-
-        <div className="d-flex align-items-center justify-content-center h-100 mt-5">
-          {shiftTimeComponent}
-          {examTypeComponent}
-          {locationComponent}
-          {roomComponent}
+        <div className="container mt-2">
+          <div className="row d-flex justify-content-center">
+            <h3>Resource Builder</h3>
+          </div>
+          <div className="row">
+            <div className="col">
+              <BuilderDashboard
+                toggleComponent={this.handleComponentChange.bind(this)}
+              />
+            </div>
+            <div className="col">
+              {shiftTimeComponent}
+              {examTypeComponent}
+              {locationComponent}
+              {roomComponent}
+            </div>
+          </div>
         </div>
       </Fragment>
     );

@@ -2,7 +2,7 @@ import React from "react";
 
 const BuilderDashboard = props => {
   return (
-    <div className="container d-flex align-items-center flex-row justify-content-center h-100">
+    <div className="container d-flex flex-column h-100">
       <button
         className="btn btn-outline-primary"
         name="shiftTimeBuilder"
