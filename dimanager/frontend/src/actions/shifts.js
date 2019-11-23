@@ -4,6 +4,7 @@ import {
   GET_EXAMTYPES,
   GET_SHIFTTIMES,
   SHIFT_ADDED,
+  SHIFT_DELETED,
   SHIFT_RETRIEVE,
   DUPLICATE_ITEMS,
   OVERRIDE_ITEMS,
@@ -184,6 +185,22 @@ export const assignShift = (dateOfShift, examType, shiftTime, room, tech) => (
         dispatch(returnErrors(err.response.data, err.response.status))
       );
   }
+};
+
+//delete Shift
+export const deleteShift = id => dispatch => {
+  console.log(id);
+  axios
+    .delete(`/api/shifts/${id}/`)
+    .then(res => {
+      dispatch({
+        type: SHIFT_DELETED,
+        payload: id
+      });
+    })
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };
 
 //get today's shifts

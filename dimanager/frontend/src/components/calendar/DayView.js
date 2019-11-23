@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { deleteShift } from "../../actions/shifts";
 
 export class DayView extends Component {
   static propTypes = {
@@ -16,6 +17,7 @@ export class DayView extends Component {
               <th scope="col">Room</th>
               <th scope="col">Shift</th>
               <th scope="col">Technologist</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
@@ -30,6 +32,15 @@ export class DayView extends Component {
                     item.shift_time.end_time}
                 </td>
                 <td>{item.tech.initials}</td>
+                <td>
+                  <button
+                    href="#"
+                    className="btn btn-primary btn-sm btn-danger"
+                    onClick={() => this.props.deleteShift(item.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -43,7 +54,4 @@ const mapStateToProps = state => ({
   shifts: state.shifts.shifts
 });
 
-export default connect(
-  mapStateToProps,
-  null
-)(DayView);
+export default connect(mapStateToProps, { deleteShift })(DayView);
