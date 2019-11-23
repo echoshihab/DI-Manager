@@ -145,7 +145,7 @@ export class MonthView extends Component {
             id="plus"
             onClick={() => this.handleYearQuery("plus")}
           >
-            <strong>+</strong>
+            <strong className="year-mod">+</strong>
           </button>
           <h1>{year}</h1>
           <button
@@ -154,7 +154,7 @@ export class MonthView extends Component {
             id="minus"
             onClick={() => this.handleYearQuery("minus")}
           >
-            -
+            <strong className="year-mod">-</strong>
           </button>
         </div>
 

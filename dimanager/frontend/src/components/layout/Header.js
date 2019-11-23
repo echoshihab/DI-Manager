@@ -14,17 +14,33 @@ export class Header extends Component {
     const { isAuthenticated, user } = this.props.auth;
     const authLinks = (
       <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-        <span className="nav-bar-text mr-sm-2">
-          <strong>{user ? `Welcome ${user.username}` : ""}</strong>
-        </span>
         <li className="nav-item">
-          <button
-            onClick={this.props.logout}
-            className="btn btn-primary btn-sm mr-sm-2"
-          >
-            Logout
-          </button>
+          <Link to="/calendar" className="nav-link">
+            Day View
+          </Link>
         </li>
+        <li className="nav-item">
+          <Link to="/monthview" className="nav-link">
+            Month View
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/shiftbuilder" className="nav-link">
+            Resource Builder
+          </Link>
+        </li>
+        <span className="nav-bar-text mr-sm-2">
+          {user ? `Welcome ${user.username} ` : ""}
+          <sup>
+            <a
+              href="#"
+              className="badge badge-pill badge-dark"
+              onClick={this.props.logout}
+            >
+              Logout
+            </a>
+          </sup>
+        </span>
       </ul>
     );
 
@@ -43,7 +59,7 @@ export class Header extends Component {
       </ul>
     );
     return (
-      <nav className="navbar navbar-expand-sm navbar-light bg-light">
+      <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
         <div className="container">
           <button
             className="navbar-toggler"
@@ -71,7 +87,4 @@ export class Header extends Component {
 const mapStateToProps = state => ({
   auth: state.auth
 });
-export default connect(
-  mapStateToProps,
-  { logout }
-)(Header);
+export default connect(mapStateToProps, { logout })(Header);
