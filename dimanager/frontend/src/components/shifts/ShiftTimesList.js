@@ -18,18 +18,22 @@ export class ShiftTimesList extends Component {
   render() {
     return (
       <ul className="list-group">
-        <ShiftFormAdd />
+        <li className="list-group-item">
+          <ShiftFormAdd />
+        </li>
         {this.props.shiftTimes.map(shiftTime => (
           <li className="list-group-item" key={shiftTime.id}>
             {shiftTime.start_time.slice(0, -3) +
               " - " +
               shiftTime.end_time.slice(0, -3)}
-            <button
+
+            <a
+              href="#"
+              className="badge badge-danger ml-2"
               onClick={this.props.deleteShiftTime.bind(this, shiftTime.id)}
-              className="btn btn-outline-danger btn-sm"
             >
               Delete
-            </button>
+            </a>
           </li>
         ))}
       </ul>
@@ -41,7 +45,6 @@ const mapStateToProps = state => ({
   shiftTimes: state.shiftTimes.shiftTimes
 });
 
-export default connect(
-  mapStateToProps,
-  { getShiftTimes, deleteShiftTime }
-)(ShiftTimesList);
+export default connect(mapStateToProps, { getShiftTimes, deleteShiftTime })(
+  ShiftTimesList
+);

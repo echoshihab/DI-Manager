@@ -42,7 +42,7 @@ export class ShiftBuilder extends Component {
           toggleComponent={this.handleComponentChange.bind(this)}
         />
 
-        <div className="d-flex align-items-center flex-column justify-content-center h-100 mt-5">
+        <div className="d-flex align-items-center justify-content-center h-100 mt-5">
           {shiftTimeComponent}
           {examTypeComponent}
           {locationComponent}

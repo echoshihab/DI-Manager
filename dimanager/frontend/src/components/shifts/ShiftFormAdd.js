@@ -31,58 +31,70 @@ export class ShiftFormAdd extends Component {
 
     return (
       <form onSubmit={this.handleSubmit}>
+        <label htmlFor="start-time">Start Time</label>
         <div className="form-row">
-          <label htmlFor="start-time">Start Time:</label>
-          <input
-            type="text"
-            className="hr"
-            name="startHour"
-            value={startHour}
-            onChange={this.handleChange}
-            maxLength="2"
-          />
-          <div className="separator">:</div>
-          <input
-            type="text"
-            className="min"
-            name="startMin"
-            value={startMin}
-            onChange={this.handleChange}
-            maxLength="2"
-          />
+          <div className="col">
+            <input
+              type="text"
+              className="form-control mr-sm-2"
+              name="startHour"
+              value={startHour}
+              onChange={this.handleChange}
+              maxLength="2"
+            />
+          </div>
+          <strong>:</strong>
+          <div className="col">
+            <input
+              type="text"
+              className="form-control mr-sm-2"
+              name="startMin"
+              value={startMin}
+              onChange={this.handleChange}
+              maxLength="2"
+            />
+          </div>
         </div>
 
-        <button className="btn btn-outline-dark add">+</button>
-        <label className="col-sm-2 col-form-label" htmlFor="end-time">
-          End Time:
+        <label htmlFor="end-time" className="mt-1">
+          End Time
         </label>
+        <div className="form-row ">
+          <div className="col">
+            <input
+              type="text"
+              className="form-control mr-sm-2"
+              name="endHour"
+              value={endHour}
+              onChange={this.handleChange}
+              maxLength="2"
+            />
+          </div>
+
+          <strong className="separator">:</strong>
+          <div className="col">
+            <input
+              type="text"
+              className="form-control mr-sm-2"
+              name="endMin"
+              value={endMin}
+              onChange={this.handleChange}
+              maxLength="2"
+            />
+          </div>
+        </div>
         <div className="form-row">
-          <input
-            type="text"
-            className="hr"
-            name="endHour"
-            value={endHour}
-            onChange={this.handleChange}
-            maxLength="2"
-          />
-
-          <div className="separator">:</div>
-
-          <input
-            type="text"
-            className="min"
-            name="endMin"
-            value={endMin}
-            onChange={this.handleChange}
-            maxLength="2"
-          />
+          <button className="btn btn-secondary btn-sm btn-block mt-1">
+            <span style={style}>+</span>
+          </button>
         </div>
       </form>
     );
   }
 }
 
-export default connect(
-  null,
-  { buildShift }
-)(ShiftFormAdd);
+const style = {
+  fontSize: "30px"
+};
+
+export default connect(null, { buildShift })(ShiftFormAdd);
