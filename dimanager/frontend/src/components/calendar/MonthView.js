@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./monthView.css";
 import { getShiftsForMonth } from "../../actions/shifts";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 //helper function for querying for shift for a month
 const shiftQuery = (getShifts, year, month, daysInMonth) => {
@@ -97,6 +98,18 @@ export class MonthView extends Component {
       result.length > 0
         ? days.push(
             <li className="day" key={i}>
+              <Link
+                to={{
+                  pathname: "/calendar",
+                  param: {
+                    day: i,
+                    month: month,
+                    year: year
+                  }
+                }}
+              >
+                DayView
+              </Link>
               {i +
                 " " +
                 result.map(

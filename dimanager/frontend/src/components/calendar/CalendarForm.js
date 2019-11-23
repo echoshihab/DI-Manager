@@ -139,7 +139,16 @@ export class CalendarForm extends Component {
   };
 
   componentDidMount() {
-    shiftQuery(this.props.getShiftsForDay);
+    //query for shift with user selected date coming from monthview
+    if (this.props.location.param) {
+      const { day, month, year } = this.props.location.param;
+      this.setState({ day: day, month: month, year: year }, function() {
+        shiftQuery(this.props.getShiftsForDay);
+      });
+      //if directly accessing dayview query for shift for current date set in constructor
+    } else {
+      shiftQuery(this.props.getShiftsForDay);
+    }
   }
 
   render() {
@@ -228,7 +237,9 @@ const mapStateToProps = state => ({
   values: state.modal.values
 });
 
-export default connect(
-  mapStateToProps,
-  { assignShift, getShiftsForDay, closeModal, validAssignShift }
-)(CalendarForm);
+export default connect(mapStateToProps, {
+  assignShift,
+  getShiftsForDay,
+  closeModal,
+  validAssignShift
+})(CalendarForm);
