@@ -1,5 +1,5 @@
 /* Used starter template from - https://css-tricks.com/snippets/css/css-grid-starter-layouts/ by Geoff graham */
-
+/*
 header {
   display: flex;
   align-items: center;
@@ -11,23 +11,28 @@ header {
   min-height: 10vh;
   text-align: center;
 }
+*/
 
 ul {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-gap: 1em;
-  margin: 0 auto;
+
   max-width: 120em;
   padding: 0;
 }
 
 li {
   display: flex;
-  align-items: center;
-  justify-content: center;
   list-style: none;
   margin-left: 0;
   font-size: 75%;
+}
+
+.daysOfMonth {
+  color: #000;
+  font-weight: 900;
+  margin-left: 2px;
 }
 
 ul.weekdays {
@@ -35,13 +40,16 @@ ul.weekdays {
 }
 
 ul.weekdays li {
-  height: 4vw;
+  margin-top: 2em;
+  height: 1vw;
 }
 
 ul.day-grid li {
-  background-color: #eaeaea;
-  border: 1px solid #eaeaea;
+  background-color: #fff;
+  border: 1px solid #000;
   height: 12vw;
+  width: 200px;
+  max-width: 250px;
   max-height: 150px;
 }
 
@@ -51,12 +59,13 @@ ul.weekdays abbr[title] {
   text-decoration: none;
 }
 
+/*this below is for the white boxes */
 ul.day-grid li:nth-child(1),
 ul.day-grid li:nth-child(2),
 ul.day-grid li:nth-child(3),
 ul.day-grid li:nth-child(34),
 ul.day-grid li:nth-child(35) {
-  background-color: #fff;
+  background-color: #eaeaea;
 }
 
 @media all and (max-width: 800px) {
@@ -81,4 +90,30 @@ ul.day-grid li:nth-child(35) {
 
 .selected-month {
   font-size: 30px;
+}
+
+.shift-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 10%;
+  list-style: none;
+}
+.shift {
+  color: yellow;
+  background: black;
+  flex-wrap: nowrap;
+}
+
+.shift:nth-child(even) {
+  color: black;
+  background: yellow;
+}
+
+.material-icons.md-18 {
+  font-size: 18px;
+}
+
+i {
+  outline: 1px solid black;
 }

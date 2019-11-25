@@ -100,6 +100,23 @@ export class MonthView extends Component {
       result.length > 0
         ? days.push(
             <li className="day" key={i}>
+              <span className="daysOfMonth">{i}</span>
+
+              <div className="shift-container">
+                {result.map(r => (
+                  <div className="shift" key={r.id}>
+                    {r.room.room +
+                      " " +
+                      r.exam_type.exam_type +
+                      " " +
+                      r.shift_time.start_time.slice(0, -3) +
+                      "-" +
+                      r.shift_time.end_time.slice(0, -3) +
+                      " " +
+                      r.tech.initials}
+                  </div>
+                ))}
+              </div>
               <Link
                 to={{
                   pathname: "/calendar",
@@ -110,28 +127,14 @@ export class MonthView extends Component {
                   }
                 }}
               >
-                DayView
+                <i className="material-icons md-18">edit</i>
               </Link>
-              {i +
-                " " +
-                result.map(
-                  r =>
-                    r.room.room +
-                    " " +
-                    r.exam_type.exam_type +
-                    " " +
-                    r.shift_time.start_time.slice(0, -3) +
-                    "-" +
-                    r.shift_time.end_time.slice(0, -3) +
-                    " " +
-                    r.tech.initials
-                )}
             </li>
           )
         : //if no matches, just push the day of month to days array
           days.push(
             <li className="day" key={i}>
-              {i}
+              <strong className="daysOfMonth">{i}</strong>
             </li>
           );
     }
