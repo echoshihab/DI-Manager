@@ -216,7 +216,7 @@ export class CalendarForm extends Component {
             <div className="days">{days}</div>
           </div>
         </div>
-        <form className="form-inline" onSubmit={this.handleSubmit}>
+        <form className="form-inline test" onSubmit={this.handleSubmit}>
           <ExamTypes />
           <ShiftTimes />
           <Location />

@@ -44,7 +44,7 @@ ul.weekdays li {
   height: 1vw;
 }
 
-ul.day-grid li {
+ul.day-grid li.day {
   background-color: #fff;
   border: 1px solid #000;
   height: 12vw;
@@ -57,15 +57,6 @@ ul.weekdays abbr[title] {
   border: none;
   font-weight: 800;
   text-decoration: none;
-}
-
-/*this below is for the white boxes */
-ul.day-grid li:nth-child(1),
-ul.day-grid li:nth-child(2),
-ul.day-grid li:nth-child(3),
-ul.day-grid li:nth-child(34),
-ul.day-grid li:nth-child(35) {
-  background-color: #eaeaea;
 }
 
 @media all and (max-width: 800px) {
@@ -116,4 +107,10 @@ ul.day-grid li:nth-child(35) {
 
 i {
   outline: 1px solid black;
+}
+
+/*this below is for the white boxes */
+.month-prev,
+.month-next {
+  background-color: #d3d3d3;
 }

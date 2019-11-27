@@ -16,31 +16,48 @@ export class MonthView extends Component {
   constructor() {
     super();
     let date = new Date();
-    let day = date.getDate();
     let month = date.getMonth();
     let year = date.getFullYear();
     let daysInMonth = new Date(year, month + 1, 0).getDate();
+    let weekdayIndexOfFirst = new Date(year, month, 1).getDay(); //get weekday index of first of month
+    let weekdayIndexOfLast = new Date(year, month, daysInMonth).getDay(); //get weekday index of last of month
 
     this.state = {
-      isActive: false,
-      day: day,
       month: month,
       year: year,
-      daysInMonth: daysInMonth
+      daysInMonth: daysInMonth,
+      weekdayIndexOfFirst: weekdayIndexOfFirst,
+      weekdayIndexOfLast: weekdayIndexOfLast
     };
   }
 
   handleMonthQuery = (index, e) => {
+    const { year } = this.state;
     let newMonth = index;
-    let newDaysInMonth = new Date(this.state.year, newMonth + 1, 0).getDate();
-    this.setState({ month: newMonth, daysInMonth: newDaysInMonth }, function() {
-      shiftQuery(
-        this.props.getShiftsForMonth,
-        this.state.year,
-        this.state.month,
-        this.state.daysInMonth
-      );
-    });
+    let newDaysInMonth = new Date(year, newMonth + 1, 0).getDate();
+    let newWeekdayIndexOfFirst = new Date(year, newMonth, 1).getDay();
+    let newWeekdayIndexOfLast = new Date(
+      year,
+      newMonth,
+      newDaysInMonth
+    ).getDay();
+
+    this.setState(
+      {
+        month: newMonth,
+        daysInMonth: newDaysInMonth,
+        weekdayIndexOfFirst: newWeekdayIndexOfFirst,
+        weekdayIndexOfLast: newWeekdayIndexOfLast
+      },
+      function() {
+        shiftQuery(
+          this.props.getShiftsForMonth,
+          this.state.year,
+          this.state.month,
+          this.state.daysInMonth
+        );
+      }
+    );
   };
 
   handleYearQuery = mod => {
@@ -50,14 +67,32 @@ export class MonthView extends Component {
     let newYear = this.state.year + modification;
     console.log(newYear);
     let newDaysInMonth = new Date(newYear, this.state.month + 1, 0).getDate();
-    this.setState({ year: newYear, daysInMonth: newDaysInMonth }, function() {
-      shiftQuery(
-        this.props.getShiftsForMonth,
-        this.state.year,
-        this.state.month,
-        this.state.daysInMonth
-      );
-    });
+    let newWeekdayIndexOfFirst = new Date(
+      newYear,
+      this.state.month,
+      1
+    ).getDay();
+    let newWeekdayIndexOfLast = new Date(
+      newYear,
+      this.state.month,
+      newDaysInMonth
+    ).getDay();
+    this.setState(
+      {
+        year: newYear,
+        daysInMonth: newDaysInMonth,
+        weekdayIndexOfFirst: newWeekdayIndexOfFirst,
+        weekdayIndexOfLast: newWeekdayIndexOfLast
+      },
+      function() {
+        shiftQuery(
+          this.props.getShiftsForMonth,
+          this.state.year,
+          this.state.month,
+          this.state.daysInMonth
+        );
+      }
+    );
   };
 
   componentDidMount() {
@@ -66,7 +101,13 @@ export class MonthView extends Component {
   }
 
   render() {
-    const { isActive, day, month, year, daysInMonth } = this.state;
+    const {
+      month,
+      year,
+      daysInMonth,
+      weekdayIndexOfFirst,
+      weekdayIndexOfLast
+    } = this.state;
     const months = [
       "January",
       "February",
@@ -83,6 +124,7 @@ export class MonthView extends Component {
     ];
 
     const days = [];
+
     for (let i = 1; i <= daysInMonth; i++) {
       let dayOfMonth;
       if (i < 10) {
@@ -96,7 +138,7 @@ export class MonthView extends Component {
       );
 
       //if there are any matching shifts, associate  day push
-      //to days array in order to map out calender view lateer
+      //to days array in order to map out calender view later
       result.length > 0
         ? days.push(
             <li className="day" key={i}>
@@ -137,6 +179,24 @@ export class MonthView extends Component {
               <strong className="daysOfMonth">{i}</strong>
             </li>
           );
+    }
+
+    //days from previous month represented as gray boxes in monthview
+    let daysBefore = weekdayIndexOfFirst - 0;
+    console.log(daysBefore);
+    if (daysBefore > 0) {
+      for (let i = 1; i <= daysBefore; i++) {
+        days.unshift(<li className="month-prev" key={i + "prev"}></li>);
+      }
+    }
+
+    //days from next month represented as gray boxes in monthview
+    let daysAfter = 6 - weekdayIndexOfLast;
+    console.log(daysAfter);
+    if (daysAfter > 0) {
+      for (let i = 1; i <= daysAfter; i++) {
+        days.push(<li className="month-next" key={i + "next"}></li>);
+      }
     }
 
     return (
@@ -203,14 +263,7 @@ export class MonthView extends Component {
             </li>
           </ul>
 
-          <ul className="day-grid">
-            <li className="month=prev">29</li>
-            <li className="month=prev">30</li>
-            <li className="month=prev">31</li>
-            {days}
-            <li className="month-next">1</li>
-            <li className="month-next">2</li>
-          </ul>
+          <ul className="day-grid">{days}</ul>
         </div>
       </div>
     );
