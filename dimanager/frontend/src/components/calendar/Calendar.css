@@ -56,7 +56,7 @@
 }
 
 .date-picker .dates .month .arrows:hover {
-  background-color: #f3f3f3;
+  transform: scale(1.1);
 }
 
 .date-picker .dates .month .arrows:active {
@@ -97,4 +97,9 @@
   color: black;
   height: 50%;
   width: 50%;
+}
+
+.other-days {
+  background-color: #d3d3d3;
+  font-style: italic;
 }

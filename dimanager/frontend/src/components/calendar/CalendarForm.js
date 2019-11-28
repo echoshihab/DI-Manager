@@ -48,13 +48,19 @@ export class CalendarForm extends Component {
     let month = date.getMonth();
     let year = date.getFullYear();
     let daysInMonth = new Date(year, month + 1, 0).getDate();
+    let prevDaysInMonth = new Date(year, month, 0).getDate();
+    let weekdayIndexOfFirst = new Date(year, month, 1).getDay();
+    let weekdayIndexOfLast = new Date(year, month, daysInMonth).getDay(); //get weekday index of last of month
 
     this.state = {
       isActive: false,
       day: day,
       month: month,
       year: year,
-      daysInMonth: daysInMonth
+      daysInMonth: daysInMonth,
+      prevDaysInMonth: prevDaysInMonth,
+      weekdayIndexOfFirst: weekdayIndexOfFirst,
+      weekdayIndexOfLast: weekdayIndexOfLast
     };
   }
 
@@ -65,23 +71,44 @@ export class CalendarForm extends Component {
   };
 
   viewNextMonth = () => {
+    let newYear,
+      newDaysInMonth,
+      newPrevDaysInMonth,
+      newWeekdayIndexOfFirst,
+      newWeekdayIndexOfLast;
     let nextMonth = this.state.month + 1;
     if (nextMonth > 11) {
-      let newYear = this.state.year + 1;
-      let newDaysInMonth = new Date(newYear, 0 + 1, 0).getDate(); //this accounts for 0 indexed month values
+      newYear = this.state.year + 1;
+      newDaysInMonth = new Date(newYear, 0 + 1, 0).getDate(); //this accounts for 0 indexed month values
+      newPrevDaysInMonth = this.state.daysInMonth;
+      newWeekdayIndexOfFirst = new Date(newYear, 1, 1).getDay();
+      newWeekdayIndexOfLast = new Date(newYear, 1, newDaysInMonth).getDay();
       this.setState({
         month: 0,
         year: newYear,
-        daysInMonth: newDaysInMonth
+        daysInMonth: newDaysInMonth,
+        prevDaysInMonth: newPrevDaysInMonth,
+        weekdayIndexOfFirst: newWeekdayIndexOfFirst,
+        weekdayIndexOfLast: newWeekdayIndexOfLast
       });
     } else {
-      let newDaysInMonth = new Date(
+      newDaysInMonth = new Date(this.state.year, nextMonth + 1, 0).getDate();
+      newPrevDaysInMonth = this.state.daysInMonth;
+      newWeekdayIndexOfFirst = new Date(this.state.year, nextMonth, 1).getDay();
+      newWeekdayIndexOfLast = new Date(
         this.state.year,
-        nextMonth + 1,
-        0
-      ).getDate();
+        nextMonth,
+        newDaysInMonth
+      ).getDay();
+
       this.setState(
-        { month: nextMonth, daysInMonth: newDaysInMonth },
+        {
+          month: nextMonth,
+          daysInMonth: newDaysInMonth,
+          prevDaysInMonth: newPrevDaysInMonth,
+          weekdayIndexOfFirst: newWeekdayIndexOfFirst,
+          weekdayIndexOfLast: newWeekdayIndexOfLast
+        },
         function() {
           shiftQuery(this.props.getShiftsForDay);
         }
@@ -152,9 +179,18 @@ export class CalendarForm extends Component {
   }
 
   render() {
-    const { isActive, day, month, year, daysInMonth } = this.state;
-
+    const {
+      isActive,
+      day,
+      month,
+      year,
+      prevDaysInMonth,
+      daysInMonth,
+      weekdayIndexOfFirst,
+      weekdayIndexOfLast
+    } = this.state;
     const days = [];
+    const weekDays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
     //populate days in a month
     for (let i = 1; i <= daysInMonth; i++) {
@@ -163,6 +199,34 @@ export class CalendarForm extends Component {
           {i}
         </div>
       );
+    }
+
+    //days from previous month
+    let daysBefore = weekdayIndexOfFirst - 0;
+    if (daysBefore > 0) {
+      let prevDays = prevDaysInMonth;
+      for (let i = 1; i <= daysBefore; i++) {
+        days.unshift(
+          <div className="day other-days" key={i + "prev"}>
+            {prevDays}
+          </div>
+        );
+        {
+          prevDays--;
+        }
+      }
+    }
+
+    //days from next month
+    let daysAfter = 6 - weekdayIndexOfLast;
+    if (daysAfter > 0) {
+      for (let i = 1; i <= daysAfter; i++) {
+        days.push(
+          <div className="day other-days" key={i + "next"}>
+            {i}
+          </div>
+        );
+      }
     }
 
     const modal = this.props.modal ? (
@@ -213,7 +277,14 @@ export class CalendarForm extends Component {
                 Next
               </div>
             </div>
-            <div className="days">{days}</div>
+            <div className="days">
+              {weekDays.map((weekDay, index) => (
+                <div className="day" key={index}>
+                  {weekDay}
+                </div>
+              ))}
+              {days}
+            </div>
           </div>
         </div>
         <form className="form-inline test" onSubmit={this.handleSubmit}>
