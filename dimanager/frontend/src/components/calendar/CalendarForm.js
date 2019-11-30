@@ -129,9 +129,8 @@ export class CalendarForm extends Component {
     if (prevMonth < 0) {
       newYear = this.state.year - 1;
       newDaysInMonth = new Date(this.state.year, 0 + 1, 0).getDate();
-      console.log(newDaysInMonth);
       //this accounts for 0 indexed month values
-      newPrevDaysInMonth = new Date(newYear, 11 + 1, 0).getDate();
+      newPrevDaysInMonth = new Date(newYear, 11, 0).getDate();
       newWeekdayIndexOfFirst = new Date(newYear, 11, 1).getDay();
       newWeekdayIndexOfLast = new Date(newYear, 11, newDaysInMonth).getDay();
 
