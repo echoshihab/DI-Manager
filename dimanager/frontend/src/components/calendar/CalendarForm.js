@@ -75,14 +75,15 @@ export class CalendarForm extends Component {
       newDaysInMonth,
       newPrevDaysInMonth,
       newWeekdayIndexOfFirst,
-      newWeekdayIndexOfLast;
-    let nextMonth = this.state.month + 1;
+      newWeekdayIndexOfLast,
+      nextMonth;
+    nextMonth = this.state.month + 1;
     if (nextMonth > 11) {
       newYear = this.state.year + 1;
       newDaysInMonth = new Date(newYear, 0 + 1, 0).getDate(); //this accounts for 0 indexed month values
       newPrevDaysInMonth = this.state.daysInMonth;
-      newWeekdayIndexOfFirst = new Date(newYear, 1, 1).getDay();
-      newWeekdayIndexOfLast = new Date(newYear, 1, newDaysInMonth).getDay();
+      newWeekdayIndexOfFirst = new Date(newYear, 0, 1).getDay();
+      newWeekdayIndexOfLast = new Date(newYear, 0, newDaysInMonth).getDay();
       this.setState({
         month: 0,
         year: newYear,
@@ -117,11 +118,17 @@ export class CalendarForm extends Component {
   };
 
   viewPrevMonth = () => {
-    let prevMonth = this.state.month - 1;
+    let newYear,
+      newDaysInMonth,
+      newPrevDaysInMonth,
+      newWeekdayIndexOfFirst,
+      newWeekdayIndexOfLast,
+      prevMonth;
+    prevMonth = this.state.month - 1;
     if (prevMonth < 0) {
       let newYear = this.state.year - 1;
       let newDaysInMonth = new Date(newYear, 11 + 1, 0).getDate(); //this accounts for 0 indexed month values
-      this.setState({
+      let newPrevDaysInMonth = this.setState({
         month: 11,
         year: newYear,
         daysInMonth: newDaysInMonth
@@ -203,6 +210,7 @@ export class CalendarForm extends Component {
 
     //days from previous month
     let daysBefore = weekdayIndexOfFirst - 0;
+    console.log(weekdayIndexOfFirst);
     if (daysBefore > 0) {
       let prevDays = prevDaysInMonth;
       for (let i = 1; i <= daysBefore; i++) {
