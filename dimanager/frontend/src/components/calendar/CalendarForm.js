@@ -104,6 +104,7 @@ export class CalendarForm extends Component {
 
       this.setState(
         {
+          day: 1,
           month: nextMonth,
           daysInMonth: newDaysInMonth,
           prevDaysInMonth: newPrevDaysInMonth,
@@ -126,21 +127,42 @@ export class CalendarForm extends Component {
       prevMonth;
     prevMonth = this.state.month - 1;
     if (prevMonth < 0) {
-      let newYear = this.state.year - 1;
-      let newDaysInMonth = new Date(newYear, 11 + 1, 0).getDate(); //this accounts for 0 indexed month values
-      let newPrevDaysInMonth = this.setState({
+      newYear = this.state.year - 1;
+      newDaysInMonth = new Date(this.state.year, 0 + 1, 0).getDate();
+      console.log(newDaysInMonth);
+      //this accounts for 0 indexed month values
+      newPrevDaysInMonth = new Date(newYear, 11 + 1, 0).getDate();
+      newWeekdayIndexOfFirst = new Date(newYear, 11, 1).getDay();
+      newWeekdayIndexOfLast = new Date(newYear, 11, newDaysInMonth).getDay();
+
+      this.setState({
+        day: 1,
         month: 11,
         year: newYear,
-        daysInMonth: newDaysInMonth
+        daysInMonth: newDaysInMonth,
+        prevDaysInMonth: newPrevDaysInMonth,
+        weekdayIndexOfFirst: newWeekdayIndexOfFirst,
+        weekdayIndexOfLast: newWeekdayIndexOfLast
       });
     } else {
-      let newDaysInMonth = new Date(
+      newDaysInMonth = new Date(this.state.year, prevMonth + 1, 0).getDate();
+      newPrevDaysInMonth = new Date(this.state.year, prevMonth, 0).getDate();
+      newWeekdayIndexOfFirst = new Date(this.state.year, prevMonth, 1).getDay();
+      newWeekdayIndexOfLast = new Date(
         this.state.year,
-        prevMonth + 1,
-        0
-      ).getDate();
+        prevMonth,
+        newDaysInMonth
+      ).getDay();
+
       this.setState(
-        { month: prevMonth, daysInMonth: newDaysInMonth },
+        {
+          day: 1,
+          month: prevMonth,
+          daysInMonth: newDaysInMonth,
+          prevDaysInMonth: newPrevDaysInMonth,
+          weekdayIndexOfFirst: newWeekdayIndexOfFirst,
+          weekdayIndexOfLast: newWeekdayIndexOfLast
+        },
         function() {
           shiftQuery(this.props.getShiftsForDay);
         }
@@ -210,7 +232,6 @@ export class CalendarForm extends Component {
 
     //days from previous month
     let daysBefore = weekdayIndexOfFirst - 0;
-    console.log(weekdayIndexOfFirst);
     if (daysBefore > 0) {
       let prevDays = prevDaysInMonth;
       for (let i = 1; i <= daysBefore; i++) {
