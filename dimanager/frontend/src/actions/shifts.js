@@ -264,7 +264,6 @@ export const buildShift = (startShift, endShift) => dispatch => {
       });
     })
     .catch(err => {
-      console.log(err);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };

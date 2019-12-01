@@ -42,7 +42,11 @@ export class ExamTypes extends Component {
     return (
       <ul className="list-group">
         <li className="list-group-item">
-          <form className="form-inline my-2 my-lg-0" onSubmit={this.onSubmit}>
+          <form
+            className="form-inline my-2 my-lg-0"
+            onSubmit={this.onSubmit}
+            autoComplete="off"
+          >
             <input
               name="examType"
               className="form-control mr-sm-2"

@@ -12,7 +12,7 @@ export class ShiftFormAdd extends Component {
   };
 
   handleChange = e => {
-    const regEx = /^[0-9\b]+$/;
+    let regEx = /^[0-9\b]+$/;
     const {
       target: { name, value }
     } = e;
@@ -24,19 +24,27 @@ export class ShiftFormAdd extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    let { startHour, startMin, endHour, endMin } = e.target;
-    const startTime = startHour.value + ":" + startMin.value;
-    const endTime = endHour.value + ":" + endMin.value;
+    let regEx = /^[0-9\b]+$/;
+    const {
+      target: { name, value }
+    } = e;
+    if (!regEx.test(value)) {
+      this.setState({ errorFlag: true });
+    } else {
+      let { startHour, startMin, endHour, endMin } = e.target;
 
-    this.props.buildShift(startTime, endTime);
+      const startTime = startHour.value + ":" + startMin.value;
+      const endTime = endHour.value + ":" + endMin.value;
+      this.props.buildShift(startTime, endTime);
+    }
   };
 
   render() {
     const { startHour, startMin, endHour, endMin, errorFlag } = this.state;
-    let errorMsg = "*Vaid Integer/Whole numbers only";
+    let errorMsg = "*Vaid Integers/Whole numbers only";
 
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} autoComplete="off">
         <label htmlFor="start-time">Start Time</label>
         <div className="form-row">
           <div className="col">

@@ -43,11 +43,16 @@ export class LocationBuild extends Component {
       <Fragment>
         <ul className="list-group">
           <li className="list-group-item">
-            <form className="form-inline my-2 my-lg-0" onSubmit={this.onSubmit}>
+            <form
+              className="form-inline my-2 my-lg-0"
+              onSubmit={this.onSubmit}
+              autoComplete="off"
+            >
               <input
                 name="location"
                 className="form-control mr-sm-2"
                 type="text"
+                maxLength="15"
                 placeholder="..add new location"
                 onChange={this.onChange}
                 value={this.state.location}
@@ -84,7 +89,8 @@ const mapStateToProps = state => ({
   locations: state.locations.locations
 });
 
-export default connect(
-  mapStateToProps,
-  { getLocations, addLocation, deleteLocation }
-)(LocationBuild);
+export default connect(mapStateToProps, {
+  getLocations,
+  addLocation,
+  deleteLocation
+})(LocationBuild);

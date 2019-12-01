@@ -49,7 +49,11 @@ export class RoomBuild extends Component {
   }
   render() {
     return (
-      <form className="form-inline my-2 my-lg-0" onSubmit={this.onSubmit}>
+      <form
+        className="form-inline my-2 my-lg-0"
+        onSubmit={this.onSubmit}
+        autoComplete="off"
+      >
         <ul className="list-group">
           <li className="list-group-item">
             <select
@@ -75,6 +79,7 @@ export class RoomBuild extends Component {
                 <input
                   name="roomName"
                   className="form-control mr-sm-2"
+                  maxLength="15"
                   type="text"
                   placeholder="..add new room"
                   onChange={this.onRoomChange}
@@ -114,7 +119,9 @@ const mapStateToProps = state => ({
   rooms: state.rooms.rooms
 });
 
-export default connect(
-  mapStateToProps,
-  { getLocations, getRooms, deleteRoom, addRoom }
-)(RoomBuild);
+export default connect(mapStateToProps, {
+  getLocations,
+  getRooms,
+  deleteRoom,
+  addRoom
+})(RoomBuild);
