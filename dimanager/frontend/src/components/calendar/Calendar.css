@@ -108,3 +108,10 @@
 .weekday {
   cursor: default;
 }
+
+.error {
+  color: red;
+  font-size: 80%;
+  font-weight: bold;
+  padding-left: 2%;
+}

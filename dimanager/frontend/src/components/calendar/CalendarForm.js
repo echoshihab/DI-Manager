@@ -54,6 +54,7 @@ export class CalendarForm extends Component {
 
     this.state = {
       isActive: false,
+      error: false,
       day: day,
       month: month,
       year: year,
@@ -177,20 +178,25 @@ export class CalendarForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    let { room, shiftTime, examType, tech } = e.target;
-    let selectedDate = document
-      .getElementsByClassName("selected-date")[0]
-      .innerHTML.split("/")
-      .reverse()
-      .join("-");
+    let { location, room, shiftTime, examType, tech } = e.target;
+    if (location.value == "default") {
+      this.setState({ error: true });
+    } else {
+      this.setState({ error: false });
+      let selectedDate = document
+        .getElementsByClassName("selected-date")[0]
+        .innerHTML.split("/")
+        .reverse()
+        .join("-");
 
-    this.props.assignShift(
-      selectedDate,
-      examType.value,
-      shiftTime.value,
-      room.value,
-      tech.value
-    );
+      this.props.assignShift(
+        selectedDate,
+        examType.value,
+        shiftTime.value,
+        room.value,
+        tech.value
+      );
+    }
   };
 
   componentDidMount() {
@@ -209,6 +215,7 @@ export class CalendarForm extends Component {
   render() {
     const {
       isActive,
+      error,
       day,
       month,
       year,
@@ -219,7 +226,9 @@ export class CalendarForm extends Component {
     } = this.state;
     const days = [];
     const weekDays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+    const errorMsg = "*Select a location";
 
+    //toggle datepicker
     isActive
       ? document.addEventListener("click", this.toggleDatePicker)
       : document.removeEventListener("click", this.toggleDatePicker);
@@ -233,7 +242,7 @@ export class CalendarForm extends Component {
       );
     }
 
-    //days from previous month
+    //polulate days from previous month
     let daysBefore = weekdayIndexOfFirst - 0;
     if (daysBefore > 0) {
       let prevDays = prevDaysInMonth;
@@ -249,7 +258,7 @@ export class CalendarForm extends Component {
       }
     }
 
-    //days from next month
+    //populate days from next month
     let daysAfter = 6 - weekdayIndexOfLast;
     if (daysAfter > 0) {
       for (let i = 1; i <= daysAfter; i++) {
@@ -261,6 +270,7 @@ export class CalendarForm extends Component {
       }
     }
 
+    //this modal component displays conflicts and overriding option for duplicate tech & time
     const modal = this.props.modal ? (
       <ModalComponent>
         <div className="modal">
@@ -325,6 +335,7 @@ export class CalendarForm extends Component {
           <Location />
           <TechListView />
           <button className="btn btn-primary btn-sm">Assign</button>
+          {error ? <div className="error">{errorMsg}</div> : null}
         </form>
 
         <DayView />
