@@ -55,6 +55,7 @@ export class CalendarForm extends Component {
     this.state = {
       isActive: false,
       error: false,
+      roomflag: false,
       day: day,
       month: month,
       year: year,
@@ -64,6 +65,10 @@ export class CalendarForm extends Component {
       weekdayIndexOfLast: weekdayIndexOfLast
     };
   }
+
+  onLocationSelect = roomFlag => {
+    this.setState({ roomFlag: roomFlag });
+  };
 
   toggleDatePicker = e => {
     if (!e.target.classList.contains("arrows")) {
@@ -216,6 +221,7 @@ export class CalendarForm extends Component {
     const {
       isActive,
       error,
+      roomFlag,
       day,
       month,
       year,
@@ -336,6 +342,7 @@ export class CalendarForm extends Component {
                 <td>Type</td>
                 <td>Time </td>
                 <td>Location </td>
+                <td>Room</td>
                 <td>Technologist </td>
                 <td></td>
               </tr>
@@ -349,8 +356,21 @@ export class CalendarForm extends Component {
                   <ShiftTimes />
                 </td>
                 <td>
-                  <Location />
+                  <Location
+                    onLocationSelect={this.onLocationSelect.bind(this)}
+                  />
                 </td>
+                {roomFlag ? (
+                  <td>
+                    <select className="form-control" name="room">
+                      {this.props.rooms.map(room => (
+                        <option key={room.id} value={room.id}>
+                          {room.room}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+                ) : null}
                 <td>
                   <TechListView />
                 </td>
@@ -374,7 +394,8 @@ export class CalendarForm extends Component {
 
 const mapStateToProps = state => ({
   modal: state.modal.modal,
-  values: state.modal.values
+  values: state.modal.values,
+  rooms: state.rooms.rooms
 });
 
 export default connect(mapStateToProps, {

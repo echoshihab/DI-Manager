@@ -14,8 +14,10 @@ export class Location extends Component {
   };
 
   listRooms = e => {
-    this.props.getRooms(e.target.value);
-    this.setState({ room: true });
+    this.props.getRooms(e.target.value); //rooms are rendered calenderform
+    this.setState({ room: true }, function() {
+      this.props.onLocationSelect(this.state.room);
+    });
   };
 
   componentDidMount() {
@@ -39,7 +41,7 @@ export class Location extends Component {
             </option>
           ))}
         </select>
-        {this.state.room ? (
+        {/*this.state.room ? (
           <select className="form-control" name="room">
             {this.props.rooms.map(room => (
               <option key={room.id} value={room.id}>
@@ -49,18 +51,14 @@ export class Location extends Component {
           </select>
         ) : (
           ""
-        )}
+        )*/}
       </Fragment>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  locations: state.locations.locations,
-  rooms: state.rooms.rooms
+  locations: state.locations.locations
 });
 
-export default connect(
-  mapStateToProps,
-  { getLocations, getRooms }
-)(Location);
+export default connect(mapStateToProps, { getLocations, getRooms })(Location);
