@@ -330,11 +330,35 @@ export class CalendarForm extends Component {
           </div>
         </div>
         <form className="form-inline test" onSubmit={this.handleSubmit}>
-          <ExamTypes />
-          <ShiftTimes />
-          <Location />
-          <TechListView />
-          <button className="btn btn-primary btn-sm">Assign</button>
+          <table>
+            <thead>
+              <tr>
+                <td>Type</td>
+                <td>Time </td>
+                <td>Location </td>
+                <td>Technologist </td>
+                <td></td>
+              </tr>
+            </thead>
+            <tr>
+              <td>
+                <ExamTypes />
+              </td>
+              <td>
+                <ShiftTimes />
+              </td>
+              <td>
+                <Location />
+              </td>
+              <td>
+                <TechListView />
+              </td>
+              <td>
+                <button className="btn btn-primary btn-sm">Assign</button>
+              </td>
+            </tr>
+          </table>
+
           {error ? <div className="error">{errorMsg}</div> : null}
         </form>
 
