@@ -11,6 +11,11 @@ export class ShiftTimesList extends Component {
     deleteShiftTime: PropTypes.func.isRequired
   };
 
+  deleteShiftTime = (e, id) => {
+    e.preventDefault();
+    this.props.deleteShiftTime(id);
+  };
+
   componentDidMount() {
     this.props.getShiftTimes();
   }
@@ -30,7 +35,7 @@ export class ShiftTimesList extends Component {
             <a
               href="#"
               className="badge badge-danger ml-2"
-              onClick={this.props.deleteShiftTime.bind(this, shiftTime.id)}
+              onClick={e => this.deleteShiftTime(e, shiftTime.id)}
             >
               Delete
             </a>

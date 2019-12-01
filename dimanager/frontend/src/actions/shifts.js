@@ -315,7 +315,6 @@ export const addExamType = examType => dispatch => {
 
 //DELETE exam type
 export const deleteExamType = id => (dispatch, getState) => {
-  console.log(id);
   axios
     .delete(`/api/exam-types/${id}/`, tokenConfig(getState))
     .then(res => {

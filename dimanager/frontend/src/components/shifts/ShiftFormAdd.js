@@ -7,17 +7,18 @@ export class ShiftFormAdd extends Component {
     startHour: "",
     startMin: "",
     endHour: "",
-    endMin: ""
+    endMin: "",
+    errorFlag: false
   };
 
   handleChange = e => {
-    const re = /^[0-9\b]+$/;
+    const regEx = /^[0-9\b]+$/;
     const {
       target: { name, value }
     } = e;
-    console.log(re.test(value));
-    if (value === "" || re.test(value)) {
-      this.setState({ [name]: value });
+    if (!regEx.test(value)) this.setState({ errorFlag: true });
+    if (value === "" || regEx.test(value)) {
+      this.setState({ [name]: value, errorFlag: false });
     }
   };
 
@@ -31,7 +32,8 @@ export class ShiftFormAdd extends Component {
   };
 
   render() {
-    const { startHour, startMin, endHour, endMin } = this.state;
+    const { startHour, startMin, endHour, endMin, errorFlag } = this.state;
+    let errorMsg = "*Vaid Integer/Whole numbers only";
 
     return (
       <form onSubmit={this.handleSubmit}>
@@ -91,11 +93,13 @@ export class ShiftFormAdd extends Component {
             />
           </div>
         </div>
+
         <div className="form-row">
           <button className="btn btn-secondary btn-sm btn-block mt-1">
             <span style={style}>+</span>
           </button>
         </div>
+        {errorFlag ? <div className="form-row error">{errorMsg}</div> : null}
       </form>
     );
   }

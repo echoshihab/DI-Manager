@@ -340,23 +340,25 @@ export class CalendarForm extends Component {
                 <td></td>
               </tr>
             </thead>
-            <tr>
-              <td>
-                <ExamTypes />
-              </td>
-              <td>
-                <ShiftTimes />
-              </td>
-              <td>
-                <Location />
-              </td>
-              <td>
-                <TechListView />
-              </td>
-              <td>
-                <button className="btn btn-primary btn-sm">Assign</button>
-              </td>
-            </tr>
+            <tbody>
+              <tr>
+                <td>
+                  <ExamTypes />
+                </td>
+                <td>
+                  <ShiftTimes />
+                </td>
+                <td>
+                  <Location />
+                </td>
+                <td>
+                  <TechListView />
+                </td>
+                <td>
+                  <button className="btn btn-primary btn-sm">Assign</button>
+                </td>
+              </tr>
+            </tbody>
           </table>
 
           {error ? <div className="error">{errorMsg}</div> : null}

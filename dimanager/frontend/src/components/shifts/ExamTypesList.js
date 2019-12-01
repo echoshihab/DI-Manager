@@ -46,6 +46,7 @@ export class ExamTypes extends Component {
             <input
               name="examType"
               className="form-control mr-sm-2"
+              maxLength="15"
               type="text"
               placeholder="..add exam type"
               onChange={this.onChange}
@@ -82,7 +83,8 @@ const style = {
   fontSize: "30px"
 };
 
-export default connect(
-  mapStateToProps,
-  { getExamTypes, addExamType, deleteExamType }
-)(ExamTypes);
+export default connect(mapStateToProps, {
+  getExamTypes,
+  addExamType,
+  deleteExamType
+})(ExamTypes);
