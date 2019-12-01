@@ -4,6 +4,7 @@ import ExamTypesList from "./ExamTypesList";
 import LocationBuild from "../resources/LocationBuild";
 import RoomBuild from "../resources/RoomBuild";
 import BuilderDashboard from "../layout/BuilderDashboard";
+import "./ShiftBuilder.css";
 
 export class ShiftBuilder extends Component {
   state = {

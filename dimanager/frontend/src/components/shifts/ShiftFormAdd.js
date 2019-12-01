@@ -4,17 +4,21 @@ import { buildShift } from "../../actions/shifts";
 
 export class ShiftFormAdd extends Component {
   state = {
-    startHour: "00",
-    startMin: "00",
-    endHour: "00",
-    endMin: "00"
+    startHour: "",
+    startMin: "",
+    endHour: "",
+    endMin: ""
   };
 
   handleChange = e => {
+    const re = /^[0-9\b]+$/;
     const {
       target: { name, value }
     } = e;
-    this.setState({ [name]: value });
+    console.log(re.test(value));
+    if (value === "" || re.test(value)) {
+      this.setState({ [name]: value });
+    }
   };
 
   handleSubmit = e => {
@@ -40,10 +44,11 @@ export class ShiftFormAdd extends Component {
               name="startHour"
               value={startHour}
               onChange={this.handleChange}
+              placeholder="HH"
               maxLength="2"
             />
           </div>
-          <strong>:</strong>
+          <strong className="separator">:</strong>
           <div className="col">
             <input
               type="text"
@@ -51,6 +56,7 @@ export class ShiftFormAdd extends Component {
               name="startMin"
               value={startMin}
               onChange={this.handleChange}
+              placeholder="MM"
               maxLength="2"
             />
           </div>
@@ -65,6 +71,7 @@ export class ShiftFormAdd extends Component {
               type="text"
               className="form-control mr-sm-2"
               name="endHour"
+              placeholder="HH"
               value={endHour}
               onChange={this.handleChange}
               maxLength="2"
@@ -77,6 +84,7 @@ export class ShiftFormAdd extends Component {
               type="text"
               className="form-control mr-sm-2"
               name="endMin"
+              placeholder="MM"
               value={endMin}
               onChange={this.handleChange}
               maxLength="2"
