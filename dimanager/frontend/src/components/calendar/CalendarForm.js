@@ -64,8 +64,11 @@ export class CalendarForm extends Component {
     };
   }
 
-  toggleDatePicker = () =>
-    this.setState(prevState => ({ isActive: !prevState.isActive }));
+  toggleDatePicker = e => {
+    if (!e.target.classList.contains("arrows")) {
+      this.setState(prevState => ({ isActive: !prevState.isActive }));
+    }
+  };
 
   viewNextMonth = () => {
     let newYear,
@@ -218,10 +221,8 @@ export class CalendarForm extends Component {
     const weekDays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
     isActive
-      ? document.addEventListener("click", function() {
-          this.toggleDatePicker;
-        })
-      : null;
+      ? document.addEventListener("click", this.toggleDatePicker)
+      : document.removeEventListener("click", this.toggleDatePicker);
 
     //populate days in a month
     for (let i = 1; i <= daysInMonth; i++) {
@@ -310,7 +311,7 @@ export class CalendarForm extends Component {
             </div>
             <div className="days">
               {weekDays.map((weekDay, index) => (
-                <div className="day" key={index}>
+                <div className="day weekday" key={index}>
                   {weekDay}
                 </div>
               ))}

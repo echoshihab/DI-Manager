@@ -102,4 +102,9 @@
 .other-days {
   background-color: #d3d3d3;
   font-style: italic;
+  cursor: not-allowed;
+}
+
+.weekday {
+  cursor: default;
 }
