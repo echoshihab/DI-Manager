@@ -55,7 +55,7 @@ export class CalendarForm extends Component {
     this.state = {
       isActive: false,
       error: false,
-      roomflag: false,
+      roomFlag: false,
       day: day,
       month: month,
       year: year,
@@ -342,7 +342,7 @@ export class CalendarForm extends Component {
                 <td>Type</td>
                 <td>Time </td>
                 <td>Location </td>
-                <td>Room</td>
+                {this.state.roomFlag ? <td>Room</td> : null}
                 <td>Technologist </td>
                 <td></td>
               </tr>

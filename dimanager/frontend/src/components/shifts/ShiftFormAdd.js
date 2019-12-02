@@ -36,6 +36,13 @@ export class ShiftFormAdd extends Component {
     } else {
       const startTime = startHour.value + ":" + startMin.value;
       const endTime = endHour.value + ":" + endMin.value;
+      this.setState({
+        startHour: "",
+        startMin: "",
+        endHour: "",
+        endMin: "",
+        errorFlag: false
+      });
       this.props.buildShift(startTime, endTime);
     }
   };

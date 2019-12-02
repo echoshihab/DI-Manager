@@ -41,17 +41,6 @@ export class Location extends Component {
             </option>
           ))}
         </select>
-        {/*this.state.room ? (
-          <select className="form-control" name="room">
-            {this.props.rooms.map(room => (
-              <option key={room.id} value={room.id}>
-                {room.room}
-              </option>
-            ))}
-          </select>
-        ) : (
-          ""
-        )*/}
       </Fragment>
     );
   }
