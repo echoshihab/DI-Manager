@@ -24,15 +24,16 @@ export class ShiftFormAdd extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    let { startHour, startMin, endHour, endMin } = e.target;
     let regEx = /^[0-9\b]+$/;
-    const {
-      target: { name, value }
-    } = e;
-    if (!regEx.test(value)) {
+    if (
+      !regEx.test(startHour.value) ||
+      !regEx.test(startMin.value) ||
+      !regEx.test(endHour.value) ||
+      !regEx.test(endMin.value)
+    ) {
       this.setState({ errorFlag: true });
     } else {
-      let { startHour, startMin, endHour, endMin } = e.target;
-
       const startTime = startHour.value + ":" + startMin.value;
       const endTime = endHour.value + ":" + endMin.value;
       this.props.buildShift(startTime, endTime);

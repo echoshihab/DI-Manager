@@ -23,7 +23,7 @@ import store from "../store";
 import ShiftBuilder from "./shifts/ShiftBuilder";
 
 const alertOptions = {
-  timeout: 2000,
+  timeout: 4000,
   position: "top center"
 };
 

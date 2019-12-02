@@ -12,6 +12,13 @@ class ShiftTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShiftTime
         fields = '__all__'
+        validators = [
+            serializers.UniqueTogetherValidator(
+                queryset = model.objects.all(),
+                fields=("start_time", "end_time"),
+                message="Error: Duplicate Shift"
+            )
+        ]
 
 
 class ShiftsSerializer(serializers.ModelSerializer):
