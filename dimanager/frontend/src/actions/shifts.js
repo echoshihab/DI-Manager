@@ -189,7 +189,6 @@ export const assignShift = (dateOfShift, examType, shiftTime, room, tech) => (
 
 //delete Shift
 export const deleteShift = id => dispatch => {
-  console.log(id);
   axios
     .delete(`/api/shifts/${id}/`)
     .then(res => {
@@ -307,7 +306,6 @@ export const addExamType = examType => dispatch => {
       });
     })
     .catch(err => {
-      console.log(err);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };

@@ -105,14 +105,13 @@ export const addRoom = (room, locationID) => dispatch => {
   axios
     .post("/api/rooms/", body, config)
     .then(res => {
-      console.log(res.data);
       dispatch({
         type: ADD_ROOM,
         payload: res.data
       });
     })
     .catch(err => {
-      console.log(err);
+      console.log(err.response);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
