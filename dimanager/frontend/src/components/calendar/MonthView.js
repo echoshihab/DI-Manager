@@ -169,7 +169,7 @@ export class MonthView extends Component {
                   }
                 }}
               >
-                <i className="material-icons md-18">edit</i>
+                <i className="material-icons md-18 pen">edit</i>
               </Link>
             </li>
           )
@@ -177,6 +177,19 @@ export class MonthView extends Component {
           days.push(
             <li className="day" key={i}>
               <strong className="daysOfMonth">{i}</strong>
+              <div className="shift-container" />
+              <Link
+                to={{
+                  pathname: "/calendar",
+                  param: {
+                    day: i,
+                    month: month,
+                    year: year
+                  }
+                }}
+              >
+                <i className="material-icons md-18 pen">edit</i>
+              </Link>
             </li>
           );
     }
@@ -240,27 +253,13 @@ export class MonthView extends Component {
         </div>
         <div className="calendar">
           <ul className="weekdays">
-            <li>
-              <abbr title="S">Sunday</abbr>
-            </li>
-            <li>
-              <abbr title="M">Monday</abbr>
-            </li>
-            <li>
-              <abbr title="T">Tuesday</abbr>
-            </li>
-            <li>
-              <abbr title="W">Wednesday</abbr>
-            </li>
-            <li>
-              <abbr title="T">Thursday</abbr>
-            </li>
-            <li>
-              <abbr title="F">Friday</abbr>
-            </li>
-            <li>
-              <abbr title="S">Saturday</abbr>
-            </li>
+            <li>Sunday</li>
+            <li>Monday</li>
+            <li>Tuesday</li>
+            <li>Wednesday</li>
+            <li>Thursday</li>
+            <li>Friday</li>
+            <li>Saturday</li>
           </ul>
 
           <ul className="day-grid">{days}</ul>
