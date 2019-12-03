@@ -38,10 +38,10 @@ class ShiftsViewSet(viewsets.ModelViewSet):
         date_range_parameter = self.request.query_params.get('date_range', None)
 
         if date_parameter is not None:
-            return Shifts.objects.filter(date_of_shift=date_parameter)
+            return Shifts.objects.filter(date_of_shift=date_parameter).order_by('room')
         elif date_range_parameter is not None:
             date_range = date_range_parameter.split("^")
-            return Shifts.objects.filter(date_of_shift__range=date_range)
+            return Shifts.objects.filter(date_of_shift__range=date_range).order_by('room')
         else:
             return Shifts.objects.all()
 
