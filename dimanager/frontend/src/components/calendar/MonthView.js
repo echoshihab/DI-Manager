@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 const shiftQuery = (getShifts, year, month, daysInMonth) => {
   let selectedDate = `${year}-${month + 1}-01^${year}-${month +
     1}-${daysInMonth}`;
-  console.log(selectedDate);
   getShifts(selectedDate);
 };
 
@@ -63,9 +62,7 @@ export class MonthView extends Component {
   handleYearQuery = mod => {
     let modification;
     mod == "plus" ? (modification = 1) : (modification = -1);
-    console.log(modification);
     let newYear = this.state.year + modification;
-    console.log(newYear);
     let newDaysInMonth = new Date(newYear, this.state.month + 1, 0).getDate();
     let newWeekdayIndexOfFirst = new Date(
       newYear,
@@ -196,7 +193,6 @@ export class MonthView extends Component {
 
     //days from previous month represented as gray boxes in monthview
     let daysBefore = weekdayIndexOfFirst - 0;
-    console.log(daysBefore);
     if (daysBefore > 0) {
       for (let i = 1; i <= daysBefore; i++) {
         days.unshift(<li className="month-prev" key={i + "prev"}></li>);
@@ -205,7 +201,6 @@ export class MonthView extends Component {
 
     //days from next month represented as gray boxes in monthview
     let daysAfter = 6 - weekdayIndexOfLast;
-    console.log(daysAfter);
     if (daysAfter > 0) {
       for (let i = 1; i <= daysAfter; i++) {
         days.push(<li className="month-next" key={i + "next"}></li>);

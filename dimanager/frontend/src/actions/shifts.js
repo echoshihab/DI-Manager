@@ -142,7 +142,7 @@ export const assignShift = (dateOfShift, examType, shiftTime, room, tech) => (
       let newStartTime = secondsConverter(newShiftTime.start_time);
       let newEndTime = secondsConverter(newShiftTime.end_time);
       shiftCompare(currentStartTime, currentEndTime, newStartTime, newEndTime)
-        ? (timeDetail = "Overlap of time, please review")
+        ? (timeDetail = `Overlap of time in room ${duplicateRoomShift.room.room}, please review`)
         : (timeDetail = "No Time Conflict");
     }
 

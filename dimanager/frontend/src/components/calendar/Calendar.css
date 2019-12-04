@@ -94,11 +94,16 @@
 }
 
 .modal-content {
+  height: 100px;
   color: black;
-  height: 50%;
-  width: 50%;
+  text-align: center;
+  align-items: center;
 }
 
+.modal-button {
+  height: 25px;
+  padding-bottom: 1px;
+}
 .other-days {
   background-color: #d3d3d3;
   font-style: italic;

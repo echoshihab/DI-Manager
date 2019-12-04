@@ -286,20 +286,22 @@ export class CalendarForm extends Component {
               <strong>{" " + this.props.values.tech_init + " "}</strong>
             </span>
             <div>Time Conflict: {this.props.values.timeDetail} </div>
-            <button
-              className="btn btn-primary btn-sm btn-block"
-              onClick={this.props.closeModal}
-            >
-              Cancel
-            </button>
-            <button
-              className="btn btn-secondary btn-sm btn-block"
-              onClick={() => {
-                this.props.validAssignShift(this.props.values);
-              }}
-            >
-              Assign Anyway
-            </button>
+            <div>
+              <button
+                className="btn btn-primary btn-sm w-50 h-15 modal-button"
+                onClick={this.props.closeModal}
+              >
+                Cancel
+              </button>
+              <button
+                className="btn btn-danger btn-sm w-50 h-15 modal-button"
+                onClick={() => {
+                  this.props.validAssignShift(this.props.values);
+                }}
+              >
+                Override
+              </button>
+            </div>
           </div>
         </div>
       </ModalComponent>
