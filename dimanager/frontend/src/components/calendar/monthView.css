@@ -1,116 +1,84 @@
-/* Used starter template from - https://css-tricks.com/snippets/css/css-grid-starter-layouts/ by Geoff graham */
-/*
-header {
-  display: flex;
-  align-items: center;
-  font-size: calc(16px + (26 - 16) * ((100vw - 300px) / (1600 - 300)));
-  justify-content: center;
-  margin-bottom: 2em;
-  background: #fff;
-  color: #000;
-  min-height: 10vh;
-  text-align: center;
+.mv-wrapper {
+  display: grid;
 }
-*/
 
-ul {
+.mv-day-grid,
+.mv-wkdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-gap: 1em;
-
-  max-width: 120em;
-  padding: 0;
 }
 
-li {
+.mv-li {
   display: flex;
   list-style: none;
   margin-left: 0;
   font-size: 75%;
 }
 
-.daysOfMonth {
+.mv-daysOfMonth {
   color: #000;
   font-weight: 900;
   margin-left: 2px;
 }
 
-ul.weekdays {
+.mv-wkdays {
   margin-bottom: 1em;
 }
 
-ul.weekdays li {
+.mv-wkday {
   margin-top: 2em;
   height: 1vw;
 }
 
-ul.day-grid li.day {
+.mv-day-grid .mv-li.mv-day {
   background-color: #fff;
   border: 1px solid #000;
-  height: 12vw;
-  width: 200px;
-  max-width: 250px;
-  max-height: 150px;
+  min-height: 12vw;
+  min-width: 11vw;
 }
 
-ul.weekdays abbr[title] {
-  border: none;
-  font-weight: 800;
-  text-decoration: none;
+.mv-year {
+  align-content: center;
 }
-
-@media all and (max-width: 800px) {
-  ul {
-    grid-gap: 0.25em;
-  }
-
-  ul.weekdays li {
-    font-size: 0;
-  }
-
-  ul.weekdays > li abbr:after {
-    content: attr(title);
-    font-size: calc(16px + (26 - 16) * ((100vw - 300px) / (1600 - 300)));
-    text-align: center;
-  }
-}
-
-.year-mod {
+.mv-year-mod {
   font-size: 20px;
 }
 
-.selected-month {
-  font-size: 30px;
+.mv-selected-month {
+  font-size: 18px;
 }
 
-.shift-container {
+.mv-shift-container {
   display: flex;
   flex-direction: column;
   width: 100%;
   margin-top: 10%;
   list-style: none;
 }
-.shift {
+.mv-shift {
   color: yellow;
   background: black;
   flex-wrap: nowrap;
 }
 
-.shift:nth-child(even) {
+.mv-shift:nth-child(even) {
   color: black;
   background: yellow;
 }
 
-.material-icons.md-18 {
-  font-size: 18px;
-}
-
-.pen {
+.mv-pen {
+  font-size: 1.5em;
   outline: 1px solid black;
 }
 
-/*this below is for the white boxes */
-.month-prev,
-.month-next {
+.mv-month-prev,
+.mv-month-next {
   background-color: #d3d3d3;
+}
+
+.mv-months {
+  display: flex;
+  justify-content: flex-start;
+  max-width: 95%;
 }

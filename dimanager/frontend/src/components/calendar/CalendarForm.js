@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from "react";
+import React, { Component } from "react";
 import ExamTypes from "../shifts/ExamTypes";
 import ShiftTimes from "../shifts/ShiftTimes";
 import Location from "../resources/Location";
@@ -307,7 +307,7 @@ export class CalendarForm extends Component {
       </ModalComponent>
     ) : null;
     return (
-      <Fragment>
+      <div className="container">
         <div className="date-picker" onClick={this.toggleDatePicker}>
           <div className="selected-date">
             {(day < 10 ? "0" + day : day) +
@@ -389,7 +389,7 @@ export class CalendarForm extends Component {
         <DayView />
         <div id="modal-root"></div>
         {modal}
-      </Fragment>
+      </div>
     );
   }
 }

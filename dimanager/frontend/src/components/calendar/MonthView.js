@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Fragment, Component } from "react";
 import "./monthView.css";
 import { getShiftsForMonth } from "../../actions/shifts";
 import { connect } from "react-redux";
@@ -120,6 +120,16 @@ export class MonthView extends Component {
       "December"
     ];
 
+    const weekDays = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ];
+
     const days = [];
 
     for (let i = 1; i <= daysInMonth; i++) {
@@ -138,12 +148,12 @@ export class MonthView extends Component {
       //to days array in order to map out calender view later
       result.length > 0
         ? days.push(
-            <li className="day" key={i}>
-              <span className="daysOfMonth">{i}</span>
+            <li className="mv-li mv-day" key={i}>
+              <span className="mv-daysOfMonth">{i}</span>
 
-              <div className="shift-container">
+              <div className="mv-shift-container">
                 {result.map(r => (
-                  <div className="shift" key={r.id}>
+                  <div className="mv-shift" key={r.id}>
                     {r.room.room +
                       " " +
                       r.exam_type.exam_type +
@@ -166,15 +176,15 @@ export class MonthView extends Component {
                   }
                 }}
               >
-                <i className="material-icons md-18 pen">edit</i>
+                <i className="material-icons md-18 mv-pen">edit</i>
               </Link>
             </li>
           )
         : //if no matches, just push the day of month to days array
           days.push(
-            <li className="day" key={i}>
-              <strong className="daysOfMonth">{i}</strong>
-              <div className="shift-container" />
+            <li className="mv-li mv-day" key={i}>
+              <strong className="mv-daysOfMonth">{i}</strong>
+              <div className="mv-shift-container" />
               <Link
                 to={{
                   pathname: "/calendar",
@@ -185,7 +195,7 @@ export class MonthView extends Component {
                   }
                 }}
               >
-                <i className="material-icons md-18 pen">edit</i>
+                <i className="material-icons md-18 mv-pen">edit</i>
               </Link>
             </li>
           );
@@ -195,7 +205,9 @@ export class MonthView extends Component {
     let daysBefore = weekdayIndexOfFirst - 0;
     if (daysBefore > 0) {
       for (let i = 1; i <= daysBefore; i++) {
-        days.unshift(<li className="month-prev" key={i + "prev"}></li>);
+        days.unshift(
+          <li className="mv-li mv-month-prev" key={i + "prev"}></li>
+        );
       }
     }
 
@@ -203,12 +215,12 @@ export class MonthView extends Component {
     let daysAfter = 6 - weekdayIndexOfLast;
     if (daysAfter > 0) {
       for (let i = 1; i <= daysAfter; i++) {
-        days.push(<li className="month-next" key={i + "next"}></li>);
+        days.push(<li className="mv-li mv-month-next" key={i + "next"}></li>);
       }
     }
 
     return (
-      <div className="container d-flex align-items-center flex-column justify-content-center h-100">
+      <div className="container-fluid">
         <div className="btn-group btn-group-horizontal">
           <button
             type="button"
@@ -216,20 +228,20 @@ export class MonthView extends Component {
             id="plus"
             onClick={() => this.handleYearQuery("plus")}
           >
-            <strong className="year-mod">+</strong>
+            <strong className="mv-year-mod">+</strong>
           </button>
-          <h1>{year}</h1>
+          <h1 className="mv-year">{year}</h1>
           <button
             type="button"
             className="btn btn-sm btn-secondary"
             id="minus"
             onClick={() => this.handleYearQuery("minus")}
           >
-            <strong className="year-mod">-</strong>
+            <strong className="mv-year-mod">-</strong>
           </button>
         </div>
 
-        <div className="btn-group" role="group" aria-label="months">
+        <div className="btn-group mv-months" role="group">
           {months.map((month, index) => {
             return (
               <button
@@ -237,7 +249,7 @@ export class MonthView extends Component {
                 key={month}
                 className={
                   "btn btn-secondary " +
-                  (this.state.month == index ? "selected-month" : "")
+                  (this.state.month == index ? "mv-selected-month" : "")
                 }
                 onClick={e => this.handleMonthQuery(index, e)}
               >
@@ -246,18 +258,19 @@ export class MonthView extends Component {
             );
           })}
         </div>
-        <div className="calendar">
-          <ul className="weekdays">
-            <li>Sunday</li>
-            <li>Monday</li>
-            <li>Tuesday</li>
-            <li>Wednesday</li>
-            <li>Thursday</li>
-            <li>Friday</li>
-            <li>Saturday</li>
+
+        <div className="mv-wrapper">
+          <ul className="mv-wkdays">
+            {weekDays.map(weekDay => {
+              return (
+                <li className="mv-li mv-wkday" key={weekDay}>
+                  {weekDay}
+                </li>
+              );
+            })}
           </ul>
 
-          <ul className="day-grid">{days}</ul>
+          <ul className="mv-day-grid">{days}</ul>
         </div>
       </div>
     );
