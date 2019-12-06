@@ -38,15 +38,29 @@
   min-width: 11vw;
 }
 
-.mv-year {
-  align-content: center;
-}
-.mv-year-mod {
-  font-size: 20px;
+.mv-year-wrapper {
+  margin-top: 10px;
+  display: flex;
+  transition: transform 0.5s;
+  justify-content: center;
 }
 
+.mv-year-mod {
+  cursor: pointer;
+  padding-top: 3px;
+}
+
+.mv-year-mod:hover {
+  transform: scale(1.3);
+  color: #2f4f4f;
+}
+
+.mv-month {
+  margin: auto;
+}
 .mv-selected-month {
-  font-size: 18px;
+  transform: scale(1.5);
+  text-decoration: red underline;
 }
 
 .mv-shift-container {
@@ -79,6 +93,23 @@
 
 .mv-months {
   display: flex;
-  justify-content: flex-start;
-  max-width: 95%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 740px) {
+  .mv-test {
+    overflow-x: scroll;
+  }
+  .mv-responsive {
+    outline: 1px solid black;
+    overflow-x: scroll;
+    scrollbar-color: red yellow;
+  }
+  .mv-day {
+    width: 81px;
+  }
+  .mv-months {
+    width: 695px;
+  }
 }

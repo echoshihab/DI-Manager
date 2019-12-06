@@ -166,18 +166,20 @@ export class MonthView extends Component {
                   </div>
                 ))}
               </div>
-              <Link
-                to={{
-                  pathname: "/calendar",
-                  param: {
-                    day: i,
-                    month: month,
-                    year: year
-                  }
-                }}
-              >
-                <i className="material-icons md-18 mv-pen">edit</i>
-              </Link>
+              <div className="mv-edit">
+                <Link
+                  to={{
+                    pathname: "/calendar",
+                    param: {
+                      day: i,
+                      month: month,
+                      year: year
+                    }
+                  }}
+                >
+                  <i className="material-icons mv-pen">edit</i>
+                </Link>
+              </div>
             </li>
           )
         : //if no matches, just push the day of month to days array
@@ -185,18 +187,20 @@ export class MonthView extends Component {
             <li className="mv-li mv-day" key={i}>
               <strong className="mv-daysOfMonth">{i}</strong>
               <div className="mv-shift-container" />
-              <Link
-                to={{
-                  pathname: "/calendar",
-                  param: {
-                    day: i,
-                    month: month,
-                    year: year
-                  }
-                }}
-              >
-                <i className="material-icons md-18 mv-pen">edit</i>
-              </Link>
+              <div className="mv-edit">
+                <Link
+                  to={{
+                    pathname: "/calendar",
+                    param: {
+                      day: i,
+                      month: month,
+                      year: year
+                    }
+                  }}
+                >
+                  <i className="material-icons mv-pen">edit</i>
+                </Link>
+              </div>
             </li>
           );
     }
@@ -221,56 +225,60 @@ export class MonthView extends Component {
 
     return (
       <div className="container-fluid">
-        <div className="btn-group btn-group-horizontal">
-          <button
-            type="button"
-            className="btn btn-sm btn-secondary"
+        <div className="mv-year-wrapper">
+          <i
+            className="material-icons mv-year-mod"
             id="plus"
             onClick={() => this.handleYearQuery("plus")}
           >
-            <strong className="mv-year-mod">+</strong>
-          </button>
+            keyboard_arrow_up
+          </i>
+
           <h1 className="mv-year">{year}</h1>
-          <button
-            type="button"
-            className="btn btn-sm btn-secondary"
+
+          <i
+            className="material-icons mv-year-mod"
             id="minus"
             onClick={() => this.handleYearQuery("minus")}
           >
-            <strong className="mv-year-mod">-</strong>
-          </button>
+            keyboard_arrow_down
+          </i>
         </div>
 
-        <div className="btn-group mv-months" role="group">
-          {months.map((month, index) => {
-            return (
-              <button
-                type="button"
-                key={month}
-                className={
-                  "btn btn-secondary " +
-                  (this.state.month == index ? "mv-selected-month" : "")
-                }
-                onClick={e => this.handleMonthQuery(index, e)}
-              >
-                {month}
-              </button>
-            );
-          })}
-        </div>
-
-        <div className="mv-wrapper">
-          <ul className="mv-wkdays">
-            {weekDays.map(weekDay => {
+        <div className="mv-responsive">
+          <div className="mv-months">
+            {months.map((month, index) => {
               return (
-                <li className="mv-li mv-wkday" key={weekDay}>
-                  {weekDay}
-                </li>
+                <button
+                  type="button"
+                  key={month}
+                  className={
+                    "btn btn-secondary " +
+                    (this.state.month == index
+                      ? "mv-selected-month"
+                      : "mv-month")
+                  }
+                  onClick={e => this.handleMonthQuery(index, e)}
+                >
+                  {month}
+                </button>
               );
             })}
-          </ul>
+          </div>
 
-          <ul className="mv-day-grid">{days}</ul>
+          <div className="mv-wrapper">
+            <ul className="mv-wkdays">
+              {weekDays.map(weekDay => {
+                return (
+                  <li className="mv-li mv-wkday" key={weekDay}>
+                    {weekDay}
+                  </li>
+                );
+              })}
+            </ul>
+
+            <ul className="mv-day-grid">{days}</ul>
+          </div>
         </div>
       </div>
     );
