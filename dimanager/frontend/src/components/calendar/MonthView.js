@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from "react";
 import "./monthView.css";
-import { getShiftsForMonth } from "../../actions/shifts";
+import { getShiftsForMonth, clearShifts } from "../../actions/shifts";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -95,6 +95,10 @@ export class MonthView extends Component {
   componentDidMount() {
     const { year, month, daysInMonth } = this.state;
     shiftQuery(this.props.getShiftsForMonth, year, month, daysInMonth);
+  }
+
+  componentWillUnmount() {
+    this.props.clearShifts();
   }
 
   render() {
@@ -289,4 +293,6 @@ const mapStateToProps = state => ({
   shifts: state.shifts.shifts
 });
 
-export default connect(mapStateToProps, { getShiftsForMonth })(MonthView);
+export default connect(mapStateToProps, { getShiftsForMonth, clearShifts })(
+  MonthView
+);

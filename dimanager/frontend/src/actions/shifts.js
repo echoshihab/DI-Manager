@@ -11,7 +11,8 @@ import {
   BUILD_SHIFTTIMES,
   DELETE_SHIFTTIME,
   ADD_EXAMTYPE,
-  DELETE_EXAMTYPE
+  DELETE_EXAMTYPE,
+  CLEAR_SHIFT
 } from "./types";
 import { tokenConfig } from "./auth";
 
@@ -323,4 +324,10 @@ export const deleteExamType = id => (dispatch, getState) => {
     .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
+};
+
+export const clearShifts = () => dispatch => {
+  dispatch({
+    type: CLEAR_SHIFT
+  });
 };

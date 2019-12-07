@@ -40,6 +40,7 @@ export const DELETE_ROOM = "DELETE_ROOM";
 export const SHIFT_ADDED = "SHIFT_ADDED";
 export const SHIFT_DELETED = "SHIFT_DELETED";
 export const SHIFT_RETRIEVE = "SHIFT_RETRIEVE";
+export const CLEAR_SHIFT = "SHIFT_CLEAR";
 
 //MISC
 export const DUPLICATE_ITEMS = "DUPLICATE ITEMS";

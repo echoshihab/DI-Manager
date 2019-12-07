@@ -15,6 +15,9 @@ import {
 import { connect } from "react-redux";
 
 //loader
+const hideLoader = loader => {
+  loader.classList.add("loader--hide");
+};
 
 //helper function for querying for shifts
 const shiftQuery = getShifts => {
@@ -216,10 +219,6 @@ export class CalendarForm extends Component {
     }
   };
 
-  hideLoader = loader => {
-    loader.classList.add("loader--hide");
-  };
-
   componentDidMount() {
     //query for shift with user selected date coming from monthview
     if (this.props.location.param) {
@@ -231,9 +230,6 @@ export class CalendarForm extends Component {
     } else {
       shiftQuery(this.props.getShiftsForDay);
     }
-
-    const loader = document.querySelector(".loader");
-    this.hideLoader(loader);
   }
 
   render() {
@@ -327,7 +323,6 @@ export class CalendarForm extends Component {
     ) : null;
     return (
       <div className="container">
-        <div className="loader"></div>
         <div className="date-picker" onClick={this.toggleDatePicker}>
           <div className="selected-date">
             {(day < 10 ? "0" + day : day) +

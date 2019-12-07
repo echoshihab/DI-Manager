@@ -1,7 +1,8 @@
 import {
   SHIFT_ADDED,
   SHIFT_RETRIEVE,
-  SHIFT_DELETED
+  SHIFT_DELETED,
+  CLEAR_SHIFT
 } from "../actions/types.js";
 
 const initialState = {
@@ -25,7 +26,8 @@ export default function(state = initialState, action) {
         ...state,
         shifts: state.shifts.filter(shift => shift.id !== action.payload)
       };
-
+    case CLEAR_SHIFT:
+      return initialState;
     default:
       return state;
   }
