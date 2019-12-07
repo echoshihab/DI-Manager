@@ -42,11 +42,6 @@ const months = [
   "December"
 ];
 
-const showLoader = () => loader.classList.remove("loader--hide");
-const hideLoader = () => {
-  let loader = document.querySelector(".loader");
-  loader.classList.add("loader--hide");
-};
 export class CalendarForm extends Component {
   constructor() {
     super();
@@ -97,14 +92,19 @@ export class CalendarForm extends Component {
       newPrevDaysInMonth = this.state.daysInMonth;
       newWeekdayIndexOfFirst = new Date(newYear, 0, 1).getDay();
       newWeekdayIndexOfLast = new Date(newYear, 0, newDaysInMonth).getDay();
-      this.setState({
-        month: 0,
-        year: newYear,
-        daysInMonth: newDaysInMonth,
-        prevDaysInMonth: newPrevDaysInMonth,
-        weekdayIndexOfFirst: newWeekdayIndexOfFirst,
-        weekdayIndexOfLast: newWeekdayIndexOfLast
-      });
+      this.setState(
+        {
+          month: 0,
+          year: newYear,
+          daysInMonth: newDaysInMonth,
+          prevDaysInMonth: newPrevDaysInMonth,
+          weekdayIndexOfFirst: newWeekdayIndexOfFirst,
+          weekdayIndexOfLast: newWeekdayIndexOfLast
+        },
+        function() {
+          shiftQuery(this.props.getShiftsForDay);
+        }
+      );
     } else {
       newDaysInMonth = new Date(this.state.year, nextMonth + 1, 0).getDate();
       newPrevDaysInMonth = this.state.daysInMonth;
@@ -147,15 +147,20 @@ export class CalendarForm extends Component {
       newWeekdayIndexOfFirst = new Date(newYear, 11, 1).getDay();
       newWeekdayIndexOfLast = new Date(newYear, 11, newDaysInMonth).getDay();
 
-      this.setState({
-        day: 1,
-        month: 11,
-        year: newYear,
-        daysInMonth: newDaysInMonth,
-        prevDaysInMonth: newPrevDaysInMonth,
-        weekdayIndexOfFirst: newWeekdayIndexOfFirst,
-        weekdayIndexOfLast: newWeekdayIndexOfLast
-      });
+      this.setState(
+        {
+          day: 1,
+          month: 11,
+          year: newYear,
+          daysInMonth: newDaysInMonth,
+          prevDaysInMonth: newPrevDaysInMonth,
+          weekdayIndexOfFirst: newWeekdayIndexOfFirst,
+          weekdayIndexOfLast: newWeekdayIndexOfLast
+        },
+        function() {
+          shiftQuery(this.props.getShiftsForDay);
+        }
+      );
     } else {
       newDaysInMonth = new Date(this.state.year, prevMonth + 1, 0).getDate();
       newPrevDaysInMonth = new Date(this.state.year, prevMonth, 0).getDate();
@@ -211,6 +216,10 @@ export class CalendarForm extends Component {
     }
   };
 
+  hideLoader = loader => {
+    loader.classList.add("loader--hide");
+  };
+
   componentDidMount() {
     //query for shift with user selected date coming from monthview
     if (this.props.location.param) {
@@ -223,7 +232,8 @@ export class CalendarForm extends Component {
       shiftQuery(this.props.getShiftsForDay);
     }
 
-    hideLoader();
+    const loader = document.querySelector(".loader");
+    this.hideLoader(loader);
   }
 
   render() {
