@@ -14,6 +14,8 @@ import {
 } from "../../actions/shifts";
 import { connect } from "react-redux";
 
+//loader
+
 //helper function for querying for shifts
 const shiftQuery = getShifts => {
   let selectedDate = document
@@ -40,6 +42,11 @@ const months = [
   "December"
 ];
 
+const showLoader = () => loader.classList.remove("loader--hide");
+const hideLoader = () => {
+  let loader = document.querySelector(".loader");
+  loader.classList.add("loader--hide");
+};
 export class CalendarForm extends Component {
   constructor() {
     super();
@@ -215,6 +222,8 @@ export class CalendarForm extends Component {
     } else {
       shiftQuery(this.props.getShiftsForDay);
     }
+
+    hideLoader();
   }
 
   render() {
@@ -308,6 +317,7 @@ export class CalendarForm extends Component {
     ) : null;
     return (
       <div className="container">
+        <div className="loader"></div>
         <div className="date-picker" onClick={this.toggleDatePicker}>
           <div className="selected-date">
             {(day < 10 ? "0" + day : day) +

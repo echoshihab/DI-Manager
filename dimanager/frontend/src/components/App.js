@@ -39,15 +39,16 @@ class App extends Component {
             <Fragment>
               <Header />
               <Alerts />
-
-              <Switch>
-                <PrivateRoute exact path="/" component={Dashboard} />
-                <Route exact path="/register" component={Register} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/calendar" component={CalendarForm} />
-                <Route exact path="/shiftbuilder" component={ShiftBuilder} />
-                <Route exact path="/monthview" component={MonthView} />
-              </Switch>
+              <div className="container-fluid">
+                <Switch>
+                  <PrivateRoute exact path="/" component={CalendarForm} />
+                  <Route exact path="/register" component={Register} />
+                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/calendar" component={CalendarForm} />
+                  <Route exact path="/shiftbuilder" component={ShiftBuilder} />
+                  <Route exact path="/monthview" component={MonthView} />
+                </Switch>
+              </div>
             </Fragment>
           </Router>
         </AlertProvider>

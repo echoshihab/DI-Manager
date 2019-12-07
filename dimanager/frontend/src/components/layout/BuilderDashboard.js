@@ -31,6 +31,13 @@ const BuilderDashboard = props => {
       >
         Build Rooms
       </button>
+      <button
+        className="btn btn-outline-primary"
+        name="techBuilder"
+        onClick={props.toggleComponent}
+      >
+        Add Technologist
+      </button>
     </div>
   );
 };

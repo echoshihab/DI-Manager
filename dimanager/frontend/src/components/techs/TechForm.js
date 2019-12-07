@@ -31,11 +31,10 @@ export class TechForm extends Component {
     const { name, initials, certs } = this.state;
 
     return (
-      <div className="card card-body mt-4 mb-4">
-        <h2>Add Technologist</h2>
+      <div className="card card-body">
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
-            <label>Name</label>
+            <label>Technologist Name</label>
             <input
               className="form-control"
               type="text"
@@ -65,8 +64,8 @@ export class TechForm extends Component {
             />
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-primary">
-              Submit
+            <button type="submit" className="btn btn-primary btn-sm">
+              Add
             </button>
           </div>
         </form>
@@ -75,7 +74,4 @@ export class TechForm extends Component {
   }
 }
 
-export default connect(
-  null,
-  { addTech }
-)(TechForm);
+export default connect(null, { addTech })(TechForm);

@@ -3,6 +3,7 @@ import ShiftTimeList from "./ShiftTimesList";
 import ExamTypesList from "./ExamTypesList";
 import LocationBuild from "../resources/LocationBuild";
 import RoomBuild from "../resources/RoomBuild";
+import TechBuild from "../resources/TechBuild";
 import BuilderDashboard from "../layout/BuilderDashboard";
 import "./ShiftBuilder.css";
 
@@ -11,7 +12,8 @@ export class ShiftBuilder extends Component {
     locationBuilder: false,
     roomBuilder: false,
     shiftTimeBuilder: false,
-    examTypeBuilder: false
+    examTypeBuilder: false,
+    techBuilder: false
   };
 
   handleComponentChange = e => {
@@ -29,13 +31,15 @@ export class ShiftBuilder extends Component {
       locationBuilder,
       roomBuilder,
       shiftTimeBuilder,
-      examTypeBuilder
+      examTypeBuilder,
+      techBuilder
     } = this.state;
 
     const shiftTimeComponent = shiftTimeBuilder ? <ShiftTimeList /> : null;
     const examTypeComponent = examTypeBuilder ? <ExamTypesList /> : null;
     const locationComponent = locationBuilder ? <LocationBuild /> : null;
     const roomComponent = roomBuilder ? <RoomBuild /> : null;
+    const techComponent = techBuilder ? <TechBuild /> : null;
 
     return (
       <Fragment>
@@ -54,6 +58,7 @@ export class ShiftBuilder extends Component {
               {examTypeComponent}
               {locationComponent}
               {roomComponent}
+              {techComponent}
             </div>
           </div>
         </div>

@@ -13,7 +13,7 @@ export class Header extends Component {
   render() {
     const { isAuthenticated, user } = this.props.auth;
     const authLinks = (
-      <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+      <ul className="navbar-nav mr-auto mt-2 ml-2 mt-lg-0">
         <li className="nav-item">
           <Link to="/calendar" className="nav-link">
             Day View
@@ -29,8 +29,10 @@ export class Header extends Component {
             Resource Builder
           </Link>
         </li>
-        <span className="nav-bar-text mr-sm-2">
-          {user ? `Welcome ${user.username} ` : ""}
+        <span className="nav-bar-text mr-sm-2 ">
+          <em style={{ fontSize: 10 }}>
+            {user ? `Welcome ${user.username}` : ""}
+          </em>
           <sup>
             <a
               href="#"
