@@ -49,7 +49,6 @@ export const addLocation = location => dispatch => {
       });
     })
     .catch(err => {
-      console.log(err);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
@@ -88,7 +87,6 @@ export const getRooms = location => dispatch => {
 //ADD ROOMS
 
 export const addRoom = (room, locationID) => dispatch => {
-  console.log(room, locationID);
   //config
   const config = {
     headers: {

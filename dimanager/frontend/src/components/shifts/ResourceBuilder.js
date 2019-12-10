@@ -5,7 +5,7 @@ import LocationBuild from "../resources/LocationBuild";
 import RoomBuild from "../resources/RoomBuild";
 import TechBuild from "../resources/TechBuild";
 import BuilderDashboard from "../layout/BuilderDashboard";
-import "./ShiftBuilder.css";
+import "./ResourceBuilder.css";
 
 export class ResourceBuilder extends Component {
   state = {
@@ -43,17 +43,17 @@ export class ResourceBuilder extends Component {
 
     return (
       <Fragment>
-        <div className="container mt-2">
+        <div className="container mt-2 ">
           <div className="row d-flex justify-content-center">
             <h3>Resource Builder</h3>
           </div>
-          <div className="row">
+          <div className="row rb-main">
             <div className="col">
               <BuilderDashboard
                 toggleComponent={this.handleComponentChange.bind(this)}
               />
             </div>
-            <div className="col">
+            <div className="col rb-components">
               {shiftTimeComponent}
               {examTypeComponent}
               {locationComponent}

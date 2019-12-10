@@ -1,0 +1,15 @@
+.separator {
+  font-size: 30px;
+}
+
+@media only screen and (max-width: 640px) {
+  .rb-main {
+    display: flex;
+    flex-direction: column;
+  }
+  .rb-components {
+    margin-top: 5px;
+    width: 512px;
+    align-self: center;
+  }
+}
