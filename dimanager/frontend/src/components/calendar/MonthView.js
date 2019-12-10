@@ -102,6 +102,7 @@ export class MonthView extends Component {
   } //this ensures dayview render will not be affected by monthview shift query
 
   render() {
+    const { isAuthenticated, user } = this.props.auth;
     const {
       month,
       year,
@@ -170,20 +171,22 @@ export class MonthView extends Component {
                   </div>
                 ))}
               </div>
-              <div className="mv-edit">
-                <Link
-                  to={{
-                    pathname: "/calendar",
-                    param: {
-                      day: i,
-                      month: month,
-                      year: year
-                    }
-                  }}
-                >
-                  <i className="material-icons mv-pen">edit</i>
-                </Link>
-              </div>
+              {isAuthenticated ? (
+                <div className="mv-edit">
+                  <Link
+                    to={{
+                      pathname: "/calendar",
+                      param: {
+                        day: i,
+                        month: month,
+                        year: year
+                      }
+                    }}
+                  >
+                    <i className="material-icons mv-pen">edit</i>
+                  </Link>
+                </div>
+              ) : null}
             </li>
           )
         : //if no matches, just push the day of month to days array
@@ -191,20 +194,22 @@ export class MonthView extends Component {
             <li className="mv-li mv-day" key={i}>
               <strong className="mv-daysOfMonth">{i}</strong>
               <div className="mv-shift-container" />
-              <div className="mv-edit">
-                <Link
-                  to={{
-                    pathname: "/calendar",
-                    param: {
-                      day: i,
-                      month: month,
-                      year: year
-                    }
-                  }}
-                >
-                  <i className="material-icons mv-pen">edit</i>
-                </Link>
-              </div>
+              {isAuthenticated ? (
+                <div className="mv-edit">
+                  <Link
+                    to={{
+                      pathname: "/calendar",
+                      param: {
+                        day: i,
+                        month: month,
+                        year: year
+                      }
+                    }}
+                  >
+                    <i className="material-icons mv-pen">edit</i>
+                  </Link>
+                </div>
+              ) : null}
             </li>
           );
     }
@@ -290,7 +295,8 @@ export class MonthView extends Component {
 }
 
 const mapStateToProps = state => ({
-  shifts: state.shifts.shifts
+  shifts: state.shifts.shifts,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { getShiftsForMonth, clearShifts })(

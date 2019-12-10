@@ -75,9 +75,9 @@ export class Header extends Component {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <a className="navbar-brand" href="#">
+            <Link className="navbar-brand" to="/dayview">
               DI Manager
-            </a>
+            </Link>
           </div>
           {isAuthenticated ? authLinks : guestLinks}
         </div>
