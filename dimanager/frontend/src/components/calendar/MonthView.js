@@ -99,7 +99,7 @@ export class MonthView extends Component {
 
   componentWillUnmount() {
     this.props.clearShifts();
-  }
+  } //this ensures dayview render will not be affected by monthview shift query
 
   render() {
     const {

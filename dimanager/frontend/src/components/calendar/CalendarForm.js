@@ -5,7 +5,7 @@ import Location from "../resources/Location";
 import DayView from "../calendar/DayView";
 import TechListView from "../techs/TechListView";
 import ModalComponent from "./ModalComponent";
-import "./Calendar.css";
+import "./CalendarForm.css";
 import {
   assignShift,
   getShiftsForDay,
@@ -14,19 +14,14 @@ import {
 } from "../../actions/shifts";
 import { connect } from "react-redux";
 
-//loader
-const hideLoader = loader => {
-  loader.classList.add("loader--hide");
-};
-
 //helper function for querying for shifts
-const shiftQuery = getShifts => {
+const shiftQuery = getShiftsFunction => {
   let selectedDate = document
-    .getElementsByClassName("selected-date")[0]
+    .getElementsByClassName("cf-selected-date")[0]
     .innerHTML.split("/")
     .reverse()
     .join("-");
-  getShifts(selectedDate);
+  getShiftsFunction(selectedDate);
 };
 
 //months
@@ -72,7 +67,7 @@ export class CalendarForm extends Component {
   }
 
   onLocationSelect = roomFlag => {
-    this.setState({ roomFlag: roomFlag });
+    this.setState({ roomFlag: roomFlag, error: false });
   };
 
   toggleDatePicker = e => {
@@ -204,7 +199,7 @@ export class CalendarForm extends Component {
     } else {
       this.setState({ error: false });
       let selectedDate = document
-        .getElementsByClassName("selected-date")[0]
+        .getElementsByClassName("cf-selected-date")[0]
         .innerHTML.split("/")
         .reverse()
         .join("-");
@@ -257,7 +252,7 @@ export class CalendarForm extends Component {
     //populate days in a month
     for (let i = 1; i <= daysInMonth; i++) {
       days.push(
-        <div className="day" onClick={this.setDay} key={i}>
+        <div className="cf-day day-main" onClick={this.setDay} key={i}>
           {i}
         </div>
       );
@@ -269,7 +264,7 @@ export class CalendarForm extends Component {
       let prevDays = prevDaysInMonth;
       for (let i = 1; i <= daysBefore; i++) {
         days.unshift(
-          <div className="day other-days" key={i + "prev"}>
+          <div className="cf-day other-days" key={i + "prev"}>
             {prevDays}
           </div>
         );
@@ -284,7 +279,7 @@ export class CalendarForm extends Component {
     if (daysAfter > 0) {
       for (let i = 1; i <= daysAfter; i++) {
         days.push(
-          <div className="day other-days" key={i + "next"}>
+          <div className="cf-day other-days" key={i + "next"}>
             {i}
           </div>
         );
@@ -294,8 +289,8 @@ export class CalendarForm extends Component {
     //this modal component displays conflicts and overriding option for duplicate tech & time
     const modal = this.props.modal ? (
       <ModalComponent>
-        <div className="modal">
-          <div className="modal-content">
+        <div className="modal cf-modal">
+          <div className="modal-content cf-modal-content">
             <span>
               Technologist:
               <strong>{" " + this.props.values.tech_init + " "}</strong>
@@ -303,13 +298,13 @@ export class CalendarForm extends Component {
             <div>Time Conflict: {this.props.values.timeDetail} </div>
             <div>
               <button
-                className="btn btn-primary btn-sm w-50 h-15 modal-button"
+                className="cf-modal-button"
                 onClick={this.props.closeModal}
               >
                 Cancel
               </button>
               <button
-                className="btn btn-danger btn-sm w-50 h-15 modal-button"
+                className="cf-modal-button"
                 onClick={() => {
                   this.props.validAssignShift(this.props.values);
                 }}
@@ -323,8 +318,8 @@ export class CalendarForm extends Component {
     ) : null;
     return (
       <div className="container">
-        <div className="date-picker" onClick={this.toggleDatePicker}>
-          <div className="selected-date">
+        <div className="cf-date-picker" onClick={this.toggleDatePicker}>
+          <div className="cf-selected-date">
             {(day < 10 ? "0" + day : day) +
               "/" +
               (1 + month < 10 ? "0" + (1 + month) : 1 + month) +
@@ -332,8 +327,8 @@ export class CalendarForm extends Component {
               year}
           </div>
 
-          <div className={`dates ${isActive ? "active" : ""}`}>
-            <div className="month">
+          <div className={`cf-dates ${isActive ? "active" : ""}`}>
+            <div className="cf-month">
               <div className="arrows prev-mth" onClick={this.viewPrevMonth}>
                 Prev
               </div>
@@ -342,9 +337,9 @@ export class CalendarForm extends Component {
                 Next
               </div>
             </div>
-            <div className="days">
+            <div className="cf-days">
               {weekDays.map((weekDay, index) => (
-                <div className="day weekday" key={index}>
+                <div className="cf-day weekday" key={index}>
                   {weekDay}
                 </div>
               ))}
@@ -352,7 +347,7 @@ export class CalendarForm extends Component {
             </div>
           </div>
         </div>
-        <form className="form-inline test" onSubmit={this.handleSubmit}>
+        <form className="form-inline" onSubmit={this.handleSubmit}>
           <table>
             <thead>
               <tr>

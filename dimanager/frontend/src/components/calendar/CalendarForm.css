@@ -1,4 +1,5 @@
-.date-picker {
+/* Calender form Date Picker */
+.cf-date-picker {
   position: relative;
   width: 100;
   max-width: 320px;
@@ -11,10 +12,11 @@
   user-select: none;
 }
 
-.date-picker:hover {
+.cf-date-picker:hover {
   background-color: #f3f3f3;
 }
-.date-picker .selected-date {
+
+.cf-date-picker .cf-selected-date {
   width: 100%;
   height: 100%;
 
@@ -26,7 +28,7 @@
   font-size: 28px;
 }
 
-.date-picker .dates {
+.cf-date-picker .cf-dates {
   display: none;
   position: absolute;
   top: 100%;
@@ -34,18 +36,18 @@
   right: 0;
 }
 
-.date-picker .dates.active {
+.cf-date-picker .cf-dates.active {
   display: block;
 }
 
-.date-picker .dates .month {
+.cf-date-picker .cf-dates .cf-month {
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid #eee;
 }
 
-.date-picker .dates .month .arrows {
+.cf-date-picker .cf-dates .cf-month .arrows {
   width: 35px;
   height: 35px;
   display: flex;
@@ -55,33 +57,33 @@
   font-size: 18px;
 }
 
-.date-picker .dates .month .arrows:hover {
+.cf-date-picker .cf-dates .cf-month .arrows:hover {
   transform: scale(1.1);
 }
 
-.date-picker .dates .month .arrows:active {
+.cf-date-picker .dates .cf-month .arrows:active {
   background-color: #00ca85;
 }
 
-.date-picker .days {
+.cf-date-picker .cf-days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   height: 200px;
   background-color: #eee;
 }
 
-.date-picker .days .day {
+.cf-date-picker .cf-days .cf-day {
   display: flex;
   justify-content: center;
   align-items: center;
   color: #313131;
 }
 
-.date-picker .dates .days .day.selected {
-  background-color: #00ca85;
+.day-main:hover {
+  text-decoration: red underline;
 }
-
-.modal {
+/*Modal Components */
+.cf-modal {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   height: 100%;
@@ -93,17 +95,29 @@
   justify-content: center;
 }
 
-.modal-content {
+.cf-modal-content {
   height: 100px;
   color: black;
   text-align: center;
   align-items: center;
 }
 
-.modal-button {
+.cf-modal-button {
   height: 25px;
-  padding-bottom: 1px;
+  width: 60px;
+  background-color: #000000;
+  border: none;
+  color: white;
+  padding: 2px 2px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 20%;
 }
+
 .other-days {
   background-color: #d3d3d3;
   font-style: italic;
@@ -114,37 +128,10 @@
   cursor: default;
 }
 
+/* errors */
 .error {
   color: red;
   font-size: 80%;
   font-weight: bold;
   padding-left: 2%;
-}
-
-/*loader */
-
-.loader {
-  position: absolute;
-  top: calc(50% - 4em);
-  left: calc(50% - 4em);
-  width: 6em;
-  height: 6em;
-  border: 1.1em solid rgba(0, 0, 0, 0.2);
-  border-left: 1.1em solid #000000;
-  border-radius: 50%;
-  animation: load8 1.1s infinite linear;
-  transition: opacity 0.3s;
-}
-
-.loader--hide {
-  opacity: 0;
-}
-
-@keyframes load8 {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }
