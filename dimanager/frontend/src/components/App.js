@@ -26,6 +26,14 @@ const alertOptions = {
   position: "top center"
 };
 
+const InvalidPage = () => {
+  return (
+    <div className="container mt-5">
+      <h2>Oops! Page not found</h2>;
+    </div>
+  );
+};
+
 class App extends Component {
   componentDidMount() {
     store.dispatch(loadUser());
@@ -50,6 +58,7 @@ class App extends Component {
                     component={ResourceBuilder}
                   />
                   <Route exact path="/monthview" component={MonthView} />
+                  <Route component={InvalidPage} />
                 </Switch>
               </div>
             </Fragment>
