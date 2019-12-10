@@ -15,7 +15,7 @@ export class Header extends Component {
     const authLinks = (
       <ul className="navbar-nav mr-auto mt-2 ml-2 mt-lg-0">
         <li className="nav-item">
-          <Link to="/calendar" className="nav-link">
+          <Link to="/dayview" className="nav-link">
             Day View
           </Link>
         </li>
@@ -25,7 +25,7 @@ export class Header extends Component {
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/shiftbuilder" className="nav-link">
+          <Link to="/resource-builder" className="nav-link">
             Resource Builder
           </Link>
         </li>

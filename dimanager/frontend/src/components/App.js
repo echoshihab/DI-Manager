@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import ReactDOM from "react-dom";
 import Header from "./layout/Header";
-import Dashboard from "./techs/Dashboard";
 import Alerts from "./layout/Alerts";
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
@@ -20,7 +19,7 @@ import {
 
 import { Provider } from "react-redux";
 import store from "../store";
-import ShiftBuilder from "./shifts/ShiftBuilder";
+import ResourceBuilder from "./shifts/ResourceBuilder";
 
 const alertOptions = {
   timeout: 4000,
@@ -44,8 +43,12 @@ class App extends Component {
                   <PrivateRoute exact path="/" component={CalendarForm} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
-                  <Route exact path="/calendar" component={CalendarForm} />
-                  <Route exact path="/shiftbuilder" component={ShiftBuilder} />
+                  <Route exact path="/dayview" component={CalendarForm} />
+                  <Route
+                    exact
+                    path="/resource-builder"
+                    component={ResourceBuilder}
+                  />
                   <Route exact path="/monthview" component={MonthView} />
                 </Switch>
               </div>

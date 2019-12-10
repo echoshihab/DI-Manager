@@ -27,7 +27,7 @@ export class Login extends Component {
 
   render() {
     if (this.props.isAuthenticated) {
-      return <Redirect to="/calendar" />;
+      return <Redirect to="/dayview" />;
     }
     const { username, password } = this.state;
 

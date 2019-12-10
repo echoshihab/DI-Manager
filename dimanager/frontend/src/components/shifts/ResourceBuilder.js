@@ -7,7 +7,7 @@ import TechBuild from "../resources/TechBuild";
 import BuilderDashboard from "../layout/BuilderDashboard";
 import "./ShiftBuilder.css";
 
-export class ShiftBuilder extends Component {
+export class ResourceBuilder extends Component {
   state = {
     locationBuilder: false,
     roomBuilder: false,
@@ -67,4 +67,4 @@ export class ShiftBuilder extends Component {
   }
 }
 
-export default ShiftBuilder;
+export default ResourceBuilder;
