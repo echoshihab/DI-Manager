@@ -78,8 +78,8 @@ export class Header extends Component {
             <Link className="navbar-brand" to="/dayview">
               DI Manager
             </Link>
+            {isAuthenticated ? authLinks : guestLinks}
           </div>
-          {isAuthenticated ? authLinks : guestLinks}
         </div>
       </nav>
     );
