@@ -1,8 +1,8 @@
-.separator {
+.rb-separator {
   font-size: 30px;
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 790px) {
   .rb-main {
     display: flex;
     flex-direction: column;

@@ -347,51 +347,41 @@ export class CalendarForm extends Component {
             </div>
           </div>
         </div>
-        <form className="form-inline" onSubmit={this.handleSubmit}>
-          <table>
-            <thead>
-              <tr>
-                <td>Type</td>
-                <td>Time </td>
-                <td>Location </td>
-                {this.state.roomFlag ? <td>Room</td> : null}
-                <td>Technologist </td>
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <ExamTypes />
-                </td>
-                <td>
-                  <ShiftTimes />
-                </td>
-                <td>
-                  <Location
-                    onLocationSelect={this.onLocationSelect.bind(this)}
-                  />
-                </td>
-                {roomFlag ? (
-                  <td>
-                    <select className="form-control" name="room">
-                      {this.props.rooms.map(room => (
-                        <option key={room.id} value={room.id}>
-                          {room.room}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
-                ) : null}
-                <td>
-                  <TechListView />
-                </td>
-                <td>
-                  <button className="btn btn-primary btn-sm">Assign</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <form className="cf-form" onSubmit={this.handleSubmit}>
+          <div className="cf-form-group">
+            <label>Type</label>
+            <ExamTypes />
+          </div>
+
+          <div className="cf-form-group">
+            <label>Time</label>
+            <ShiftTimes />
+          </div>
+          <div className="cf-form-group">
+            <label>Location</label>
+            <Location onLocationSelect={this.onLocationSelect.bind(this)} />
+          </div>
+
+          {roomFlag ? (
+            <div className="cf-form-group">
+              <label>Room</label>
+              <select className="form-control" name="room">
+                {this.props.rooms.map(room => (
+                  <option key={room.id} value={room.id}>
+                    {room.room}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ) : null}
+
+          <div className="cf-form-group">
+            <label>Technologist </label>
+            <TechListView />
+          </div>
+          <div className="cf-form-btn">
+            <button className="btn btn-primary btn-sm">Assign</button>
+          </div>
 
           {error ? <div className="error">{errorMsg}</div> : null}
         </form>

@@ -66,7 +66,7 @@ export class ShiftFormAdd extends Component {
               maxLength="2"
             />
           </div>
-          <strong className="separator">:</strong>
+          <strong className="rb-separator">:</strong>
           <div className="col">
             <input
               type="text"
@@ -96,7 +96,7 @@ export class ShiftFormAdd extends Component {
             />
           </div>
 
-          <strong className="separator">:</strong>
+          <strong className="rb-separator">:</strong>
           <div className="col">
             <input
               type="text"

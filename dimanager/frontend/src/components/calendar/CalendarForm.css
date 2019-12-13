@@ -133,5 +133,31 @@
   color: red;
   font-size: 80%;
   font-weight: bold;
-  padding-left: 2%;
+  margin-top: 20%;
+}
+
+.cf-form {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 0.25em;
+}
+
+.cf-form-btn {
+  margin-top: 20%;
+}
+
+@media only screen and (max-width: 1228px) {
+  .cf-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cf-form-btn {
+    margin-top: 5px;
+  }
+
+  .error {
+    margin-top: 2%;
+    margin-left: auto;
+  }
 }
