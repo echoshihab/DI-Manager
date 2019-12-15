@@ -42,22 +42,6 @@ const shiftCompare = (
   return false;
 };
 
-//GET SHIFT TIMES
-
-export const getShiftTimes = () => dispatch => {
-  axios
-    .get("/api/shift-times/")
-    .then(res => {
-      dispatch({
-        type: GET_SHIFTTIMES,
-        payload: res.data
-      });
-    })
-    .catch(err =>
-      dispatch(returnErrors(err.response.data, err.response.status))
-    );
-};
-
 //Modal Assign SHIFT -after overriding at modal or with no duplicates
 export const validAssignShift = values => dispatch => {
   const { dateOfShift, examType, shiftTime, room, tech } = values;
@@ -225,15 +209,24 @@ export const closeModal = () => dispatch => {
   }
 };
 
-//build new shift
-export const buildShift = (startShift, endShift) => dispatch => {
-  //config
-  const config = {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
+//GET SHIFT TIMES
 
+export const getShiftTimes = () => (dispatch, getState) => {
+  axios
+    .get("/api/shift-times/", tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: GET_SHIFTTIMES,
+        payload: res.data
+      });
+    })
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+//build new shift times
+export const buildShift = (startShift, endShift) => (dispatch, getState) => {
   //request body
   const body = JSON.stringify({
     start_time: startShift,
@@ -241,7 +234,7 @@ export const buildShift = (startShift, endShift) => dispatch => {
   });
 
   axios
-    .post("api/shift-times/", body, config)
+    .post("api/shift-times/", body, tokenConfig(getState))
     .then(res => {
       dispatch({
         type: BUILD_SHIFTTIMES,

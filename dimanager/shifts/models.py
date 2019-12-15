@@ -11,6 +11,8 @@ class ExamTypes(models.Model):
 class ShiftTime(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
+    owner = models.ForeignKey(User, related_name="ShiftTimes", on_delete=models.PROTECT, null=True)
+
     class Meta:
         unique_together = ["start_time", "end_time"]
 

@@ -17,12 +17,17 @@ class ExamTypesViewSet(viewsets.ModelViewSet):
         serializer.save(owner=self.request.user)
 
 class ShiftTimeViewSet(viewsets.ModelViewSet):
-    queryset = ShiftTime.objects.all()
+    serializer_class = ShiftTimeSerializer
     permission_classes = [
-        permissions.AllowAny 
+        IsCoordinator
     ]
 
-    serializer_class = ShiftTimeSerializer
+    def get_queryset(self):
+        return self.request.user.ShiftTimes.all()
+    
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+    
 
 class ShiftsViewSet(viewsets.ModelViewSet):
     permission_classes = [
