@@ -42,21 +42,6 @@ const shiftCompare = (
   return false;
 };
 
-//GET EXAM TYPES
-export const getExamTypes = () => dispatch => {
-  axios
-    .get("/api/exam-types/")
-    .then(res => {
-      dispatch({
-        type: GET_EXAMTYPES,
-        payload: res.data
-      });
-    })
-    .catch(err =>
-      dispatch(returnErrors(err.response.data, err.response.status))
-    );
-};
-
 //GET SHIFT TIMES
 
 export const getShiftTimes = () => dispatch => {
@@ -283,23 +268,32 @@ export const deleteShiftTime = id => (dispatch, getState) => {
     );
 };
 
-//build exam types
+//GET EXAM TYPES
+export const getExamTypes = () => (dispatch, getState) => {
+  axios
+    .get("/api/exam-types/", tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: GET_EXAMTYPES,
+        payload: res.data
+      });
+    })
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
 
-export const addExamType = examType => dispatch => {
-  //config
-  const config = {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
+//BUILD EXAM TYPES
 
+export const addExamType = examType => (dispatch, getState) => {
   //request body
+  let exam_type = examType.toUpperCase();
   const body = JSON.stringify({
-    exam_type: examType
+    exam_type
   });
 
   axios
-    .post("/api/exam-types/", body, config)
+    .post("/api/exam-types/", body, tokenConfig(getState))
     .then(res => {
       dispatch({
         type: ADD_EXAMTYPE,
@@ -307,6 +301,7 @@ export const addExamType = examType => dispatch => {
       });
     })
     .catch(err => {
+      console.log(err.response.data, err.response.status);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };

@@ -1,14 +1,20 @@
 from shifts.models import ExamTypes, ShiftTime, Shifts
 from rest_framework import viewsets, permissions
 from .serializers import ExamTypesSerializer, ShiftTimeSerializer, ShiftsSerializer, ShiftsCreateSerializer
+from accounts.permissions import IsCoordinator
 
 class ExamTypesViewSet(viewsets.ModelViewSet):
-    queryset = ExamTypes.objects.all() 
+    serializer_class = ExamTypesSerializer
+
     permission_classes = [
-        permissions.AllowAny #changed from AllowAny
+        IsCoordinator
     ]
 
-    serializer_class = ExamTypesSerializer
+    def get_queryset(self):
+        return self.request.user.ExamTypes.all()
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 class ShiftTimeViewSet(viewsets.ModelViewSet):
     queryset = ShiftTime.objects.all()

@@ -1,8 +1,11 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class ExamTypes(models.Model):
     exam_type = models.CharField(max_length=7, unique=True)
+    owner = models.ForeignKey(User, related_name="ExamTypes", on_delete=models.PROTECT, null=True)
+    
 
 
 class ShiftTime(models.Model):
