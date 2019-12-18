@@ -11,9 +11,9 @@ import {
 import { tokenConfig } from "./auth";
 
 //GET locations
-export const getLocations = () => dispatch => {
+export const getLocations = () => (dispatch, getState) => {
   axios
-    .get("/api/location/")
+    .get("/api/location/", tokenConfig(getState))
     .then(res => {
       dispatch({
         type: GET_LOCATIONS,
@@ -27,21 +27,15 @@ export const getLocations = () => dispatch => {
 
 //Add locations
 
-export const addLocation = location => dispatch => {
-  //config
-  const config = {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
-
+export const addLocation = locName => (dispatch, getState) => {
+  let location = locName.toUpperCase();
   //request body
   const body = JSON.stringify({
     location
   });
 
   axios
-    .post("/api/location/", body, config)
+    .post("/api/location/", body, tokenConfig(getState))
     .then(res => {
       dispatch({
         type: ADD_LOCATION,
@@ -70,9 +64,9 @@ export const deleteLocation = id => (dispatch, getState) => {
 
 //GET rooms
 
-export const getRooms = location => dispatch => {
+export const getRooms = location => (dispatch, getState) => {
   axios
-    .get(`/api/rooms/?location=${location}`)
+    .get(`/api/rooms/?location=${location}`, tokenConfig(getState))
     .then(res => {
       dispatch({
         type: GET_ROOMS,
@@ -86,13 +80,8 @@ export const getRooms = location => dispatch => {
 
 //ADD ROOMS
 
-export const addRoom = (room, locationID) => dispatch => {
-  //config
-  const config = {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
+export const addRoom = (roomName, locationID) => (dispatch, getState) => {
+  let room = roomName.toUpperCase();
 
   //request body
   const body = JSON.stringify({
@@ -101,7 +90,7 @@ export const addRoom = (room, locationID) => dispatch => {
   });
 
   axios
-    .post("/api/rooms/", body, config)
+    .post("/api/rooms/", body, tokenConfig(getState))
     .then(res => {
       dispatch({
         type: ADD_ROOM,
@@ -109,7 +98,6 @@ export const addRoom = (room, locationID) => dispatch => {
       });
     })
     .catch(err => {
-      console.log(err.response);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
