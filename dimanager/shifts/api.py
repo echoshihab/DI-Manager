@@ -1,7 +1,18 @@
-from shifts.models import ExamTypes, ShiftTime, Shifts
+from shifts.models import ExamTypes, ShiftTime, Shifts, Modality
 from rest_framework import viewsets, permissions
-from .serializers import ExamTypesSerializer, ShiftTimeSerializer, ShiftsSerializer, ShiftsCreateSerializer
+from .serializers import ExamTypesSerializer, ShiftTimeSerializer, ShiftsSerializer, ShiftsCreateSerializer, ModalitySerializer
 from accounts.permissions import IsCoordinator
+
+
+class ModalityViewSet(viewsets.ModelViewSet):
+    queryset = Modality.objects.all()
+    serializer_class = ModalitySerializer
+
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    
+    
 
 class ExamTypesViewSet(viewsets.ModelViewSet):
     serializer_class = ExamTypesSerializer
