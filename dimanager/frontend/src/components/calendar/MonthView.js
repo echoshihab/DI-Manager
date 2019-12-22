@@ -113,6 +113,7 @@ export class MonthView extends Component {
 
   render() {
     const { isAuthenticated, user } = this.props.auth;
+    console.log(user);
     const {
       month,
       year,

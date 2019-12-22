@@ -1,16 +1,10 @@
 import React, { Fragment, Component } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { getLocations, getRooms } from "../../actions/resources";
 
 export class Location extends Component {
   state = {
     room: false
-  };
-
-  static propTypes = {
-    locations: PropTypes.array.isRequired,
-    getLocations: PropTypes.func.isRequired
   };
 
   listRooms = e => {

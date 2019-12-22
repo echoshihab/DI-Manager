@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import ExamTypes from "../shifts/ExamTypes";
+import React, { Component, Fragment } from "react";
 import ShiftTimes from "../shifts/ShiftTimes";
 import Location from "../resources/Location";
 import Modality from "./Modality";
@@ -22,7 +21,8 @@ const shiftQuery = getShiftsFunction => {
     .innerHTML.split("/")
     .reverse()
     .join("-");
-  getShiftsFunction(selectedDate);
+  let modalityID = document.getElementsByName("modality")[0].value;
+  getShiftsFunction(selectedDate, modalityID);
 };
 
 //months
@@ -69,6 +69,23 @@ export class CalendarForm extends Component {
 
   onLocationSelect = roomFlag => {
     this.setState({ roomFlag: roomFlag, error: false });
+  };
+
+  onModalitySelect = manageFlag => {
+    let modalityID = document.getElementsByName("modality")[0].value;
+    const { isAuthenticated, user } = this.props.auth;
+    //get shifts for day by modality with edit permission if coordinator else get shifts for view only
+    if (
+      isAuthenticated &&
+      user.modalities.some(modality => modality.id == modalityID)
+    ) {
+      this.setState({ manageFlag: manageFlag }, function() {
+        shiftQuery(this.props.getShiftsForDay);
+      });
+    } else
+      this.setState({ manageFlag: false }, function() {
+        shiftQuery(this.props.getShiftsForDay);
+      });
   };
 
   toggleDatePicker = e => {
@@ -194,7 +211,7 @@ export class CalendarForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    let { location, room, shiftTime, examType, tech } = e.target;
+    let { location, room, shiftTime, examType, tech, modality } = e.target;
     if (location.value == "default") {
       this.setState({ error: true });
     } else {
@@ -210,7 +227,8 @@ export class CalendarForm extends Component {
         examType.value,
         shiftTime.value,
         room.value,
-        tech.value
+        tech.value,
+        modality.value
       );
     }
   };
@@ -233,6 +251,7 @@ export class CalendarForm extends Component {
       isActive,
       error,
       roomFlag,
+      manageFlag,
       day,
       month,
       year,
@@ -318,7 +337,7 @@ export class CalendarForm extends Component {
       </ModalComponent>
     ) : null;
     return (
-      <div className="container">
+      <div className="container-fluid">
         <div className="cf-date-picker" onClick={this.toggleDatePicker}>
           <div className="cf-selected-date">
             {(day < 10 ? "0" + day : day) +
@@ -351,46 +370,55 @@ export class CalendarForm extends Component {
         <form className="cf-form" onSubmit={this.handleSubmit}>
           <div className="cf-form-group">
             <label>Modality</label>
-            <Modality />
+            <Modality onModalitySelect={this.onModalitySelect.bind(this)} />
           </div>
-          <div className="cf-form-group">
-            <label>Type</label>
-            <ExamTypes />
-          </div>
+          {manageFlag ? (
+            <Fragment>
+              <div className="cf-form-group">
+                <label>Types</label>
+                <select className="form-control" name="examType">
+                  {this.props.examTypes.map(examType => (
+                    <option key={examType.id} value={examType.id}>
+                      {examType.exam_type}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          <div className="cf-form-group">
-            <label>Time</label>
-            <ShiftTimes />
-          </div>
-          <div className="cf-form-group">
-            <label>Location</label>
-            <Location onLocationSelect={this.onLocationSelect.bind(this)} />
-          </div>
+              <div className="cf-form-group">
+                <label>Time</label>
+                <ShiftTimes />
+              </div>
+              <div className="cf-form-group">
+                <label>Location</label>
+                <Location onLocationSelect={this.onLocationSelect.bind(this)} />
+              </div>
 
-          {roomFlag ? (
-            <div className="cf-form-group">
-              <label>Room</label>
-              <select className="form-control" name="room">
-                {this.props.rooms.map(room => (
-                  <option key={room.id} value={room.id}>
-                    {room.room}
-                  </option>
-                ))}
-              </select>
-            </div>
+              {roomFlag ? (
+                <div className="cf-form-group">
+                  <label>Room</label>
+                  <select className="form-control" name="room">
+                    {this.props.rooms.map(room => (
+                      <option key={room.id} value={room.id}>
+                        {room.room}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : null}
+
+              <div className="cf-form-group">
+                <label>Technologist </label>
+                <TechListView />
+              </div>
+              <div className="cf-form-btn">
+                <button className="btn btn-primary btn-sm">Assign</button>
+              </div>
+
+              {error ? <div className="error">{errorMsg}</div> : null}
+            </Fragment>
           ) : null}
-
-          <div className="cf-form-group">
-            <label>Technologist </label>
-            <TechListView />
-          </div>
-          <div className="cf-form-btn">
-            <button className="btn btn-primary btn-sm">Assign</button>
-          </div>
-
-          {error ? <div className="error">{errorMsg}</div> : null}
         </form>
-
         <DayView />
         <div id="modal-root"></div>
         {modal}
@@ -402,7 +430,9 @@ export class CalendarForm extends Component {
 const mapStateToProps = state => ({
   modal: state.modal.modal,
   values: state.modal.values,
-  rooms: state.rooms.rooms
+  rooms: state.rooms.rooms,
+  examTypes: state.examTypes.examTypes,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, {

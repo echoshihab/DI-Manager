@@ -1,20 +1,17 @@
 from rest_framework import serializers
+from shifts.serializers import ModalitySerializer
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate
 
 
-#GROUP SERIALIZER
-class GroupSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Group
-        fields = ('name',)
+
 
 #USER SERIALIZERS
 class UserSerializer(serializers.ModelSerializer):
-    groups = GroupSerializer(many=True)
+    modalities = ModalitySerializer(many=True)
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'groups')
+        fields = ('id', 'username', 'email', 'modalities')
 
 #REGISTER SERIALIZERS
 class RegisterSerializer(serializers.ModelSerializer):

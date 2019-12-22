@@ -76,10 +76,14 @@ export const validAssignShift = values => dispatch => {
 };
 
 //ASSIGN SHIFT  - prior to modal override option
-export const assignShift = (dateOfShift, examType, shiftTime, room, tech) => (
-  dispatch,
-  getState
-) => {
+export const assignShift = (
+  dateOfShift,
+  examType,
+  shiftTime,
+  room,
+  tech,
+  modality
+) => (dispatch, getState) => {
   const currentShifts = getState().shifts.shifts;
   //Show error if duplicate technologist on same day
   if (
@@ -142,7 +146,8 @@ export const assignShift = (dateOfShift, examType, shiftTime, room, tech) => (
       exam_type: examType,
       shift_time: shiftTime,
       room: room,
-      tech: tech
+      tech: tech,
+      modality: modality
     });
     axios
       .post("api/shifts/", body, config)
@@ -174,9 +179,9 @@ export const deleteShift = id => dispatch => {
 };
 
 //get today's shifts
-export const getShiftsForDay = dateOfShift => dispatch => {
+export const getShiftsForDay = (dateOfShift, modalityID) => dispatch => {
   axios
-    .get(`api/shifts/?date=${dateOfShift}`)
+    .get(`api/shifts/?date=${dateOfShift}&modality=${modalityID}`)
     .then(res => {
       dispatch({
         type: SHIFT_RETRIEVE,

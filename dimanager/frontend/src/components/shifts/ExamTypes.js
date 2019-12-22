@@ -1,14 +1,8 @@
 import React, { Fragment, Component } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { getExamTypes } from "../../actions/shifts";
 
 export class ExamTypes extends Component {
-  static propTypes = {
-    examTypes: PropTypes.array.isRequired,
-    getExamTypes: PropTypes.func.isRequired
-  };
-
   componentDidMount() {
     this.props.getExamTypes();
   }
@@ -31,7 +25,4 @@ const mapStateToProps = state => ({
   examTypes: state.examTypes.examTypes
 });
 
-export default connect(
-  mapStateToProps,
-  { getExamTypes }
-)(ExamTypes);
+export default connect(mapStateToProps, { getExamTypes })(ExamTypes);

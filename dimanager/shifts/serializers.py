@@ -6,7 +6,7 @@ from resources.serializers import RoomSerializer
 class ModalitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Modality
-        fields = '__all__'
+        fields = ('id', 'modality')
 
 class ExamTypesSerializer(serializers.ModelSerializer):
     class Meta:

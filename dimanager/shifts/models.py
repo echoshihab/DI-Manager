@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 class Modality(models.Model):
     modality = models.CharField(max_length=7, unique=True)
+    coordinator = models.ManyToManyField(User, related_name="modalities")
 
 
 
