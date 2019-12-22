@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ExamTypes from "../shifts/ExamTypes";
 import ShiftTimes from "../shifts/ShiftTimes";
 import Location from "../resources/Location";
+import Modality from "./Modality";
 import DayView from "../calendar/DayView";
 import TechListView from "../techs/TechListView";
 import ModalComponent from "./ModalComponent";
@@ -348,6 +349,10 @@ export class CalendarForm extends Component {
           </div>
         </div>
         <form className="cf-form" onSubmit={this.handleSubmit}>
+          <div className="cf-form-group">
+            <label>Modality</label>
+            <Modality />
+          </div>
           <div className="cf-form-group">
             <label>Type</label>
             <ExamTypes />

@@ -1,8 +1,13 @@
 import React, { Fragment, Component } from "react";
 import "./monthView.css";
-import { getShiftsForMonth, clearShifts } from "../../actions/shifts";
+import {
+  getShiftsForMonth,
+  clearShifts,
+  getModalities
+} from "../../actions/shifts";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import Modality from "./Modality";
 
 //helper function for querying for shift for a month
 const shiftQuery = (getShifts, year, month, daysInMonth) => {
@@ -29,6 +34,10 @@ export class MonthView extends Component {
       weekdayIndexOfLast: weekdayIndexOfLast
     };
   }
+
+  handleModalityQuery = () => {
+    console.log("test");
+  };
 
   handleMonthQuery = (index, e) => {
     const { year } = this.state;
@@ -94,6 +103,7 @@ export class MonthView extends Component {
 
   componentDidMount() {
     const { year, month, daysInMonth } = this.state;
+    this.props.getModalities();
     shiftQuery(this.props.getShiftsForMonth, year, month, daysInMonth);
   }
 
@@ -103,7 +113,6 @@ export class MonthView extends Component {
 
   render() {
     const { isAuthenticated, user } = this.props.auth;
-    console.log(user);
     const {
       month,
       year,
@@ -176,7 +185,7 @@ export class MonthView extends Component {
                 <div className="mv-edit">
                   <Link
                     to={{
-                      pathname: "/calendar",
+                      pathname: "/dayview",
                       param: {
                         day: i,
                         month: month,
@@ -199,7 +208,7 @@ export class MonthView extends Component {
                 <div className="mv-edit">
                   <Link
                     to={{
-                      pathname: "/calendar",
+                      pathname: "/dayview",
                       param: {
                         day: i,
                         month: month,
@@ -243,9 +252,7 @@ export class MonthView extends Component {
           >
             keyboard_arrow_up
           </i>
-
           <h1 className="mv-year">{year}</h1>
-
           <i
             className="material-icons mv-year-mod"
             id="minus"
@@ -253,6 +260,7 @@ export class MonthView extends Component {
           >
             keyboard_arrow_down
           </i>
+          <Modality onChange={this.handleModalityQuery} />
         </div>
 
         <div className="mv-responsive">
@@ -300,6 +308,8 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { getShiftsForMonth, clearShifts })(
-  MonthView
-);
+export default connect(mapStateToProps, {
+  getShiftsForMonth,
+  clearShifts,
+  getModalities
+})(MonthView);

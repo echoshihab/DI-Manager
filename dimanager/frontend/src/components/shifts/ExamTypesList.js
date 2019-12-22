@@ -1,20 +1,23 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
+
 import {
   getExamTypes,
   addExamType,
-  deleteExamType
+  deleteExamType,
+  getModalities
 } from "../../actions/shifts";
 
 export class ExamTypes extends Component {
   state = {
+    typeFlag: false,
+    modalityID: "",
     examType: ""
   };
 
-  static propTypes = {
-    examTypes: PropTypes.array.isRequired,
-    getExamTypes: PropTypes.func.isRequired
+  handleTypes = e => {
+    this.props.getExamTypes(e.target.value);
+    this.setState({ typeFlag: true, modalityID: e.target.value });
   };
 
   deleteExamType = (e, id) => {
@@ -28,58 +31,82 @@ export class ExamTypes extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { examType } = this.state;
-    this.props.addExamType(examType);
+    const { examType, modalityID } = this.state;
+    this.props.addExamType(examType, modalityID);
     this.setState({
       examType: ""
     });
   };
 
   componentDidMount() {
-    this.props.getExamTypes();
+    this.props.getModalities();
   }
+
   render() {
     return (
-      <ul className="list-group">
-        <li className="list-group-item">
-          <form
-            className="form-inline my-2 my-lg-0"
-            onSubmit={this.onSubmit}
-            autoComplete="off"
-          >
-            <input
-              name="examType"
-              className="form-control mr-sm-2"
-              maxLength="15"
-              type="text"
-              placeholder="..add exam type"
-              onChange={this.onChange}
-              value={this.state.examType}
-            />
-            <button className="btn btn-secondary btn-sm">
-              <span style={style}>+</span>
-            </button>
-          </form>
-        </li>
-        {this.props.examTypes.map(examType => (
-          <li className="list-group-item" key={examType.id}>
-            {examType.exam_type}
-            <a
-              href="#"
-              name={examType.id}
-              className="badge badge-danger ml-2"
-              onClick={e => this.deleteExamType(e, examType.id)}
+      <form
+        className="form-inline my-2 my-lg-0"
+        onSubmit={this.onSubmit}
+        autoComplete="off"
+      >
+        <ul className="list-group">
+          <li className="list-group-item">
+            <select
+              className="form-control"
+              defaultValue={"default"}
+              onChange={this.handleTypes}
+              name="location"
             >
-              Delete
-            </a>
+              <option hidden disabled value="default">
+                Select Modality
+              </option>
+              {this.props.modalities.map(modality => (
+                <option key={modality.id} value={modality.id}>
+                  {modality.modality}
+                </option>
+              ))}
+            </select>
           </li>
-        ))}
-      </ul>
+
+          {this.state.typeFlag ? (
+            <Fragment>
+              <li className="list-group-item">
+                <input
+                  name="examType"
+                  className="form-control mr-sm-2"
+                  maxLength="15"
+                  type="text"
+                  placeholder="..add exam type"
+                  onChange={this.onChange}
+                  value={this.state.examType}
+                />
+                <button className="btn btn-secondary btn-sm">
+                  <span style={style}>+</span>
+                </button>
+              </li>
+              {this.props.examTypes.map(examType => (
+                <li className="list-group-item" key={examType.id}>
+                  {examType.exam_type}
+                  <a
+                    href="#"
+                    name={examType.id}
+                    className="badge badge-danger ml-2"
+                    onClick={e => this.deleteExamType(e, examType.id)}
+                  >
+                    Delete
+                  </a>
+                </li>
+              ))}
+            </Fragment>
+          ) : null}
+        </ul>
+      </form>
     );
   }
 }
 
 const mapStateToProps = state => ({
+  modalities: state.modalities.modalities,
   examTypes: state.examTypes.examTypes
 });
 
@@ -90,5 +117,6 @@ const style = {
 export default connect(mapStateToProps, {
   getExamTypes,
   addExamType,
-  deleteExamType
+  deleteExamType,
+  getModalities
 })(ExamTypes);

@@ -22,7 +22,12 @@ class ExamTypesViewSet(viewsets.ModelViewSet):
     ]
 
     def get_queryset(self):
-        return self.request.user.ExamTypes.all()
+        query_parameter = self.request.query_params.get('modality', None)
+        if query_parameter == None:
+            return self.request.user.ExamTypes.all()
+        else:
+            modality = Modality.objects.get(id=query_parameter)
+            return self.request.user.ExamTypes.filter(modality = modality)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

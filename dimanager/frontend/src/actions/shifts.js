@@ -12,7 +12,8 @@ import {
   DELETE_SHIFTTIME,
   ADD_EXAMTYPE,
   DELETE_EXAMTYPE,
-  CLEAR_SHIFT
+  CLEAR_SHIFT,
+  GET_MODALITY
 } from "./types";
 import { tokenConfig } from "./auth";
 
@@ -262,9 +263,9 @@ export const deleteShiftTime = id => (dispatch, getState) => {
 };
 
 //GET EXAM TYPES
-export const getExamTypes = () => (dispatch, getState) => {
+export const getExamTypes = modality => (dispatch, getState) => {
   axios
-    .get("/api/exam-types/", tokenConfig(getState))
+    .get(`/api/exam-types/?modality=${modality}`, tokenConfig(getState))
     .then(res => {
       dispatch({
         type: GET_EXAMTYPES,
@@ -278,11 +279,12 @@ export const getExamTypes = () => (dispatch, getState) => {
 
 //BUILD EXAM TYPES
 
-export const addExamType = examType => (dispatch, getState) => {
+export const addExamType = (examType, modality) => (dispatch, getState) => {
   //request body
   let exam_type = examType.toUpperCase();
   const body = JSON.stringify({
-    exam_type
+    exam_type,
+    modality
   });
 
   axios
@@ -318,4 +320,21 @@ export const clearShifts = () => dispatch => {
   dispatch({
     type: CLEAR_SHIFT
   });
+};
+
+//Get Modalities list
+
+//GET EXAM TYPES
+export const getModalities = () => (dispatch, getState) => {
+  axios
+    .get("/api/modality/", tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: GET_MODALITY,
+        payload: res.data
+      });
+    })
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };

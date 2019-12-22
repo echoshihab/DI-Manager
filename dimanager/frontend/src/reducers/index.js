@@ -8,6 +8,7 @@ import shiftTimes from "./shiftTimes";
 import locations from "./locations";
 import rooms from "./rooms";
 import shifts from "./shifts";
+import modalities from "./modalities";
 import modal from "./modal";
 
 export default combineReducers({
@@ -20,5 +21,6 @@ export default combineReducers({
   locations,
   rooms,
   shifts,
+  modalities,
   modal
 });
