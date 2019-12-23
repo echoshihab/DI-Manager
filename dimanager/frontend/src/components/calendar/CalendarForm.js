@@ -10,7 +10,8 @@ import {
   assignShift,
   getShiftsForDay,
   closeModal,
-  validAssignShift
+  validAssignShift,
+  getExamTypes
 } from "../../actions/shifts";
 import { connect } from "react-redux";
 
@@ -71,8 +72,7 @@ export class CalendarForm extends Component {
     this.setState({ roomFlag: roomFlag, error: false });
   };
 
-  onModalitySelect = manageFlag => {
-    let modalityID = document.getElementsByName("modality")[0].value;
+  onModalitySelect = (manageFlag, modalityID) => {
     const { isAuthenticated, user } = this.props.auth;
     //get shifts for day by modality with edit permission if coordinator else get shifts for view only
     if (
@@ -81,6 +81,7 @@ export class CalendarForm extends Component {
     ) {
       this.setState({ manageFlag: manageFlag }, function() {
         shiftQuery(this.props.getShiftsForDay);
+        this.props.getExamTypes(modalityID);
       });
     } else
       this.setState({ manageFlag: false }, function() {
@@ -241,8 +242,6 @@ export class CalendarForm extends Component {
         shiftQuery(this.props.getShiftsForDay);
       });
       //if directly accessing dayview query for shift for current date set in constructor
-    } else {
-      shiftQuery(this.props.getShiftsForDay);
     }
   }
 
@@ -439,5 +438,6 @@ export default connect(mapStateToProps, {
   assignShift,
   getShiftsForDay,
   closeModal,
-  validAssignShift
+  validAssignShift,
+  getExamTypes
 })(CalendarForm);

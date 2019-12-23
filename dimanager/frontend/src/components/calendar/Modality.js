@@ -1,16 +1,17 @@
 import React, { Fragment, Component } from "react";
 import { connect } from "react-redux";
-import { getModalities, getExamTypes } from "../../actions/shifts";
+import { getModalities } from "../../actions/shifts";
 
 class Modality extends Component {
   state = {
-    manageFlag: false
+    manageFlag: false,
+    modalityID: ""
   };
 
   listTypes = e => {
-    this.props.getExamTypes(e.target.value); //types are rendered in calendarform
-    this.setState({ manageFlag: true }, function() {
-      this.props.onModalitySelect(this.state.manageFlag);
+    //types are rendered in calendarform
+    this.setState({ manageFlag: true, modalityID: e.target.value }, function() {
+      this.props.onModalitySelect(this.state.manageFlag, this.state.modalityID);
     });
   };
 
@@ -46,6 +47,4 @@ const mapStateToProps = state => ({
   modalities: state.modalities.modalities
 });
 
-export default connect(mapStateToProps, { getModalities, getExamTypes })(
-  Modality
-);
+export default connect(mapStateToProps, { getModalities })(Modality);
