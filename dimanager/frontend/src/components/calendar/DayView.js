@@ -4,10 +4,6 @@ import PropTypes from "prop-types";
 import { deleteShift } from "../../actions/shifts";
 
 export class DayView extends Component {
-  static propTypes = {
-    shifts: PropTypes.array.isRequired
-  };
-
   render() {
     return (
       <div>
@@ -33,13 +29,15 @@ export class DayView extends Component {
                 </td>
                 <td>{item.tech.initials}</td>
                 <td>
-                  <button
-                    href="#"
-                    className="btn btn-primary btn-sm btn-danger"
-                    onClick={() => this.props.deleteShift(item.id)}
-                  >
-                    Delete
-                  </button>
+                  {this.props.manageFlag ? (
+                    <button
+                      href="#"
+                      className="btn btn-primary btn-sm btn-danger"
+                      onClick={() => this.props.deleteShift(item.id)}
+                    >
+                      Delete
+                    </button>
+                  ) : null}
                 </td>
               </tr>
             ))}

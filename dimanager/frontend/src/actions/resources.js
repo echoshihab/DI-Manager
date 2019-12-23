@@ -27,11 +27,12 @@ export const getLocations = () => (dispatch, getState) => {
 
 //Add locations
 
-export const addLocation = locName => (dispatch, getState) => {
+export const addLocation = (locName, owner) => (dispatch, getState) => {
   let location = locName.toUpperCase();
   //request body
   const body = JSON.stringify({
-    location
+    location,
+    owner
   });
 
   axios

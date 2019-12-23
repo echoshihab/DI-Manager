@@ -419,7 +419,7 @@ export class CalendarForm extends Component {
             </Fragment>
           ) : null}
         </form>
-        <DayView />
+        <DayView manageFlag={manageFlag} />
         <div id="modal-root"></div>
         {modal}
       </div>

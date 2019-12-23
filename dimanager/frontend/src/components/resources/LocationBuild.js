@@ -29,7 +29,8 @@ export class LocationBuild extends Component {
   onSubmit = e => {
     e.preventDefault();
     const { location } = this.state;
-    this.props.addLocation(location);
+    let userID = this.props.auth.user.id;
+    this.props.addLocation(location, userID);
     this.setState({
       location: ""
     });
@@ -86,7 +87,8 @@ const style = {
 };
 
 const mapStateToProps = state => ({
-  locations: state.locations.locations
+  locations: state.locations.locations,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, {
