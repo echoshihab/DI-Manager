@@ -58,6 +58,8 @@ export class CalendarForm extends Component {
       isActive: false,
       error: false,
       roomFlag: false,
+      manageFlag: false,
+      modalityFlag: false,
       day: day,
       month: month,
       year: year,
@@ -79,12 +81,12 @@ export class CalendarForm extends Component {
       isAuthenticated &&
       user.modalities.some(modality => modality.id == modalityID)
     ) {
-      this.setState({ manageFlag: manageFlag }, function() {
+      this.setState({ manageFlag: manageFlag, modalityFlag: true }, function() {
         shiftQuery(this.props.getShiftsForDay);
         this.props.getExamTypes(modalityID);
       });
     } else
-      this.setState({ manageFlag: false }, function() {
+      this.setState({ manageFlag: false, modalityFlag: true }, function() {
         shiftQuery(this.props.getShiftsForDay);
       });
   };
@@ -205,9 +207,11 @@ export class CalendarForm extends Component {
   };
 
   setDay = e => {
-    this.setState({ day: e.target.textContent }, function() {
-      shiftQuery(this.props.getShiftsForDay);
-    });
+    this.state.modalityFlag
+      ? this.setState({ day: e.target.textContent }, function() {
+          shiftQuery(this.props.getShiftsForDay);
+        })
+      : null;
   };
 
   handleSubmit = e => {
