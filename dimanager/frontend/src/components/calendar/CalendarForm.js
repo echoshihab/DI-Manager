@@ -121,7 +121,9 @@ export class CalendarForm extends Component {
           weekdayIndexOfLast: newWeekdayIndexOfLast
         },
         function() {
-          shiftQuery(this.props.getShiftsForDay);
+          this.state.modalityFlag
+            ? shiftQuery(this.props.getShiftsForDay)
+            : null;
         }
       );
     } else {
@@ -144,7 +146,9 @@ export class CalendarForm extends Component {
           weekdayIndexOfLast: newWeekdayIndexOfLast
         },
         function() {
-          shiftQuery(this.props.getShiftsForDay);
+          this.state.modalityFlag
+            ? shiftQuery(this.props.getShiftsForDay)
+            : null;
         }
       );
     }
@@ -177,7 +181,9 @@ export class CalendarForm extends Component {
           weekdayIndexOfLast: newWeekdayIndexOfLast
         },
         function() {
-          shiftQuery(this.props.getShiftsForDay);
+          this.state.modalityFlag
+            ? shiftQuery(this.props.getShiftsForDay)
+            : null;
         }
       );
     } else {
@@ -200,18 +206,18 @@ export class CalendarForm extends Component {
           weekdayIndexOfLast: newWeekdayIndexOfLast
         },
         function() {
-          shiftQuery(this.props.getShiftsForDay);
+          this.state.modalityFlag
+            ? shiftQuery(this.props.getShiftsForDay)
+            : null;
         }
       );
     }
   };
 
   setDay = e => {
-    this.state.modalityFlag
-      ? this.setState({ day: e.target.textContent }, function() {
-          shiftQuery(this.props.getShiftsForDay);
-        })
-      : null;
+    this.setState({ day: e.target.textContent }, function() {
+      this.state.modalityFlag ? shiftQuery(this.props.getShiftsForDay) : null;
+    });
   };
 
   handleSubmit = e => {
