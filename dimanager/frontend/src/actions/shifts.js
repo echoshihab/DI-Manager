@@ -194,9 +194,11 @@ export const getShiftsForDay = (dateOfShift, modalityID) => dispatch => {
 };
 
 //get month's shifts
-export const getShiftsForMonth = dateRange => dispatch => {
+export const getShiftsForMonth = (dateRange, modalityID) => dispatch => {
   axios
-    .get(`http://localhost:8000/api/shifts/?date_range=${dateRange}`)
+    .get(
+      `http://localhost:8000/api/shifts/?date_range=${dateRange}&modality=${modalityID}`
+    )
     .then(res => {
       dispatch({
         type: SHIFT_RETRIEVE,

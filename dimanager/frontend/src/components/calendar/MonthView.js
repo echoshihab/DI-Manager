@@ -13,7 +13,8 @@ import Modality from "./Modality";
 const shiftQuery = (getShifts, year, month, daysInMonth) => {
   let selectedDate = `${year}-${month + 1}-01^${year}-${month +
     1}-${daysInMonth}`;
-  getShifts(selectedDate);
+  let modalityID = document.getElementsByName("modality")[0].value;
+  getShifts(selectedDate, modalityID);
 };
 
 export class MonthView extends Component {
@@ -31,12 +32,34 @@ export class MonthView extends Component {
       year: year,
       daysInMonth: daysInMonth,
       weekdayIndexOfFirst: weekdayIndexOfFirst,
-      weekdayIndexOfLast: weekdayIndexOfLast
+      weekdayIndexOfLast: weekdayIndexOfLast,
+      manageFlag: false,
+      modalityFlag: false,
+      modalityID: ""
     };
   }
 
-  handleModalityQuery = () => {
-    console.log("test");
+  onModalitySelect = (manageFlag, modalityID) => {
+    const { isAuthenticated, user } = this.props.auth;
+    const { year, month, daysInMonth } = this.state;
+    //get shifts with edit permission for coordinators or shifts with view permission for others
+    if (
+      isAuthenticated &&
+      user.modalities.some(modality => modality.id == modalityID)
+    ) {
+      this.setState(
+        { manageFlag: manageFlag, modalityFlag: true, modalityID: modalityID },
+        function() {
+          shiftQuery(this.props.getShiftsForMonth, year, month, daysInMonth);
+        }
+      );
+    } else
+      this.setState(
+        { manageFlag: false, modalityFlag: true, modalityID: modalityID },
+        function() {
+          shiftQuery(this.props.getShiftsForMonth, year, month, daysInMonth);
+        }
+      );
   };
 
   handleMonthQuery = (index, e) => {
@@ -101,25 +124,19 @@ export class MonthView extends Component {
     );
   };
 
-  componentDidMount() {
-    const { year, month, daysInMonth } = this.state;
-    this.props.getModalities();
-    shiftQuery(this.props.getShiftsForMonth, year, month, daysInMonth);
-  }
-
   componentWillUnmount() {
     this.props.clearShifts();
   } //this ensures dayview render will not be affected by monthview shift query
 
   render() {
-    const { isAuthenticated, user } = this.props.auth;
-    console.log(user);
     const {
       month,
       year,
       daysInMonth,
       weekdayIndexOfFirst,
-      weekdayIndexOfLast
+      weekdayIndexOfLast,
+      manageFlag,
+      modalityID
     } = this.state;
     const months = [
       "January",
@@ -182,7 +199,7 @@ export class MonthView extends Component {
                   </div>
                 ))}
               </div>
-              {isAuthenticated ? (
+              {manageFlag ? (
                 <div className="mv-edit">
                   <Link
                     to={{
@@ -190,7 +207,8 @@ export class MonthView extends Component {
                       param: {
                         day: i,
                         month: month,
-                        year: year
+                        year: year,
+                        modalityID: modalityID
                       }
                     }}
                   >
@@ -205,7 +223,7 @@ export class MonthView extends Component {
             <li className="mv-li mv-day" key={i}>
               <strong className="mv-daysOfMonth">{i}</strong>
               <div className="mv-shift-container" />
-              {isAuthenticated ? (
+              {manageFlag ? (
                 <div className="mv-edit">
                   <Link
                     to={{
@@ -213,7 +231,8 @@ export class MonthView extends Component {
                       param: {
                         day: i,
                         month: month,
-                        year: year
+                        year: year,
+                        modalityID: modalityID
                       }
                     }}
                   >
@@ -261,7 +280,7 @@ export class MonthView extends Component {
           >
             keyboard_arrow_down
           </i>
-          <Modality onChange={this.handleModalityQuery} />
+          <Modality onModalitySelect={this.onModalitySelect.bind(this)} />
         </div>
 
         <div className="mv-responsive">

@@ -11,7 +11,8 @@ import {
   getShiftsForDay,
   closeModal,
   validAssignShift,
-  getExamTypes
+  getExamTypes,
+  clearShifts
 } from "../../actions/shifts";
 import { connect } from "react-redux";
 
@@ -76,7 +77,7 @@ export class CalendarForm extends Component {
 
   onModalitySelect = (manageFlag, modalityID) => {
     const { isAuthenticated, user } = this.props.auth;
-    //get shifts for day by modality with edit permission if coordinator else get shifts for view only
+    //get shifts with edit permission for coordinators or shifts with view permission for others
     if (
       isAuthenticated &&
       user.modalities.some(modality => modality.id == modalityID)
@@ -247,13 +248,28 @@ export class CalendarForm extends Component {
   componentDidMount() {
     //query for shift with user selected date coming from monthview
     if (this.props.location.param) {
-      const { day, month, year } = this.props.location.param;
-      this.setState({ day: day, month: month, year: year }, function() {
-        shiftQuery(this.props.getShiftsForDay);
-      });
-      //if directly accessing dayview query for shift for current date set in constructor
+      const { day, month, year, modalityID } = this.props.location.param;
+
+      this.setState(
+        {
+          day: day,
+          month: month,
+          year: year,
+          manageFlag: true,
+          modalityFlag: true
+        },
+        function() {
+          document.getElementsByName("modality")[0].value = modalityID;
+          shiftQuery(this.props.getShiftsForDay);
+          this.props.getExamTypes(modalityID);
+        }
+      );
     }
   }
+
+  componentWillUnmount() {
+    this.props.clearShifts();
+  } //this ensures monthview render will not be affected by monthview shift query
 
   render() {
     const {
@@ -449,5 +465,6 @@ export default connect(mapStateToProps, {
   getShiftsForDay,
   closeModal,
   validAssignShift,
-  getExamTypes
+  getExamTypes,
+  clearShifts
 })(CalendarForm);
