@@ -63,7 +63,7 @@ export class MonthView extends Component {
   };
 
   handleMonthQuery = (index, e) => {
-    const { year } = this.state;
+    const { year, modalityFlag } = this.state;
     let newMonth = index;
     let newDaysInMonth = new Date(year, newMonth + 1, 0).getDate();
     let newWeekdayIndexOfFirst = new Date(year, newMonth, 1).getDay();
@@ -81,29 +81,28 @@ export class MonthView extends Component {
         weekdayIndexOfLast: newWeekdayIndexOfLast
       },
       function() {
-        shiftQuery(
-          this.props.getShiftsForMonth,
-          this.state.year,
-          this.state.month,
-          this.state.daysInMonth
-        );
+        modalityFlag
+          ? shiftQuery(
+              this.props.getShiftsForMonth,
+              this.state.year,
+              this.state.month,
+              this.state.daysInMonth
+            )
+          : null;
       }
     );
   };
 
   handleYearQuery = mod => {
+    const { year, month, modalityFlag } = this.state;
     let modification;
     mod == "plus" ? (modification = 1) : (modification = -1);
-    let newYear = this.state.year + modification;
-    let newDaysInMonth = new Date(newYear, this.state.month + 1, 0).getDate();
-    let newWeekdayIndexOfFirst = new Date(
-      newYear,
-      this.state.month,
-      1
-    ).getDay();
+    let newYear = year + modification;
+    let newDaysInMonth = new Date(newYear, month + 1, 0).getDate();
+    let newWeekdayIndexOfFirst = new Date(newYear, month, 1).getDay();
     let newWeekdayIndexOfLast = new Date(
       newYear,
-      this.state.month,
+      month,
       newDaysInMonth
     ).getDay();
     this.setState(
@@ -114,12 +113,14 @@ export class MonthView extends Component {
         weekdayIndexOfLast: newWeekdayIndexOfLast
       },
       function() {
-        shiftQuery(
-          this.props.getShiftsForMonth,
-          this.state.year,
-          this.state.month,
-          this.state.daysInMonth
-        );
+        modalityFlag
+          ? shiftQuery(
+              this.props.getShiftsForMonth,
+              this.state.year,
+              this.state.month,
+              this.state.daysInMonth
+            )
+          : null;
       }
     );
   };
