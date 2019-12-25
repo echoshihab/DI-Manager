@@ -283,7 +283,10 @@ export class MonthView extends Component {
             </i>
           </div>
           <div>
-            <Modality onModalitySelect={this.onModalitySelect.bind(this)} />
+            <Modality
+              parentClasses={"form-control mv-control"}
+              onModalitySelect={this.onModalitySelect.bind(this)}
+            />
           </div>
         </div>
 

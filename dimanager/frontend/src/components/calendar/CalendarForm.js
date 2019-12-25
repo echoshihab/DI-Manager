@@ -395,7 +395,10 @@ export class CalendarForm extends Component {
         <form className="cf-form" onSubmit={this.handleSubmit}>
           <div className="cf-form-group">
             <label>Modality</label>
-            <Modality onModalitySelect={this.onModalitySelect.bind(this)} />
+            <Modality
+              parentClasses={"form-control"}
+              onModalitySelect={this.onModalitySelect.bind(this)}
+            />
           </div>
           {manageFlag ? (
             <Fragment>

@@ -23,7 +23,7 @@ class Modality extends Component {
     return (
       <Fragment>
         <select
-          className="form-control mv-control"
+          className={this.props.parentClasses}
           defaultValue={"default"}
           name="modality"
           onChange={this.listTypes}
