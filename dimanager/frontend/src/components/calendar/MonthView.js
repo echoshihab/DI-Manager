@@ -264,23 +264,27 @@ export class MonthView extends Component {
 
     return (
       <div className="container-fluid">
-        <div className="mv-year-wrapper">
-          <i
-            className="material-icons mv-year-mod"
-            id="plus"
-            onClick={() => this.handleYearQuery("plus")}
-          >
-            keyboard_arrow_up
-          </i>
-          <h1 className="mv-year">{year}</h1>
-          <i
-            className="material-icons mv-year-mod"
-            id="minus"
-            onClick={() => this.handleYearQuery("minus")}
-          >
-            keyboard_arrow_down
-          </i>
-          <Modality onModalitySelect={this.onModalitySelect.bind(this)} />
+        <div className="mv-mods-wrapper">
+          <div className="mv-year-wrapper">
+            <i
+              className="material-icons mv-year-mod"
+              id="plus"
+              onClick={() => this.handleYearQuery("plus")}
+            >
+              keyboard_arrow_up
+            </i>
+            <h1 className="mv-year">{year}</h1>
+            <i
+              className="material-icons mv-year-mod"
+              id="minus"
+              onClick={() => this.handleYearQuery("minus")}
+            >
+              keyboard_arrow_down
+            </i>
+          </div>
+          <div>
+            <Modality onModalitySelect={this.onModalitySelect.bind(this)} />
+          </div>
         </div>
 
         <div className="mv-responsive">
