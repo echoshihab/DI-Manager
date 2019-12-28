@@ -66,10 +66,10 @@ class ShiftsViewSet(viewsets.ModelViewSet):
         modality = self.request.query_params.get('modality', None)
 
         if date_parameter is not None:
-            return Shifts.objects.filter(date_of_shift=date_parameter).filter(modality=modality).order_by('room')
+            return Shifts.objects.filter(date_of_shift=date_parameter).filter(modality=modality).order_by('room__room')
         elif date_range_parameter is not None:
             date_range = date_range_parameter.split("^")
-            return Shifts.objects.filter(date_of_shift__range=date_range).filter(modality=modality).order_by('room')
+            return Shifts.objects.filter(date_of_shift__range=date_range).filter(modality=modality).order_by('room__room')
         else:
             return Shifts.objects.all()
 
