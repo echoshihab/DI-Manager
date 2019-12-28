@@ -6,25 +6,25 @@ DI Manager is an application for diagnostic imaging coordinators/managers to bui
 * **Resource Builder**: build and customize shifts, exam types, locations, rooms
 
 <p align="center">
-  <img src="./img/resourcebuilder.png" alt="Resource Builder snippett">
+  <img src="./img/resourcebuilder.png" alt="Resource Builder snippett" width="440" height="192">
 </p>
 
 * **Month View**: view & edit shifts for a month
 
 <p align="center">
-  <img src="./img/monthview.png" alt="Monthview snippett">
+  <img src="./img/monthview.png" alt="Monthview snippett" width="769" height="159">
 </p>
 
-* **Day View**: view & assign shifts on a day
+* **Day View**: view & assign shifts for specific days
 
 <p align="center">
-  <img src="./img/dayview.png" alt="Dayview snippett">
+  <img src="./img/calendar.png" alt="Calendar snippett" width="151" height="163">
 </p>
-<p align="left">
-  <img src="./img/calendar.png" alt="Calendar snippett">
+<p align="center">
+  <img src="./img/dayview.png" alt="Dayview snippett" width="677" height="187">
 </p>
 
-* built in validation for conflicting shifts and technologist
+* Built in validation for conflicting shifts and technologist
 
 <p align="center">
   <img src="./img/validation.png" alt="validation snippett">
