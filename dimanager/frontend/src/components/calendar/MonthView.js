@@ -42,7 +42,7 @@ export class MonthView extends Component {
   onModalitySelect = (manageFlag, modalityID) => {
     const { isAuthenticated, user } = this.props.auth;
     const { year, month, daysInMonth } = this.state;
-    //get shifts with edit permission for coordinators or shifts with view permission for others
+    //get shifts with edit permission for coordinators or shifts with view only permission for others
     if (
       isAuthenticated &&
       user.modalities.some(modality => modality.id == modalityID)

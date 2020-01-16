@@ -17,6 +17,7 @@ export class ExamTypes extends Component {
 
   handleTypes = e => {
     this.props.getExamTypes(e.target.value);
+
     this.setState({ typeFlag: true, modalityID: e.target.value });
   };
 
@@ -43,6 +44,8 @@ export class ExamTypes extends Component {
   }
 
   render() {
+    const { user } = this.props.auth;
+
     return (
       <form
         className="form-inline my-2 my-lg-0"
@@ -60,11 +63,15 @@ export class ExamTypes extends Component {
               <option hidden disabled value="default">
                 Select Modality
               </option>
-              {this.props.modalities.map(modality => (
-                <option key={modality.id} value={modality.id}>
-                  {modality.modality}
-                </option>
-              ))}
+              {this.props.modalities
+                .filter(modality =>
+                  user.modalities.some(mod => mod.id == modality.id)
+                )
+                .map(modality => (
+                  <option key={modality.id} value={modality.id}>
+                    {modality.modality}
+                  </option>
+                ))}
             </select>
           </li>
 
@@ -107,7 +114,8 @@ export class ExamTypes extends Component {
 
 const mapStateToProps = state => ({
   modalities: state.modalities.modalities,
-  examTypes: state.examTypes.examTypes
+  examTypes: state.examTypes.examTypes,
+  auth: state.auth
 });
 
 const style = {
